@@ -229,6 +229,15 @@
         android:order="-90"
         android:key="top_level_account_category"
         android:layout="@layout/settingslib_preference_category_no_title">
+
+        <com.android.settings.widget.HomepagePreference
+            android:fragment="com.alpha.settings.AlphaSettings"
+            android:icon="@drawable/ic_settings_alpha"
+            android:key="top_level_alpha"
+            android:order="-50"
+            android:title="@string/alpha_settings_title"
+            android:summary="@string/alpha_settings_summary"
+            settings:controller="com.alpha.settings.TopLevelSettingsPreferenceController"/>
     </PreferenceCategory>
 
     <PreferenceCategory

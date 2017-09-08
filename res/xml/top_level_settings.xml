@@ -197,6 +197,15 @@
         settings:controller="com.android.settings.accounts.TopLevelAccountEntryPreferenceController"/>
 
     <com.android.settings.widget.HomepagePreference
+        android:fragment="com.alpha.settings.AlphaSettings"
+        android:icon="@drawable/ic_settings_alpha"
+        android:key="top_level_alpha"
+        android:order="9"
+        android:title="@string/alpha_settings_title"
+        android:summary="@string/alpha_settings_summary"
+        settings:controller="com.alpha.settings.TopLevelSettingsPreferenceController"/>
+
+    <com.android.settings.widget.HomepagePreference
         android:fragment="com.android.settings.system.SystemDashboardFragment"
         android:icon="@drawable/ic_settings_system_dashboard_white"
         android:key="top_level_system"
