@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.cyanogenmod.cmparts.livedisplay;
+package com.android.settings.lineage.livedisplay;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -27,12 +27,12 @@ import android.view.View;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
-import org.cyanogenmod.cmparts.widget.CustomDialogPreference;
-import org.cyanogenmod.cmparts.R;
-import org.cyanogenmod.internal.util.MathUtils;
+import com.android.settings.lineage.widget.CustomDialogPreference;
+import com.android.settings.R;
+import org.lineageos.internal.util.MathUtils;
 
-import cyanogenmod.hardware.LiveDisplayConfig;
-import cyanogenmod.hardware.LiveDisplayManager;
+import lineageos.hardware.LiveDisplayConfig;
+import lineageos.hardware.LiveDisplayManager;
 
 /**
  * Preference for selection of color temperature range for LiveDisplay

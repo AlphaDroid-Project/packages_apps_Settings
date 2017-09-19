@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.cyanogenmod.cmparts.livedisplay;
+package com.android.settings.lineage.livedisplay;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -27,14 +27,14 @@ import android.view.View;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
-import org.cyanogenmod.cmparts.widget.CustomDialogPreference;
-import org.cyanogenmod.cmparts.widget.IntervalSeekBar;
-import org.cyanogenmod.cmparts.R;
+import com.android.settings.lineage.widget.CustomDialogPreference;
+import com.android.settings.lineage.widget.IntervalSeekBar;
+import com.android.settings.R;
 
 import java.util.List;
 
-import cyanogenmod.hardware.HSIC;
-import cyanogenmod.hardware.LiveDisplayManager;
+import lineageos.hardware.HSIC;
+import lineageos.hardware.LiveDisplayManager;
 
 /**
  * Special preference type that allows configuration of Color settings
