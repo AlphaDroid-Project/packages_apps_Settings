@@ -27,10 +27,11 @@ import android.support.v7.preference.PreferenceScreen;
 
 import com.android.internal.view.RotationPolicy;
 
+import android.provider.Settings;
+
 import com.android.settings.R;
 import com.android.settings.lineage.SettingsPreferenceFragment;
 
-/*
 public class DisplayRotation extends SettingsPreferenceFragment {
     private static final String TAG = "DisplayRotation";
 
@@ -149,4 +150,3 @@ public class DisplayRotation extends SettingsPreferenceFragment {
         }
     };
 }
-*/
