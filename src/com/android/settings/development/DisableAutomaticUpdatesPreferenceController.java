@@ -61,7 +61,7 @@ public class DisableAutomaticUpdatesPreferenceController extends
     @Override
     public void updateState(Preference preference) {
         final int updatesEnabled = Settings.Global.getInt(mContext.getContentResolver(),
-                Settings.Global.OTA_DISABLE_AUTOMATIC_UPDATE, 0 /* default */);
+                Settings.Global.OTA_DISABLE_AUTOMATIC_UPDATE, 1 /* default */);
 
         ((TwoStatePreference) mPreference).setChecked(updatesEnabled != DISABLE_UPDATES_SETTING);
     }
@@ -72,5 +72,10 @@ public class DisableAutomaticUpdatesPreferenceController extends
         Settings.Global.putInt(mContext.getContentResolver(),
                 Settings.Global.OTA_DISABLE_AUTOMATIC_UPDATE, DISABLE_UPDATES_SETTING);
         ((TwoStatePreference) mPreference).setChecked(false);
+    }
+
+    @Override
+    public boolean isAvailable() {
+        return false;
     }
 }

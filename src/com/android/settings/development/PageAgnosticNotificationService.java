@@ -129,7 +129,7 @@ public class PageAgnosticNotificationService extends Service {
                 Settings.Global.getInt(
                         getApplicationContext().getContentResolver(),
                         Settings.Global.OTA_DISABLE_AUTOMATIC_UPDATE,
-                        0 /* default */);
+                        1 /* default */);
         // 0 means enabled, 1 means disabled
         if (currentState == 0) {
             // automatic updates are enabled, disable them
