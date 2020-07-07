@@ -19,4 +19,11 @@
 
     <dimen name="storage_card_min_width">148dp</dimen>
     <dimen name="storage_card_min_height">@dimen/storage_card_min_width</dimen>
-</resources> 
+
+    <!-- Alpha preference category -->
+    <dimen name="alpha_preference_category_padding_top">8.0dip</dimen>
+    <dimen name="alpha_preference_category_padding_bottom">0.0dip</dimen>
+    <dimen name="alpha_preference_category_line_margin_start">10.0dip</dimen>
+    <dimen name="alpha_preference_category_line_margin_end">10.0dip</dimen>
+    <dimen name="alpha_preference_category_height">48.0dip</dimen>
+</resources>

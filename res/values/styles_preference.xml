@@ -26,6 +26,21 @@
         <item name="seekBarPreferenceStyle">@style/SettingsSeekBarPreference</item>
         <item name="twoStateButtonPreferenceStyle">@style/TwoStateButtonPreference</item>
         <item name="preferenceFragmentCompatStyle">@style/SettingsPreferenceFragmentStyle</item>
+        <item name="preferenceCategoryStyle">@style/Preference.Alpha.Category</item>
+        <!--item name="preferenceCategoryTitleTextAppearance">@style/TextAppearance.CategoryTitle</item-->
+    </style>
+
+    <style name="Preference.Alpha.Category" parent="@style/Preference.Category">
+        <item name="android:layout">@layout/alpha_preference_category</item>
+        <item name="android:selectable">false</item>
+        <item name="allowDividerBelow">false</item>
+        <item name="android:shouldDisableView">false</item>
+        <item name="android:icon">@drawable/ic_alpha_category</item>
+    </style>
+
+    <style name="PreferenceCategoryTitleTextStyle">
+        <item name="android:textAppearance">?preferenceCategoryTitleTextAppearance</item>
+        <item name="android:textColor">?android:colorAccent</item>
     </style>
 
     <style name="PreferenceTheme.SetupWizard" parent="@style/SettingsPreferenceTheme">
