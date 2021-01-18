@@ -115,6 +115,7 @@ android_library {
 
         // Lineage dependencies
         "LineagePreferenceLib",
+        "vendor.lineage.fastcharge-V1.0-java",
     ],
 
     plugins: [
