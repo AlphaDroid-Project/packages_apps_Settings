@@ -36,4 +36,11 @@
         When enabled, battery stops charging at Stop trigger level and resumes charging at Start trigger level.
         Stop trigger level should be always greater than Start trigger level.</string>
 
+    <!-- Smart cutoff -->
+    <string name="smart_cutoff_title">Smart cutoff</string>
+    <string name="smart_cutoff_summary">Set maximum temperature</string>
+    <string name="smart_cutoff_switch_title">Use Smart cutoff</string>
+    <string name="smart_cutoff_level_title">Stop trigger level</string>
+    <string name="smart_cutoff_resume_level_title">Start trigger level</string>
+
 </resources>
