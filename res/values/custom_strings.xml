@@ -46,4 +46,7 @@
     <string name="smart_cutoff_level_title">Stop trigger level</string>
     <string name="smart_cutoff_resume_level_title">Start trigger level</string>
 
+    <!-- Alpha maintainer -->
+    <string name="alpha_maintainer_title">Device maintainer</string>
+
 </resources>
