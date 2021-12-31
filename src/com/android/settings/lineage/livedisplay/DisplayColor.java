@@ -16,7 +16,6 @@
 
 package com.android.settings.lineage.livedisplay;
 
-import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Parcel;
@@ -25,6 +24,8 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.widget.SeekBar;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AlertDialog;
 
 import com.android.settings.lineage.widget.CustomDialogPreference;
 import com.android.settings.lineage.widget.IntervalSeekBar;
