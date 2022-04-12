@@ -120,7 +120,7 @@ class HideDeveloperStatusSettings: Fragment(R.layout.hide_developer_status_layou
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         val activity = getActivity()
-        if (activity == null) {
+        if (activity == null || menu == null) {
             return;
         }
         optionsMenu = menu;
