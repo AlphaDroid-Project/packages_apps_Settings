@@ -25,6 +25,8 @@ import android.database.ContentObserver;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.UserHandle;
+import android.provider.Settings;
 import android.provider.Settings.Global;
 
 import androidx.annotation.VisibleForTesting;
@@ -111,6 +113,7 @@ public class PowerUsageSummary extends PowerUsageBase implements
         @Override
         public void onChange(boolean selfChange, Uri uri) {
             restartBatteryInfoLoader();
+            initPreference();
         }
     };
 
@@ -215,6 +218,10 @@ public class PowerUsageSummary extends PowerUsageBase implements
         super.onResume();
         getContentResolver().registerContentObserver(
                 Global.getUriFor(Global.BATTERY_ESTIMATES_LAST_UPDATE_TIME),
+                false,
+                mSettingsObserver);
+        getContentResolver().registerContentObserver(
+                Settings.System.getUriFor("battery_24_hrs_stats"),
                 false,
                 mSettingsObserver);
     }
