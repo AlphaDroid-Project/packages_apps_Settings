@@ -66,6 +66,7 @@ android_library {
     aaptflags: ["--extra-packages com.crdroid.settings"],
 
     resource_dirs: ["res",
+                    "res-ui",
                     "crDroidSettings/res"
     ],
 
