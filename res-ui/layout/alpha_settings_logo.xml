@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
      Copyright 2021 xdroid, xyzprjkt
-     Copyright 2022 AlphaDroid
 
      Licensed under the Apache License, Version 2.0 (the "License");
      you may not use this file except in compliance with the License.
@@ -25,16 +24,17 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
+        android:layout_gravity="center"
         android:orientation="horizontal"
-        android:padding="8dp"
-        android:layout_marginBottom="24dp"
-        android:layout_marginTop="24dp">
+        android:layout_marginHorizontal="16dp"
+		android:layout_marginTop="50dp"
+		android:layout_marginBottom="-32dp">
 
          <ImageView
             android:layout_width="match_parent"
-            android:layout_height="140dp"
+            android:layout_height="160dp"
             android:scaleType="fitCenter"
-            android:src="@drawable/alpha_logo" />
+            android:src="@drawable/alpha_settings_logo" />
 
     </LinearLayout>
 </FrameLayout>

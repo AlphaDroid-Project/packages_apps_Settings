@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Copyright (C) 2020 Project dotOS
+<!--
+     Copyright 2022 The DotOS Project
 
      Licensed under the Apache License, Version 2.0 (the "License");
      you may not use this file except in compliance with the License.
      You may obtain a copy of the License at
 
           http://www.apache.org/licenses/LICENSE-2.0
-
 
      Unless required by applicable law or agreed to in writing, software
      distributed under the License is distributed on an "AS IS" BASIS,
@@ -15,8 +15,11 @@
      limitations under the License.
 -->
 <resources>
-    <dimen name="contextual_card_stroke_width">1dp</dimen>
-
-    <dimen name="storage_card_min_width">148dp</dimen>
-    <dimen name="storage_card_min_height">@dimen/storage_card_min_width</dimen>
-</resources> 
+     <dimen name="dot_radius">22dp</dimen>
+     <dimen name="dot_radius_merge">5dp</dimen>
+     <dimen name="dot_pref_horizontal_padding">16dp</dimen>
+     <dimen name="dot_pref_horizontal_padding-negative">-16dp</dimen>
+     <dimen name="contextual_card_stroke_width">1dp</dimen>
+     <dimen name="storage_card_min_width">148dp</dimen>
+     <dimen name="storage_card_min_height">@dimen/storage_card_min_width</dimen>
+</resources>
