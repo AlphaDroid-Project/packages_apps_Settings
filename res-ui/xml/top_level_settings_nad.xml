@@ -20,34 +20,8 @@
     xmlns:settings="http://schemas.android.com/apk/res-auto"
     android:key="top_level_settings">
 
-    <com.android.settings.widget.HomepagePreference
-        android:key="top_level_alpha_settings"
-        android:title="@string/alpha_settings_title"
-        android:summary="@string/alpha_settings_summary"
-        android:order="-204"
-        android:icon="@drawable/ic_settings_alpha"
-        android:fragment="com.alpha.settings.AlphaSettings"
-    settings:controller="com.alpha.settings.TopLevelAlphaEntryPreferenceController" />
-
-    <com.android.settings.widget.HomepagePreference
-        android:fragment="com.android.settings.network.NetworkDashboardFragment"
-        android:icon="@drawable/ic_settings_wireless"
-        android:key="top_level_network"
-        android:order="-160"
-        android:title="@string/network_dashboard_title"
-        android:summary="@string/summary_placeholder"
-        settings:highlightableMenuKey="@string/menu_key_network"
-        settings:controller="com.android.settings.network.TopLevelNetworkEntryPreferenceController"/>
-
-    <com.android.settings.widget.HomepagePreference
-        android:fragment="com.android.settings.communal.CommunalDashboardFragment"
-        android:icon="@drawable/ia_settings_communal"
-        android:key="top_level_communal"
-        android:order="-145"
-        android:title="@string/communal_settings_title"
-        android:summary="@string/communal_settings_summary"
-        settings:highlightableMenuKey="@string/menu_key_communal"
-        settings:controller="com.android.settings.communal.CommunalPreferenceController"/>
+    <com.android.settings.homepage.TopMenu
+        android:order="-160"/>
 
     <com.android.settings.widget.HomepagePreference
         android:fragment="com.android.settings.location.LocationSettings"
@@ -87,16 +61,6 @@
         android:summary="@string/wallpaper_dashboard_summary"
         settings:highlightableMenuKey="@string/menu_key_wallpaper"
         settings:controller="com.android.settings.display.TopLevelWallpaperPreferenceController"/>
-
-    <com.android.settings.widget.HomepagePreference
-        android:fragment="com.android.settings.fuelgauge.batteryusage.PowerUsageSummary"
-        android:icon="@drawable/ic_settings_battery_white"
-        android:key="top_level_battery"
-        android:order="-110"
-        android:title="@string/power_usage_summary_title"
-        android:summary="@string/summary_placeholder"
-        settings:highlightableMenuKey="@string/menu_key_battery"
-        settings:controller="com.android.settings.fuelgauge.TopLevelBatteryPreferenceController"/>
 
     <com.android.settings.widget.HomepagePreference
         android:fragment="com.android.settings.notification.SoundSettings"
@@ -205,7 +169,7 @@
 
     <com.android.settings.widget.HomepagePreference
         android:fragment="com.android.settings.deviceinfo.aboutphone.MyDeviceInfoFragment"
-        android:icon="@drawable/ic_settings_about_device"
+        android:icon="@drawable/ic_phone_info"
         android:key="top_level_about_device"
         android:order="20"
         android:title="@string/about_settings"

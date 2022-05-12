@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-     Copyright 2022 The DotOS Project
+     Copyright (C) 2016-2022 crDroid Android Project
+     Copyright (C) 2023 AlphaDroid
 
      Licensed under the Apache License, Version 2.0 (the "License");
      you may not use this file except in compliance with the License.
@@ -14,10 +15,16 @@
      See the License for the specific language governing permissions and
      limitations under the License.
 -->
-<resources>
-    <color name="build_status_card_bg">@android:color/system_neutral1_800</color>
-    <color name="alpha_color_accent">@*android:color/system_accent1_700</color>
-    <color name="alpha_color_accent2">@*android:color/system_accent1_500</color>
-    <color name="alpha_color_secondary_accent">@*android:color/system_accent2_500</color>
-    <color name="alpha_color_tertiary_accent">@*android:color/system_accent3_600</color>
+
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+
+    <!--  Alpha settings -->
+    <string name="alpha_settings_title">Alphabet</string>
+    <string name="alpha_settings_summary">There will be goodies!</string>
+
+    <!-- UiBench -->
+    <string name="category_uibench">UiBench</string>
+    <string name="jitter_test_title">Jitter</string>
+    <string name="jitter_test_summary">Calculate rendering jitter</string>
+
 </resources>
