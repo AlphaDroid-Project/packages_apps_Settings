@@ -65,17 +65,9 @@ public class FirmwareVersionSettings extends DashboardFragment {
         return SettingsEnums.DIALOG_FIRMWARE_VERSION;
     }
 
-    /**
-     * For Search.
+ /**
+     * For search
      */
     public static final BaseSearchIndexProvider SEARCH_INDEX_DATA_PROVIDER =
-            new BaseSearchIndexProvider(R.xml.firmware_version) {
-
-                @Override
-                public List<AbstractPreferenceController> createPreferenceControllers(
-                        Context context) {
-                    return buildPreferenceControllers(context, null /* fragment */,
-                            null /* lifecycle */);
-                }
-            };
+            new BaseSearchIndexProvider(R.xml.firmware_version);
 }

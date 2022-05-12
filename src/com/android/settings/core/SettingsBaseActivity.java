@@ -110,7 +110,7 @@ public class SettingsBaseActivity extends FragmentActivity implements CategoryHa
         }
 
         if (isToolbarEnabled() && !isAnySetupWizard) {
-            super.setContentView(R.layout.collapsing_toolbar_base_layout);
+            super.setContentView(R.layout.alpha_collapsing_toolbar_base_layout);
             mCollapsingToolbarLayout = findViewById(R.id.collapsing_toolbar);
             mAppBarLayout = findViewById(R.id.app_bar);
             if (mCollapsingToolbarLayout != null) {
@@ -123,7 +123,7 @@ public class SettingsBaseActivity extends FragmentActivity implements CategoryHa
                                                 LineBreakConfig.LINE_BREAK_WORD_STYLE_PHRASE)
                                         .build()));
             }
-            autoSetCollapsingToolbarLayoutScrolling();
+            // autoSetCollapsingToolbarLayoutScrolling();
         } else {
             super.setContentView(R.layout.settings_base_layout);
         }

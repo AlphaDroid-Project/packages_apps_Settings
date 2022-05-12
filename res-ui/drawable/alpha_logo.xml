@@ -28,8 +28,8 @@
         <aapt:attr name="android:fillColor">
             <gradient android:endX="190" android:endY="280"
                 android:startX="260" android:startY="160" android:type="linear">
-                <item android:color="@android:color/system_accent2_400" android:offset="0"/>
-                <item android:color="@android:color/system_accent2_600" android:offset="1"/>
+                <item android:color="@android:color/system_accent2_200" android:offset="0"/>
+                <item android:color="@android:color/system_accent2_400" android:offset="1"/>
             </gradient>
         </aapt:attr>
     </path>
