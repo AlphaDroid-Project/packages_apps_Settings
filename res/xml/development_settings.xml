@@ -572,6 +572,16 @@
             android:entryValues="@array/track_frame_time_values"
             settings:keywords="@string/track_frame_time_keywords" />
 
+        <Preference
+            android:key="jitter"
+            android:title="@string/jitter_test_title"
+            android:summary="@string/jitter_test_summary"
+            android:persistent="false">
+            <intent android:action="android.intent.action.MAIN"
+                    android:targetPackage="com.android.settings"
+                    android:targetClass="com.android.settings.custom.uibench.JitterTestActivity" />
+            </Preference>
+
     </PreferenceCategory>
 
     <PreferenceCategory

@@ -4629,6 +4629,17 @@
             </intent-filter>
         </receiver>
 
+        <!-- Jitter Test Activity -->
+        <activity
+            android:name="com.android.settings.custom.uibench.JitterTestActivity"
+            android:theme="@style/Theme.SubSettingsBase"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
         <!-- This is the longest AndroidManifest.xml ever. -->
 
         <!-- Begin crDroid Settings -->
