@@ -97,7 +97,8 @@ public class ScreenOffUdfpsPreferenceController extends GesturePreferenceControl
 
     @Override
     public boolean isChecked() {
-        return getAmbientConfig().screenOffUdfpsEnabled(mUserId);
+        return Settings.Secure.getInt(mContext.getContentResolver(),
+                SECURE_KEY, OFF) == ON;
     }
 
     private AmbientDisplayConfiguration getAmbientConfig() {
