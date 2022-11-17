@@ -56,10 +56,11 @@ public class SystemUpdatePreferenceController extends BasePreferenceController {
 
     @Override
     public int getAvailabilityStatus() {
-        return mContext.getResources().getBoolean(R.bool.config_show_system_update_settings)
+        /*return mContext.getResources().getBoolean(R.bool.config_show_system_update_settings)
                 && mUm.isAdminUser()
                 ? AVAILABLE
-                : UNSUPPORTED_ON_DEVICE;
+                : UNSUPPORTED_ON_DEVICE;*/
+        return UNSUPPORTED_ON_DEVICE;
     }
 
     @Override
