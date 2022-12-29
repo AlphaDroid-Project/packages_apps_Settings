@@ -21,6 +21,6 @@ import com.android.settings.dashboard.DashboardFragment
 
 abstract class CustomDashboardFragment : DashboardFragment() {
 
-    override fun getMetricsCategory(): Int = MetricsProto.MetricsEvent.CUSTOM_SETTINGS
+    override fun getMetricsCategory(): Int = MetricsProto.MetricsEvent.ALPHA
 
 }

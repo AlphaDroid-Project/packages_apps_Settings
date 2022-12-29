@@ -439,7 +439,7 @@ public class Settings extends SettingsActivity {
      */
     public static class OneHandedSettingsActivity extends SettingsActivity { /* empty */ }
 
-    public static class crDroidSettingsLayoutActivity extends SettingsActivity {}
+    public static class AlphaSettingsActivity extends SettingsActivity {}
     public static class DevRunningServicesActivity extends SettingsActivity { /* empty */ }
     public static class SmartPixelsActivity extends SettingsActivity {}
 }
