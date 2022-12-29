@@ -23,9 +23,9 @@
     <com.android.settings.widget.HomepagePreference
         android:key="top_level_about_device"
         android:order="-205"
+        android:icon="@drawable/ic_phone_info"
         android:title="@string/dot_dashboard_device"
         android:summary="@string/summary_placeholder"
-        settings:layout="@layout/dot_dashboard_preference_phone"
         android:fragment="com.android.settings.deviceinfo.aboutphone.MyDeviceInfoFragment"
         settings:controller="com.android.settings.deviceinfo.aboutphone.TopLevelAboutDevicePreferenceController"/>
 
@@ -34,146 +34,172 @@
         android:title="@string/alpha_settings_title"
         android:summary="@string/alpha_settings_summary"
         android:order="-204"
-        settings:layout="@layout/dot_dashboard_preference_bottom"
+        android:icon="@drawable/ic_settings_alpha"
         android:fragment="com.alpha.settings.AlphaSettings"
         settings:controller="com.alpha.settings.TopLevelAlphaEntryPreferenceController" />
 
     <com.android.settings.widget.HomepagePreference
-        android:key="top_level_network"
-        android:order="-190"
-        android:summary="@string/summary_placeholder"
-        android:title="@string/network_dashboard_title"
         android:fragment="com.android.settings.network.NetworkDashboardFragment"
-        settings:layout="@layout/dot_dashboard_preference_top"
-        settings:controller="com.android.settings.network.TopLevelNetworkEntryPreferenceController" />
+        android:icon="@drawable/ic_settings_wireless"
+        android:key="top_level_network"
+        android:order="-160"
+        android:title="@string/network_dashboard_title"
+        android:summary="@string/summary_placeholder"
+        settings:highlightableMenuKey="@string/menu_key_network"
+        settings:controller="com.android.settings.network.TopLevelNetworkEntryPreferenceController"/>
 
     <com.android.settings.widget.HomepagePreference
-        android:key="top_level_connected_devices"
-        android:order="-180"
-        android:summary="@string/connected_devices_dashboard_default_summary"
-        android:title="@string/connected_devices_dashboard_title"
+        android:fragment="com.android.settings.location.LocationSettings"
+        android:icon="@drawable/ic_settings_location"
+        android:key="top_level_location"
+        android:order="-150"
+        android:title="@string/location_settings_title"
+        android:summary="@string/location_settings_loading_app_permission_stats"
+        settings:highlightableMenuKey="@string/menu_key_location"
+        settings:controller="com.android.settings.location.TopLevelLocationPreferenceController"/>
+
+    <com.android.settings.widget.HomepagePreference
         android:fragment="com.android.settings.connecteddevice.ConnectedDeviceDashboardFragment"
-        settings:layout="@layout/dot_dashboard_preference_bottom"
-        settings:controller="com.android.settings.connecteddevice.TopLevelConnectedDevicesPreferenceController" />
+        android:icon="@drawable/ic_devices_other"
+        android:key="top_level_connected_devices"
+        android:order="-140"
+        android:title="@string/connected_devices_dashboard_title"
+        android:summary="@string/connected_devices_dashboard_default_summary"
+        settings:highlightableMenuKey="@string/menu_key_connected_devices"
+        settings:controller="com.android.settings.connecteddevice.TopLevelConnectedDevicesPreferenceController"/>
 
     <com.android.settings.widget.HomepagePreference
-        android:key="top_level_display"
-        android:order="-110"
-        android:summary="@string/display_dashboard_summary"
-        android:title="@string/display_settings"
         android:fragment="com.android.settings.DisplaySettings"
-        settings:controller="com.android.settings.display.TopLevelDisplayPreferenceController"
-        settings:layout="@layout/dot_dashboard_preference_top"/>
-    
-    <com.android.settingslib.RestrictedTopLevelPreference
+        android:icon="@drawable/ic_settings_display_white"
+        android:key="top_level_display"
+        android:order="-130"
+        android:title="@string/display_settings"
+        android:summary="@string/display_dashboard_summary"
+        settings:highlightableMenuKey="@string/menu_key_display"
+        settings:controller="com.android.settings.display.TopLevelDisplayPreferenceController"/>
+
+    <com.android.settings.widget.RestrictedHomepagePreference
+        android:icon="@drawable/ic_settings_wallpaper_white"
         android:key="top_level_wallpaper"
-        android:order="-109"
+        android:order="-120"
         android:title="@string/wallpaper_settings_title"
         android:summary="@string/wallpaper_dashboard_summary"
-        settings:layout="@layout/dot_dashboard_preference_middle"
         settings:highlightableMenuKey="@string/menu_key_wallpaper"
         settings:controller="com.android.settings.display.TopLevelWallpaperPreferenceController"/>
 
     <com.android.settings.widget.HomepagePreference
+        android:fragment="com.android.settings.fuelgauge.batteryusage.PowerUsageSummary"
+        android:icon="@drawable/ic_settings_battery_white"
         android:key="top_level_battery"
-        android:order="-108"
-        android:summary="@string/summary_placeholder"
+        android:order="-110"
         android:title="@string/power_usage_summary_title"
-        settings:controller="com.android.settings.fuelgauge.TopLevelBatteryPreferenceController"
-        settings:layout="@layout/dot_dashboard_preference_middle"
-        android:fragment="com.android.settings.fuelgauge.PowerUsageSummary"/>
+        android:summary="@string/summary_placeholder"
+        settings:highlightableMenuKey="@string/menu_key_battery"
+        settings:controller="com.android.settings.fuelgauge.TopLevelBatteryPreferenceController"/>
 
     <com.android.settings.widget.HomepagePreference
+        android:fragment="com.android.settings.notification.SoundSettings"
+        android:icon="@drawable/ic_volume_up_24dp"
         android:key="top_level_sound"
-        android:order="-108"
-        android:summary="@string/sound_dashboard_summary"
+        android:order="-100"
         android:title="@string/sound_settings"
-        settings:layout="@layout/dot_dashboard_preference_middle"
-        android:fragment="com.android.settings.notification.SoundSettings"/>
+        android:summary="@string/sound_dashboard_summary"
+        settings:highlightableMenuKey="@string/menu_key_sound"/>
 
     <com.android.settings.widget.HomepagePreference
-        android:key="top_level_notification"
-        android:order="-106"
+        android:fragment="com.android.settings.notification.ConfigureNotificationSettings"
+        android:key="top_level_notifications"
+        android:icon="@drawable/ic_notifications"
+        android:order="-90"
         android:title="@string/configure_notification_settings"
         android:summary="@string/notification_dashboard_summary"
-        settings:layout="@layout/dot_dashboard_preference_middle"
-        android:fragment="com.android.settings.notification.ConfigureNotificationSettings"/>
+        settings:highlightableMenuKey="@string/menu_key_notifications"/>
 
     <com.android.settings.widget.HomepagePreference
+        android:fragment="com.android.settings.applications.AppDashboardFragment"
+        android:icon="@drawable/ic_apps"
         android:key="top_level_apps"
-        android:order="-105"
+        android:order="-80"
+        android:title="@string/apps_dashboard_title"
         android:summary="@string/app_and_notification_dashboard_summary"
-        android:title="@string/app_and_notification_dashboard_title"
-        settings:layout="@layout/dot_dashboard_preference_bottom"
-        android:fragment="com.android.settings.applications.AppDashboardFragment"/>
+        settings:highlightableMenuKey="@string/menu_key_apps"/>
 
     <com.android.settings.widget.HomepagePreference
-        android:key="top_level_privacy"
-        android:order="-99"
-        android:summary="@string/privacy_dashboard_summary"
-        android:title="@string/privacy_dashboard_title"
-        settings:layout="@layout/dot_dashboard_preference_top"
-        android:fragment="com.android.settings.privacy.PrivacyDashboardFragment"/>
-
-    <com.android.settings.widget.HomepagePreference
-        android:key="top_level_security"
-        android:order="-98"
-        android:summary="@string/security_dashboard_summary"
-        android:title="@string/security_settings_title"
-        settings:layout="@layout/dot_dashboard_preference_middle"
         android:fragment="com.android.settings.security.SecuritySettings"
+        android:icon="@drawable/ic_settings_security_white"
+        android:key="top_level_security"
+        android:order="-70"
+        android:title="@string/security_settings_title"
+        android:summary="@string/security_dashboard_summary"
+        settings:highlightableMenuKey="@string/menu_key_security"
         settings:controller="com.android.settings.security.TopLevelSecurityEntryPreferenceController"/>
 
     <com.android.settings.widget.HomepagePreference
-        android:key="top_level_location"
-        android:order="-97"
-        android:summary="@string/location_settings_loading_app_permission_stats"
-        android:title="@string/location_settings_title"
-        settings:controller="com.android.settings.location.TopLevelLocationPreferenceController"
-        settings:layout="@layout/dot_dashboard_preference_middle"
-        android:fragment="com.android.settings.location.LocationSettings"/>
+        android:icon="@drawable/ic_settings_safety_center"
+        android:key="top_level_safety_center"
+        android:order="-60"
+        android:title="@string/safety_center_title"
+        android:summary="@string/safety_center_summary"
+        settings:highlightableMenuKey="@string/menu_key_safety_center"
+        settings:controller="com.android.settings.safetycenter.TopLevelSafetyCenterEntryPreferenceController"/>
 
     <com.android.settings.widget.HomepagePreference
-        android:key="top_level_accounts"
-        android:order="-96"
-        android:summary="@string/summary_placeholder"
-        android:title="@string/account_dashboard_title"
-        settings:layout="@layout/dot_dashboard_preference_bottom"
-        settings:controller="com.android.settings.accounts.TopLevelAccountEntryPreferenceController" 
-        android:fragment="com.android.settings.accounts.AccountDashboardFragment"/>
-    
+        android:fragment="com.android.settings.privacy.PrivacyDashboardFragment"
+        android:icon="@drawable/ic_settings_privacy"
+        android:key="top_level_privacy"
+        android:order="-50"
+        android:title="@string/privacy_dashboard_title"
+        android:summary="@string/privacy_dashboard_summary"
+        settings:highlightableMenuKey="@string/menu_key_privacy"
+        settings:controller="com.android.settings.privacy.TopLevelPrivacyEntryPreferenceController"/>
+
     <com.android.settings.widget.HomepagePreference
+        android:key="top_level_emergency"
+        android:title="@string/emergency_settings_preference_title"
+        android:summary="@string/emergency_dashboard_summary"
+        android:icon="@drawable/ic_settings_emergency"
+        android:order="-40"
+        android:fragment="com.android.settings.emergency.EmergencyDashboardFragment"
+        settings:isPreferenceVisible="@bool/config_show_emergency_settings"
+        settings:highlightableMenuKey="@string/menu_key_emergency"/>
+
+    <com.android.settings.widget.HomepagePreference
+        android:fragment="com.android.settings.deviceinfo.StorageDashboardFragment"
+        android:icon="@drawable/ic_storage_white"
+        android:key="top_level_storage"
+        android:order="-30"
+        android:title="@string/storage_settings"
+        android:summary="@string/summary_placeholder"
+        settings:highlightableMenuKey="@string/menu_key_storage"
+        settings:controller="com.android.settings.deviceinfo.TopLevelStoragePreferenceController"/>
+
+    <com.android.settings.widget.HomepagePreference
+        android:fragment="com.android.settings.accessibility.AccessibilitySettings"
+        android:icon="@drawable/ic_settings_accessibility"
         android:key="top_level_accessibility"
         android:order="-20"
-        android:summary="@string/accessibility_settings_summary"
         android:title="@string/accessibility_settings"
-        settings:layout="@layout/dot_dashboard_preference_top"
-        android:fragment="com.android.settings.accessibility.AccessibilitySettings"
-        settings:controller="com.android.settings.accessibility.TopLevelAccessibilityPreferenceController" />
+        android:summary="@string/accessibility_settings_summary"
+        settings:highlightableMenuKey="@string/menu_key_accessibility"
+        settings:controller="com.android.settings.accessibility.TopLevelAccessibilityPreferenceController"/>
 
     <com.android.settings.widget.HomepagePreference
-        android:key="top_level_storage"
-        android:order="-11"
+        android:fragment="com.android.settings.accounts.AccountDashboardFragment"
+        android:icon="@drawable/ic_settings_accounts"
+        android:key="top_level_accounts"
+        android:order="-10"
+        android:title="@string/account_dashboard_title"
         android:summary="@string/summary_placeholder"
-        android:title="@string/storage_settings"
-        settings:layout="@layout/dot_dashboard_preference_middle"
-        android:fragment="com.android.settings.deviceinfo.StorageDashboardFragment"
-        settings:controller="com.android.settings.deviceinfo.TopLevelStoragePreferenceController" />
+        settings:highlightableMenuKey="@string/menu_key_accounts"
+        settings:controller="com.android.settings.accounts.TopLevelAccountEntryPreferenceController"/>
 
     <com.android.settings.widget.HomepagePreference
-        android:key="top_level_support"
-        android:order="10"
-        android:summary="@string/support_summary"
-        android:title="@string/page_tab_title_support"
-        settings:layout="@layout/dot_dashboard_preference_middle"
-        settings:controller="com.android.settings.support.SupportPreferenceController"/>
-
-    <com.android.settings.widget.HomepagePreference
+        android:fragment="com.android.settings.system.SystemDashboardFragment"
+        android:icon="@drawable/ic_settings_system_dashboard_white"
         android:key="top_level_system"
-        android:order="20"
-        android:summary="@string/system_dashboard_summary"
+        android:order="10"
         android:title="@string/header_category_system"
-        settings:layout="@layout/dot_dashboard_preference_bottom"
-        android:fragment="com.android.settings.system.SystemDashboardFragment"/>
+        android:summary="@string/system_dashboard_summary"
+        settings:highlightableMenuKey="@string/menu_key_system"/>
 
 </PreferenceScreen>

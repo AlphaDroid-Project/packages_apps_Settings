@@ -35,7 +35,7 @@
 
         <com.android.internal.widget.PreferenceImageView
             android:id="@android:id/icon"
-            android:tint="@color/dot_background1"
+            android:tint="@color/dot_primary_color"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:adjustViewBounds="true"
@@ -53,7 +53,6 @@
         <TextView
             android:id="@android:id/title"
             android:textSize="15sp"
-            android:textColor="@color/dot_background1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ellipsize="marquee"
@@ -63,7 +62,6 @@
         <TextView
             android:id="@android:id/summary"
             android:textSize="13sp"
-            android:textColor="@color/dot_background2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@android:id/title"
