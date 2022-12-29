@@ -60,7 +60,7 @@
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:padding="4dp"
-                android:tint="@android:color/system_neutral1_10"
+                android:tint="@android:color/white"
                 app:maxHeight="32dp"
                 app:maxWidth="48dp" />
         </FrameLayout>
@@ -80,6 +80,7 @@
                 android:ellipsize="marquee"
                 android:singleLine="true"
                 android:textAppearance="?android:attr/textAppearanceListItem"
+                android:textColor="@color/dot_primary_color"
                 android:textDirection="locale" />
             <TextView
                 android:id="@@android:id/summary"
@@ -89,7 +90,8 @@
                 android:layout_weight="1"
                 android:singleLine="true"
                 android:ellipsize="marquee"
-                style="@style/PreferenceSummaryTextStyle"/>
+                style="@style/PreferenceSummaryTextStyle"
+                android:textColor="@color/dot_primary_color" />
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>
