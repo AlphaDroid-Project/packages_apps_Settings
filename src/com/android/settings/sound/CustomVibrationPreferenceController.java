@@ -34,7 +34,7 @@ import com.android.settings.sound.CustomVibrationPreferenceController;
 import com.android.settings.Utils;
 import com.android.settingslib.core.AbstractPreferenceController;
 
-import com.crdroid.settings.preferences.CustomSeekBarPreference;
+import com.alpha.settings.preferences.CustomSeekBarPreference;
 
 /**
  * This class allows choosing a vibration pattern while ringing

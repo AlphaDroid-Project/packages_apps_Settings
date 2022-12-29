@@ -98,7 +98,7 @@
             android:summary="@string/lock_screen_notifs_redact_work_summary"
             settings:controller="com.android.settings.notification.RedactNotificationPreferenceController" />
 
-        <com.crdroid.settings.preferences.SecureSettingListPreference
+        <com.alpha.settings.preferences.SecureSettingListPreference
             android:key="face_unlock_method"
             android:order="16"
             android:title="@string/face_unlock_method_title"
