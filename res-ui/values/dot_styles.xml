@@ -27,9 +27,21 @@
         <item name="android:fontFamily">@*android:string/config_headlineFontFamilyMedium</item>
     </style>
 
-    <style name="dotTextSecondary">
+    <style name="dotTextSecondary" parent="dotTextPrimary">
         <item name="android:textSize">14sp</item>
-        <item name="android:textColor">?android:attr/textColorSecondary</item>
+    </style>
+
+        <!-- Text Styles -->
+    <style name="dotTextPrimaryWhite" parent="dotTextPrimary">
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
+    <style name="dotTextPrimaryMediumWhite" parent="dotTextPrimaryWhite">
+        <item name="android:fontFamily">@*android:string/config_headlineFontFamilyMedium</item>
+    </style>
+
+    <style name="dotTextSecondaryWhite" parent="dotTextPrimaryWhite">
+        <item name="android:textSize">14sp</item>
     </style>
 
     <!-- Preferences -->
@@ -58,15 +70,21 @@
     </style>
 
     <style name="dotPreferenceFull" parent="dotPreferenceBase">
-        <item name="android:layout_marginTop">4dp</item>
-        <item name="android:layout_marginBottom">4dp</item>
+        <item name="android:layout_marginTop">2dp</item>
+        <item name="android:layout_marginBottom">2dp</item>
         <item name="android:background">@drawable/dot_preference_background_full</item>
     </style>
 
     <style name="dotPreferenceFullAccent" parent="dotPreferenceBase">
         <item name="android:layout_marginTop">@dimen/dot_pref_horizontal_padding</item>
-        <item name="android:layout_marginBottom">4dp</item>
+        <item name="android:layout_marginBottom">2dp</item>
         <item name="android:background">@drawable/dot_preference_background_full_accent</item>
+    </style>
+
+    <style name="dotPreferenceFullAccent2" parent="dotPreferenceBase">
+        <item name="android:layout_marginTop">@dimen/dot_pref_horizontal_padding</item>
+        <item name="android:layout_marginBottom">2dp</item>
+        <item name="android:background">@drawable/dot_preference_background_full_accent_2</item>
     </style>
 
     <!-- Dashboard -->
@@ -80,7 +98,7 @@
 
     <style name="dotDashboardPreferenceFull" parent="dotPreferenceFull">
         <item name="android:layout_marginTop">@dimen/dot_pref_horizontal_padding</item>
-        <item name="android:layout_marginBottom">4dp</item>
+        <item name="android:layout_marginBottom">2dp</item>
     </style>
 
     <style name="dotDashboardPreferenceFullAccent" parent="dotDashboardPreferenceFull">

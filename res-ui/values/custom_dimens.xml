@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--
-     Copyright 2022 The DotOS Project
+<!-- Copyright (C) 2019-2021 Nusantara Project
 
      Licensed under the Apache License, Version 2.0 (the "License");
      you may not use this file except in compliance with the License.
@@ -14,9 +13,9 @@
      See the License for the specific language governing permissions and
      limitations under the License.
 -->
-<resources>
-     <dimen name="dot_radius">22dp</dimen>
-     <dimen name="dot_radius_merge">5dp</dimen>
-     <dimen name="dot_pref_horizontal_padding">16dp</dimen>
-     <dimen name="dot_pref_horizontal_padding-negative">-16dp</dimen>
+
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <!-- Alpha settings collapsing toolbar-->
+    <dimen name="alpha_toolbar_layout_height">20dp</dimen>
+    <dimen name="alpha_scrim_visible_height_trigger">20dp</dimen>
 </resources>

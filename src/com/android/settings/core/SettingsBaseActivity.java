@@ -106,6 +106,7 @@ public class SettingsBaseActivity extends FragmentActivity implements CategoryHa
         if (isToolbarEnabled() && !isAnySetupWizard) {
             super.setContentView(R.layout.collapsing_toolbar_base_layout);
             mCollapsingToolbarLayout = findViewById(R.id.collapsing_toolbar);
+            Log.i(TAG, "Collapsing toolbar layout");
             mAppBarLayout = findViewById(R.id.app_bar);
             if (mCollapsingToolbarLayout != null) {
                 mCollapsingToolbarLayout.setLineSpacingMultiplier(TOOLBAR_LINE_SPACING_MULTIPLIER);
@@ -120,6 +121,7 @@ public class SettingsBaseActivity extends FragmentActivity implements CategoryHa
             disableCollapsingToolbarLayoutScrollingBehavior();
         } else {
             super.setContentView(R.layout.settings_base_layout);
+            Log.i(TAG, "Settings base layout");
         }
 
         // This is to hide the toolbar from those pages which don't need a toolbar originally.
