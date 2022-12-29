@@ -219,7 +219,7 @@
         android:ringtoneType="alarm"
         android:order="-60"/>
 
-    <com.crdroid.settings.preferences.SystemSettingSwitchPreference
+    <com.alpha.settings.preferences.SystemSettingSwitchPreference
         android:key="show_app_volume"
         android:title="@string/app_volume_title"
         android:summary="@string/app_volume_summary"

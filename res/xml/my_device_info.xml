@@ -144,13 +144,13 @@
             settings:controller="com.android.settings.deviceinfo.firmwareversion.FirmwareVersionPreferenceController"/>
 
         <!-- Lineage version -->
-        <Preference
+        <!--Preference
             android:key="lineage_os_version"
             android:order="43"
             android:title="@*lineageos.platform:string/lineage_version"
             android:summary="@string/summary_placeholder"
             settings:enableCopying="true"
-            settings:controller="com.android.settings.deviceinfo.firmwareversion.LineageVersionDetailPreferenceController"/>
+            settings:controller="com.android.settings.deviceinfo.firmwareversion.LineageVersionDetailPreferenceController"/-->
     </PreferenceCategory>
 
     <PreferenceCategory

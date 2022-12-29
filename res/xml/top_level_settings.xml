@@ -21,6 +21,14 @@
     android:key="top_level_settings">
 
     <com.android.settings.widget.HomepagePreference
+        android:key="top_level_alpha_settings"
+        android:title="@string/alpha_settings_title"
+        android:summary="@string/alpha_settings_summary"
+        android:order="-204"
+        android:fragment="com.alpha.settings.AlphaSettings"
+        settings:controller="com.alpha.settings.TopLevelAlphaEntryPreferenceController" />
+
+    <com.android.settings.widget.HomepagePreference
         android:fragment="com.android.settings.network.NetworkDashboardFragment"
         android:icon="@drawable/ic_settings_wireless"
         android:key="top_level_network"
@@ -61,8 +69,8 @@
 
     <com.android.settings.widget.HomepagePreference
         android:fragment="com.android.settings.notification.ConfigureNotificationSettings"
-        android:icon="@drawable/ic_settings_notifications"
         android:key="top_level_notifications"
+        android:icon="@drawable/ic_notifications"
         android:order="-120"
         android:title="@string/configure_notification_settings"
         android:summary="@string/notification_dashboard_summary"
@@ -184,15 +192,6 @@
         android:summary="@string/summary_placeholder"
         settings:highlightableMenuKey="@string/menu_key_accounts"
         settings:controller="com.android.settings.accounts.TopLevelAccountEntryPreferenceController"/>
-
-    <com.android.settings.widget.HomepagePreference
-        android:fragment="com.crdroid.settings.crDroidSettingsLayout"
-        android:icon="@drawable/ic_settings_cogs"
-        android:key="top_level_crdroid"
-        android:order="9"
-        android:title="@string/crdroid_settings_title"
-        android:summary="@string/crdroid_settings_summary"
-        settings:controller="com.crdroid.settings.TopLevelSettingsPreferenceController"/>
 
     <com.android.settings.widget.HomepagePreference
         android:fragment="com.android.settings.system.SystemDashboardFragment"

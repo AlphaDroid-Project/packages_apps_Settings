@@ -36,10 +36,10 @@
         settings:controller="com.android.settings.deviceinfo.legal.LicensePreferenceController" />
 
     <!-- LineageOS License information -->
-    <Preference
+    <!--Preference
         android:key="lineage_license"
         android:title="@string/crdroid_license_title"
-        settings:controller="com.android.settings.deviceinfo.legal.LineageLicensePreferenceController" />
+        settings:controller="com.android.settings.deviceinfo.legal.LineageLicensePreferenceController" /-->
 
     <!-- Terms and conditions -->
     <Preference

@@ -58,7 +58,7 @@
             settings:keywords="@string/keywords_face_unlock"
             settings:controller="com.android.settings.biometrics.face.FaceSettingsConfirmPreferenceController"/>
 
-        <com.crdroid.settings.preferences.SecureSettingListPreference
+        <com.alpha.settings.preferences.SecureSettingListPreference
             android:key="face_unlock_method"
             android:title="@string/face_unlock_method_title"
             android:summary="%s"

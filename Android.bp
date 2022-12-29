@@ -59,15 +59,15 @@ android_library {
     srcs: [
            "src/**/*.java",
            "src/**/*.kt",
-           "crDroidSettings/src/**/*.java",
-           "crDroidSettings/src/**/*.kt",
+           "AlphaSettings/src/**/*.java",
+           "AlphaSettings/src/**/*.kt",
     ],
 
-    aaptflags: ["--extra-packages com.crdroid.settings"],
+    aaptflags: ["--extra-packages com.alpha.settings"],
 
     resource_dirs: ["res",
                     "res-ui",
-                    "crDroidSettings/res"
+                    "AlphaSettings/res"
     ],
 
     static_libs: [
