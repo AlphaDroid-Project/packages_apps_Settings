@@ -109,6 +109,18 @@
         <item name="android:background">@drawable/dot_preference_background_full_accent_2</item>
     </style>
 
+    <style name="alphaDashboardPreferenceFull" parent="dotDashboardPreferenceFull">
+        <item name="android:layout_marginTop">8dp</item>
+    </style>
+
+    <style name="alphaDashboardPreferenceFullAccent" parent="alphaDashboardPreferenceFull">
+        <item name="android:background">@drawable/dot_preference_background_full_accent</item>
+    </style>
+
+    <style name="alphaDashboardPreferenceFullAccent2" parent="alphaDashboardPreferenceFull">
+        <item name="android:background">@drawable/dot_preference_background_full_accent_2</item>
+    </style>
+
     <style name="dotDashboardPreferencePhone" parent="dotDashboardPreferenceTop">
         <item name="android:background">@drawable/dot_preference_background_phone</item>
     </style>
