@@ -228,7 +228,9 @@ public class TopLevelSettings extends DashboardFragment implements SplitLayoutLi
 
             if (key == null) continue;
 
-            if (mDashBoardStyle == 1) {
+            if (mDashBoardStyle == 0) {
+                preference.setLayoutResource(R.layout.aosp_homepage_preference);
+            } else if (mDashBoardStyle == 1) {
                 if (key.equals("top_level_about_device")) {
                     preference.setLayoutResource(R.layout.dot_dashboard_preference_phone);
                 } else if (key.equals("top_level_alpha_settings")) {
