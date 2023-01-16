@@ -37,6 +37,7 @@ import android.os.Bundle;
 import android.os.Process;
 import android.os.UserHandle;
 import android.os.UserManager;
+import android.provider.Settings.System;
 import android.text.TextUtils;
 import android.util.ArraySet;
 import android.util.FeatureFlagUtils;
@@ -99,6 +100,9 @@ public class SettingsHomepageActivity extends FragmentActivity implements
 
     static final int DEFAULT_HIGHLIGHT_MENU_KEY = R.string.menu_key_network;
     private static final long HOMEPAGE_LOADING_TIMEOUT_MS = 300;
+
+    private static final int DASHBOARD_AOSP_STYLE = 0;
+    private static final int DASHBOARD_DEFAULT_STYLE = 2;
 
     private TopLevelSettings mMainFragment;
     private View mHomepageView;
@@ -196,7 +200,11 @@ public class SettingsHomepageActivity extends FragmentActivity implements
         }
 
         setupEdgeToEdge();
-        setContentView(R.layout.settings_homepage_container);
+        int mStyle = System.getIntForUser(getContentResolver(),
+                System.SETTINGS_DASHBOARD_STYLE, DASHBOARD_DEFAULT_STYLE,
+                UserHandle.USER_CURRENT);
+        setContentView(mStyle == DASHBOARD_AOSP_STYLE ? R.layout.aosp_settings_homepage_container :
+                R.layout.settings_homepage_container);
 
         mActivityEmbeddingController = ActivityEmbeddingController.getInstance(this);
         mIsTwoPane = mActivityEmbeddingController.isActivityEmbedded(this);
