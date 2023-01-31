@@ -151,7 +151,6 @@
             android:order="44"
             android:title="@string/wifi_ip_address"
             android:summary="@string/summary_placeholder"
-            android:selectable="false"
             settings:enableCopying="true"/>
 
         <!-- Wi-Fi MAC address -->
@@ -169,7 +168,6 @@
             android:order="46"
             android:title="@string/status_device_wifi_mac_address"
             android:summary="@string/summary_placeholder"
-            android:selectable="false"
             settings:enableCopying="true"/>
 
         <!-- Bluetooth address -->
@@ -178,7 +176,6 @@
             android:order="47"
             android:title="@string/status_bt_address"
             android:summary="@string/summary_placeholder"
-            android:selectable="false"
             settings:enableCopying="true"/>
 
         <!-- Device up time -->
@@ -186,16 +183,14 @@
             android:key="up_time"
             android:order="48"
             android:title="@string/status_up_time"
-            android:summary="@string/summary_placeholder"
-            android:selectable="false"/>
+            android:summary="@string/summary_placeholder" />
 
         <!-- Device deep sleep time -->
         <Preference
             android:key="sleep_time"
             android:order="49"
             android:title="@string/status_sleep_time"
-            android:summary="@string/summary_placeholder"
-            android:selectable="false"/>
+            android:summary="@string/summary_placeholder" />
 
         <!-- Manual -->
         <Preference
