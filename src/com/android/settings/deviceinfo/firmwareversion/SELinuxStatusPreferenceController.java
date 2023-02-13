@@ -13,32 +13,33 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.android.settings.deviceinfo;
+package com.android.settings.deviceinfo.firmwareversion;
 
 import android.content.Context;
-import android.os.SELinux;
 import android.os.SystemProperties;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceScreen;
-import android.text.TextUtils;
 
 import com.android.settings.R;
 import com.android.settings.core.PreferenceControllerMixin;
 import com.android.settingslib.core.AbstractPreferenceController;
 
+import lineageos.trust.TrustInterface;
+
 public class SELinuxStatusPreferenceController extends AbstractPreferenceController implements
         PreferenceControllerMixin {
 
-    private static final String PROPERTY_SELINUX_STATUS = "ro.build.selinux";
     private static final String KEY_SELINUX_STATUS = "selinux_status";
+    private TrustInterface mTrustInterface;
 
     public SELinuxStatusPreferenceController(Context context) {
         super(context);
+        mTrustInterface = TrustInterface.getInstance(context);
     }
 
     @Override
     public boolean isAvailable() {
-        return !TextUtils.isEmpty(SystemProperties.get(PROPERTY_SELINUX_STATUS));
+        return true;
     }
 
     @Override
@@ -49,17 +50,20 @@ public class SELinuxStatusPreferenceController extends AbstractPreferenceControl
     @Override
     public void displayPreference(PreferenceScreen screen) {
         super.displayPreference(screen);
-        final Preference pref = screen.findPreference(KEY_SELINUX_STATUS);
-        if (pref == null) {
+
+        final Preference mSELinuxPref = screen.findPreference(KEY_SELINUX_STATUS);
+        if (mSELinuxPref == null) {
             return;
         }
-        if (!SELinux.isSELinuxEnabled()) {
-            String status = mContext.getResources().getString(R.string.selinux_status_disabled);
-            pref.setSummary(status);
-        } else if (!SELinux.isSELinuxEnforced()) {
-            String status = mContext.getResources().getString(R.string.selinux_status_permissive);
-            pref.setSummary(status);
+
+        int seLinuxLevel = mTrustInterface.getLevelForFeature(TrustInterface.TRUST_FEATURE_SELINUX);
+        int summary;
+        if (seLinuxLevel == TrustInterface.TRUST_FEATURE_LEVEL_GOOD) {
+            summary = R.string.selinux_status_enforcing;
+        } else {
+            summary = R.string.selinux_status_disabled;
         }
+        mSELinuxPref.setSummary(mContext.getString(summary));
     }
 }
 
