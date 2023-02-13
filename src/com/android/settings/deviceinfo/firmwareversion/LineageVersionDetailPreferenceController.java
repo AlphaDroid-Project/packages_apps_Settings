@@ -42,11 +42,9 @@ public class LineageVersionDetailPreferenceController extends BasePreferenceCont
     private static final int DELAY_TIMER_MILLIS = 500;
     private static final int ACTIVITY_TRIGGER_COUNT = 3;
 
-    private static final String KEY_LINEAGE_VERSION_PROP = "ro.modversion";
-    private static final String KEY_ALPHA_BUILD_VERSION_PROP = "ro.alpha.modversion";
-    private static final String KEY_ALPHA_DEVICE_PROP = "ro.alpha.device";
-    private static final String KEY_ALPHA_RELEASE_TYPE_PROP = "ro.alpha.build.package";
-    private static final String KEY_ALPHA_RELEASE_VERSION_PROP = "ro.alpha.display.version";
+    private static final String ALPHA_BUILD_VERSION = "ro.alpha.modversion";
+    private static final String ALPHA_PACKAGE_TYPE = "ro.alpha.build.package";
+    private static final String ALPHA_VERSION = "ro.alpha.display.version";
 
     private static final String PLATLOGO_PACKAGE_NAME = "com.android.egg";
     private static final String PLATLOGO_ACTIVITY_CLASS =
@@ -94,7 +92,7 @@ public class LineageVersionDetailPreferenceController extends BasePreferenceCont
             preference.setSummary(shortRomVersion());
             fullRomVersion = false;
         } else {
-            preference.setSummary(SystemProperties.get(KEY_ALPHA_RELEASE_VERSION_PROP,
+            preference.setSummary(SystemProperties.get(ALPHA_VERSION,
                 mContext.getString(R.string.unknown)));
             fullRomVersion = true;
         }
@@ -125,13 +123,11 @@ public class LineageVersionDetailPreferenceController extends BasePreferenceCont
     }
 
     private String shortRomVersion() {
-        String romVersion = SystemProperties.get(KEY_ALPHA_BUILD_VERSION_PROP,
+        String romVersion = SystemProperties.get(ALPHA_BUILD_VERSION,
                 this.mContext.getString(R.string.device_info_default));
-        String deviceCodename = SystemProperties.get(KEY_ALPHA_DEVICE_PROP,
+        String romPackagetype = SystemProperties.get(ALPHA_PACKAGE_TYPE,
                 this.mContext.getString(R.string.device_info_default));
-        String romReleasetype = SystemProperties.get(KEY_ALPHA_RELEASE_TYPE_PROP,
-                this.mContext.getString(R.string.device_info_default));
-        String shortVersion = romVersion + " | " + deviceCodename + " | " + romReleasetype;
+        String shortVersion = romVersion + " (" + romPackagetype + ")";
         return shortVersion;
     }
 

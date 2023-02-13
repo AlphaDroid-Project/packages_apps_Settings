@@ -207,22 +207,24 @@ public class TopLevelSettings extends DashboardFragment implements SplitLayoutLi
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         super.onCreatePreferences(savedInstanceState, rootKey);
-        int tintColor = Utils.getHomepageIconColor(getContext());
-        iteratePreferences(preference -> {
-            Drawable icon = preference.getIcon();
-            if (icon != null) {
-                icon.setTint(tintColor);
-            }
-            onSetPrefCard();
-        });
+        onSetPrefCard();
     }
 
 
     private void onSetPrefCard() {
         final PreferenceScreen screen = getPreferenceScreen();
+        int tintColor = Utils.getHomepageIconColor(getContext());
+
         final int count = screen.getPreferenceCount();
         for (int i = 0; i < count; i++) {
             final Preference preference = screen.getPreference(i);
+
+            if (preference == null) continue;
+
+            Drawable icon = preference.getIcon();
+            if (icon != null) {
+                icon.setTint(tintColor);
+            }
 
             String key = preference.getKey();
 

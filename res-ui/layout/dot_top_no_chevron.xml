@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
      Copyright 2021 xdroid, xyzprjkt
-     Copyright 2022 AlphaDroid
 
      Licensed under the Apache License, Version 2.0 (the "License");
      you may not use this file except in compliance with the License.
@@ -15,26 +14,15 @@
      See the License for the specific language governing permissions and
      limitations under the License.
 -->
-<FrameLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/container"
+    style="@style/dotDashboardPreferenceTop"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <LinearLayout
+    <include
+        layout="@layout/dot_pref_no_chevron"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="horizontal"
-        android:padding="8dp"
-        android:layout_marginBottom="24dp"
-        android:layout_marginTop="72dp">
+        android:layout_height="wrap_content" />
 
-         <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="140dp"
-            android:scaleType="fitCenter"
-            android:src="@drawable/alpha_logo" />
-
-    </LinearLayout>
 </FrameLayout>
