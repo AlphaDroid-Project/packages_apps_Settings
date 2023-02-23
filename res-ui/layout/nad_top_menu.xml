@@ -31,7 +31,7 @@
             android:layout_marginStart="10dp"
             android:layout_marginEnd="6dp"
             android:padding="4dp"
-            android:backgroundTint="@android:color/system_accent3_300"
+            android:backgroundTint="@color/alpha_color_secondary_accent"
             android:background="@drawable/dot_preference_background_full">
 
             <androidx.preference.internal.PreferenceImageView
@@ -91,7 +91,7 @@
             android:padding="10dp"
             android:layout_marginStart="?android:attr/listPreferredItemPaddingEnd"
             android:layout_marginEnd="2dp"
-            android:backgroundTint="@android:color/system_accent3_200"
+            android:backgroundTint="@color/alpha_color_accent2"
             android:background="@drawable/dot_preference_background_bottom_left"
             android:orientation="horizontal"
             android:gravity="center">
@@ -137,7 +137,7 @@
             android:padding="10dp"
             android:layout_marginStart="2dp"
             android:layout_marginEnd="?android:attr/listPreferredItemPaddingEnd"
-            android:backgroundTint="@android:color/system_accent3_300"
+            android:backgroundTint="@color/alpha_color_secondary_accent"
             android:background="@drawable/dot_preference_background_bottom_right"
             android:gravity="center">
 
