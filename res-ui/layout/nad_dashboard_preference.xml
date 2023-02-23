@@ -51,7 +51,7 @@
             android:paddingStart="4dp"
             android:paddingTop="4dp"
             android:paddingBottom="4dp"
-            android:backgroundTint="@android:color/system_accent1_200"
+            android:backgroundTint="@color/alpha_color_accent2"
             android:background="@drawable/dot_preference_background_full">
 
             <androidx.preference.internal.PreferenceImageView
