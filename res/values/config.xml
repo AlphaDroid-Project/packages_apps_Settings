@@ -642,4 +642,7 @@
 
     <!-- Whether sim related information is visible to the end user. -->
     <bool name="config_show_sim_info">true</bool>
+
+    <!-- Does the device support color inversion -->
+    <bool name="config_displayInversionAvailable">true</bool>
 </resources>
