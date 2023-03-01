@@ -23,8 +23,6 @@ import androidx.lifecycle.lifecycleScope
 import androidx.preference.Preference
 import androidx.preference.PreferenceScreen
 
-import com.android.settings.custom.CustomTogglePreferenceController
-
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -36,7 +34,7 @@ class AppLockPackageProtectionPC(
     context: Context,
     private val packageName: String,
     private val coroutineScope: CoroutineScope
-) : CustomTogglePreferenceController(context, KEY) {
+) : AppLockTogglePreferenceController(context, KEY) {
 
     private val appLockManager = context.getSystemService(AppLockManager::class.java)
     private var isProtected = false

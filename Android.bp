@@ -112,6 +112,7 @@ android_library {
         "vendor.lineage.fastcharge-V1.0-java",
         "SystemUISharedLib",
         "faceunlock_framework",
+        "kotlin-stdlib",
         "kotlinx_coroutines_android",
         "kotlinx_coroutines",
     ],

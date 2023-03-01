@@ -18,8 +18,6 @@ package com.android.settings.security.applock
 
 import android.app.AppLockManager
 import android.content.Context
-import android.hardware.biometrics.BiometricManager
-import android.hardware.biometrics.BiometricManager.Authenticators.BIOMETRIC_STRONG
 
 import androidx.preference.Preference
 import androidx.preference.PreferenceScreen
@@ -29,23 +27,22 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-private const val KEY = "app_lock_biometrics_allowed"
+private const val KEY = "hide_from_launcher"
 
-class AppLockBiometricPreferenceController(
+class AppLockHideAppPC(
     context: Context,
+    private val packageName: String,
     private val coroutineScope: CoroutineScope
 ) : AppLockTogglePreferenceController(context, KEY) {
 
     private val appLockManager = context.getSystemService(AppLockManager::class.java)
-    private val biometricManager = context.getSystemService(BiometricManager::class.java)
-
+    private var hideFromLauncher = AppLockManager.DEFAULT_HIDE_IN_LAUNCHER
     private var preference: Preference? = null
-    private var isBiometricsAllowed = false
 
     init {
         coroutineScope.launch {
-            isBiometricsAllowed = withContext(Dispatchers.Default) {
-                appLockManager.isBiometricsAllowed()
+            hideFromLauncher = withContext(Dispatchers.Default) {
+                appLockManager.hiddenPackages.any { it == packageName }
             }
             preference?.let {
                 updateState(it)
@@ -53,18 +50,15 @@ class AppLockBiometricPreferenceController(
         }
     }
 
-    override fun getAvailabilityStatus(): Int {
-        val result = biometricManager.canAuthenticate(BIOMETRIC_STRONG)
-        return if (result == BiometricManager.BIOMETRIC_SUCCESS) AVAILABLE else CONDITIONALLY_UNAVAILABLE
-    }
+    override fun getAvailabilityStatus() = AVAILABLE
 
-    override fun isChecked() = isBiometricsAllowed
+    override fun isChecked() = hideFromLauncher
 
     override fun setChecked(checked: Boolean): Boolean {
-        if (isBiometricsAllowed == checked) return false
-        isBiometricsAllowed = checked
+        if (hideFromLauncher == checked) return false
+        hideFromLauncher = checked
         coroutineScope.launch(Dispatchers.Default) {
-            appLockManager.setBiometricsAllowed(isBiometricsAllowed)
+            appLockManager.setPackageHidden(packageName, hideFromLauncher)
         }
         return true
     }

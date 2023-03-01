@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.android.settings.custom
+package com.android.settings.security.applock;
 
 import android.content.Context
 import android.widget.Switch
@@ -27,7 +27,7 @@ import com.android.settings.core.TogglePreferenceController
 import com.android.settingslib.widget.MainSwitchPreference
 import com.android.settingslib.widget.OnMainSwitchChangeListener
 
-abstract class CustomTogglePreferenceController(
+abstract class AppLockTogglePreferenceController(
     context: Context,
     key: String,
 ) : TogglePreferenceController(context, key),
@@ -45,5 +45,5 @@ abstract class CustomTogglePreferenceController(
         setChecked(isChecked)
     }
 
-    override fun getSliceHighlightMenuRes() = R.string.menu_key_settings
+    override fun getSliceHighlightMenuRes() = R.string.menu_key_security
 }
