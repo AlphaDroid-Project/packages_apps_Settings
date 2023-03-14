@@ -71,13 +71,13 @@
         android:selectable="false"/>
 
         <!-- AlphaDroid version -->
-        <Preference
-            android:key="lineage_version"
+        <com.android.settings.deviceinfo.firmwareversion.AlphaVersionPreference
+            android:key="alpha_version"
             android:title="@*lineageos.platform:string/lineage_version"
             android:summary="@string/summary_placeholder"
             android:icon="@drawable/ic_alpha"
             settings:enableCopying="true"
-            settings:controller="com.android.settings.deviceinfo.firmwareversion.LineageVersionDetailPreferenceController"/>
+            settings:controller="com.android.settings.deviceinfo.firmwareversion.AlphaVersionPreferenceController"/>
 
         <!-- Build date -->
         <Preference
@@ -121,7 +121,7 @@
             settings:controller="com.android.settings.deviceinfo.firmwareversion.BasebandVersionPreferenceController"/>
 
         <!-- Kernel -->
-        <Preference
+        <com.android.settings.deviceinfo.firmwareversion.KernelVersionPreference
             android:key="kernel_version"
             android:title="@string/kernel_version"
             android:summary="@string/summary_placeholder"

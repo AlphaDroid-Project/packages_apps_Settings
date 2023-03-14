@@ -14,6 +14,7 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/layout_card_preference"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:minHeight="?android:attr/listPreferredItemHeightSmall"
@@ -63,7 +64,6 @@
             android:layout_below="@android:id/title"
             android:layout_alignStart="@android:id/title"
             android:layout_marginTop="4dp"
-            android:singleLine="true"
             style="@style/dotTextSecondary" />
 
     </RelativeLayout>
@@ -85,6 +85,7 @@
             app:cardCornerRadius="99dp">
 
                 <ImageView
+                    android:id="@+id/dot_chevron"
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:layout_gravity="center"
