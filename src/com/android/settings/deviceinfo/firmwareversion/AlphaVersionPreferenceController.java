@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2019 The Android Open Source Project
+ * Copyright (C) 2019-2022 The LineageOS Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,15 +17,21 @@
 package com.android.settings.deviceinfo.firmwareversion;
 
 import android.content.Context;
+import android.os.SystemProperties;
+import android.text.TextUtils;
+import android.util.Log;
 
+import androidx.preference.Preference;
+
+import com.android.settings.R;
 import com.android.settings.core.BasePreferenceController;
-import com.android.settingslib.DeviceInfoUtils;
 
-public class KernelVersionPreferenceController extends BasePreferenceController {
+public class AlphaVersionPreferenceController extends BasePreferenceController {
 
-    private static final String KEY_KERNEL_VERSION = "kernel_version";
+    private static final String ALPHA_BUILD_VERSION = "ro.alpha.modversion";
+    private static final String KEY_ALPHA_VERSION = "alpha_version";
 
-    public KernelVersionPreferenceController(Context context, String preferenceKey) {
+    public AlphaVersionPreferenceController(Context context, String preferenceKey) {
         super(context, preferenceKey);
     }
 
@@ -35,12 +41,13 @@ public class KernelVersionPreferenceController extends BasePreferenceController 
     }
 
     @Override
-    public CharSequence getSummary() {
-        return DeviceInfoUtils.getFormattedKernelVersion(mContext);
+    public String getPreferenceKey() {
+        return KEY_ALPHA_VERSION;
     }
 
     @Override
-    public String getPreferenceKey() {
-        return KEY_KERNEL_VERSION;
+    public CharSequence getSummary() {
+        return SystemProperties.get(ALPHA_BUILD_VERSION,
+                mContext.getString(R.string.device_info_default));
     }
 }
