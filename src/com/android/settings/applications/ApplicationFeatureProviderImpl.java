@@ -46,6 +46,7 @@ import android.util.Log;
 import androidx.annotation.VisibleForTesting;
 
 import com.android.internal.telephony.SmsApplication;
+import com.android.internal.util.GoogleEuicc;
 import com.android.settings.R;
 
 import java.util.ArrayList;
@@ -199,6 +200,8 @@ public class ApplicationFeatureProviderImpl implements ApplicationFeatureProvide
         keepEnabledPackages.add("com.android.inputmethod.latin");
         keepEnabledPackages.add(com.android.internal.gmscompat.GmsCompatApp.PKG_NAME);
         keepEnabledPackages.add(com.android.internal.gmscompat.GmsCompatApp.PKG_NAME + ".config");
+        // handles firmware updates of embedded secure element that is used for eSIM, NFC, Felica etc
+        keepEnabledPackages.add(GoogleEuicc.EUICC_SUPPORT_PIXEL_PKG_NAME);
 
         return keepEnabledPackages;
     }
