@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     Copyright (C) 2016-2023 crDroid Android Project
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+          http://www.apache.org/licenses/LICENSE-2.0
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+-->
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="custom_timeout_summary_5secs">5 saniye</string>
+    <string name="custom_timeout_summary_10secs">10 saniye</string>
+    <!-- App lock -->
+    <string name="app_lock_title">Uygulama kilidi</string>
+    <plurals name="app_lock_summary">
+        <item quantity="one"><xliff:g example="1" id="Number of applications">%1$d</xliff:g> uygulama korunuyor</item>
+        <item quantity="other"><xliff:g example="10" id="Number of applications">%1$d</xliff:g> uygulama korunuyor</item>
+    </plurals>
+    <string name="app_lock_authentication_dialog_title">Kilidi aç</string>
+    <string name="enable_debugging">Hata ayıklamayı etkinleştir</string>
+    <string name="disable_debugging">Hata ayıklamayı devre dışı bırak</string>
+    <string name="app_lock_packages_title">Korunan uygulamalar</string>
+    <string name="app_lock_packages_summary">Biyometrik veriler veya cihaz kimlik bilgileriyle korunacak uygulamaları seçin</string>
+    <string name="app_lock_timeout_title">Otomatik kilitleme zaman aşımı</string>
+    <string name="app_lock_timeout_summary">Arka planda kilidi açılmış bir uygulamanın kilitlenmesi gereken süre</string>
+    <string name="app_lock_notifications_title">Bildirimleri yeniden düzenle</string>
+    <string name="app_lock_notifications_summary">Seçilen uygulamalar kilitlendiğinde bildirim içeriği gizlenecek ve daraltılacaktır. Bildirimler otomatik olarak devre dışı bırakılır.</string>
+    <string name="app_lock_notifications_disabled_summary">Önce bir uygulamayı koruyun</string>
+    <string name="app_lock_biometrics_allowed_title">Kilit açma için biyometriyi etkinleştir</string>
+    <string name="app_lock_footer_text">Baloncuklar, zaman aşımından sonra otomatik olarak kapatılacak</string>
+    <string name="enable_protection">Korumayı etkinleştir</string>
+    <string name="hide_from_launcher_title">Başlatıcıdan gizle</string>
+    <string name="hide_from_launcher_summary">Bu uygulamanın herhangi bir başlatıcıda görünmesini engelleyin. Değişikliklerin geçerli olması için başlatıcının yeniden başlatılması gerekir.</string>
+</resources>
