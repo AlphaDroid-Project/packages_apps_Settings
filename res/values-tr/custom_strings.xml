@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     Copyright (C) 2016-2022 crDroid Android Project
+     Copyright (C) 2023 AlphaDroid
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+-->
+
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+
+    <!--  Alpha settings -->
+    <string name="alpha_settings_title">Alphabet</string>
+    <string name="alpha_settings_summary">Güzel şeyler olacak!</string>
+
+    <!-- UiBench -->
+    <string name="category_uibench">UiBench</string>
+    <string name="jitter_test_title">Jitter</string>
+    <string name="jitter_test_summary">Calculate rendering jitter</string>
+
+    <!-- Smart charging -->
+    <string name="smart_charging_title">Akıllı şarj etme</string>
+    <string name="smart_charging_summary">Maksimum şarj seviyesini ayarla</string>
+    <string name="smart_charging_switch_title">Akıllı şarjı kullanın</string>
+    <string name="smart_charging_level_title">Durma tetikleme düzeyi</string>
+    <string name="smart_charging_resume_level_title">Başlama tetikleme düzeyi</string>
+    <string name="smart_charging_reset_stats_title">Pil istatistiklerini sıfırla</string>
+    <string name="smart_charging_reset_stats_summary">Kullanıcı tarafından tanımlanan şarj düzeyine ulaştıktan sonra pil istatistiklerini sıfırlayın</string>
+    <string name="smart_charging_footer">Akıllı Şarj, pilinizin ömrünü uzatmak için maksimum şarj seviyesini ayarlamanıza olanak tanır.
+        Etkinleştirildiğinde pil, Durdurma tetikleme düzeyinde şarjı durdurur ve Başlatma tetikleme düzeyinde şarj etmeye devam eder.
+        Durdurma tetikleme seviyesi her zaman Başlatma tetikleme seviyesinden daha yüksek olmalıdır.</string>
+
+    <!-- Smart cutoff -->
+    <string name="smart_cutoff_title">Akıllı kesme</string>
+    <string name="smart_cutoff_summary">Maksimum sıcaklığı ayarlayın</string>
+    <string name="smart_cutoff_switch_title">Akıllı kesmeyi kullan</string>
+    <string name="smart_cutoff_level_title">Durma tetikleme düzeyi</string>
+    <string name="smart_cutoff_resume_level_title">Başlama tetikleme düzeyi</string>
+
+    <!-- SELinux status -->
+    <string name="selinux_status">SELinux durumu</string>
+    <string name="selinux_status_disabled">Devre dışı</string>
+    <string name="selinux_status_permissive">Permissive</string>
+    <string name="selinux_status_enforcing">Enforcing</string>
+
+    <!-- Firmware info -->
+    <string name="category_android_info">Android</string>
+    <string name="category_alpha_info">AlphaDroid</string>
+    <string name="category_device_info">Cihaz</string>
+
+    <!-- Build info -->
+    <string name="build_status_title">Üretim Durumu: %s</string>
+    <string name="build_status_summary_placeholder">Ahoy</string>
+    <string name="build_status_official">Resmi</string>
+    <string name="build_status_summary">Geliştiren: %s</string>
+    <string name="build_status_oopsie">Geliştirici aranıyor...</string>
+
+    <!-- Ignore window secure -->
+    <string name="ignore_window_secure_title">Secure window izini yoksay</string>
+    <string name="ignore_window_secure_summary">Tüm uygulamalar için ekran görüntüsü ve ekran kaydı sınırlarını kaldırın. Bu, bazı durumlarda kullanışlı olabilir ancak gizlilik sızıntılarına yol açabilir.</string>
+
+    <string name="connectivity_check_title">İnternet bağlantısı kontrolü</string>
+    <string name="connectivity_check_summary">İnternet bağlantı kontrollerini gerçekleştirmek için kullanılacak HTTP uç noktaları.</string>
+
+    <string name="sandboxed_google_play">Korumalı alandaki Google Play</string>
+    <string name="sandboxed_google_play_work_profile">Korumalı alandaki Google Play (işletme profili)</string>
+
+    <string name="storage_scopes">Depolama Alanları</string>
+
+    <string name="allow_access_to_obb_directory_title">Android/obb klasörüne erişime izin ver</string>
+    <string name="allow_access_to_obb_directory_summary">OBB genişletme dosyalarını kullanan bazı büyük uygulamaların (çoğunlukla oyunlar) yüklenmesi için gereklidir.</string>
+
+    <string name="auto_grant_OTHER_SENSORS_permission_title">Uygulamalara varsayılan olarak sensörlere erişim izni verin</string>
+    <string name="auto_grant_OTHER_SENSORS_permission_summary_on">Sensörler standart olmayan bir izindir, reddedilmesi durumunda uygulamalar arızalanabilir.</string>
+    <string name="auto_grant_OTHER_SENSORS_permission_summary_off">Bir uygulama sensörlere erişmeye çalıştığında bir izin istemi gösterilecektir. Sensörler izni verildikten sonra bazı uygulamaların manuel olarak yeniden başlatılması gerekebileceğini unutmayın.</string>
+
+</resources>
