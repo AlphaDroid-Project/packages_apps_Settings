@@ -24,6 +24,7 @@ import android.net.LinkProperties;
 import android.net.Network;
 import android.os.Handler;
 import android.os.Looper;
+import android.os.SystemProperties;
 import android.os.UserHandle;
 import android.os.UserManager;
 import android.provider.Settings;
@@ -68,6 +69,8 @@ public class ConnectivityCheckPreferenceController
 
     private static final String KEY_CONNECTIVITY_CHECK_SETTINGS =
             "connectivity_check_settings";
+
+    private static final String GAPPS_CONFIG = "ro.alpha.build.package";
 
     private ListPreference mConnectivityPreference;
 
@@ -120,10 +123,24 @@ public class ConnectivityCheckPreferenceController
         if (STANDARD_HTTP_URL.equals(pref)) {
             mConnectivityPreference.setValueIndex(
                     STANDARD_CAPTIVE_PORTAL_HTTP_URL_INTVAL);
-        } else {
+        } else if (GRAPHENEOS_CAPTIVE_PORTAL_HTTP_URL.equals(pref)) {
             mConnectivityPreference.setValueIndex(
                     GRAPHENEOS_CAPTIVE_PORTAL_HTTP_URL_INTVAL);
+        } else {
+            int defaultIndex = getDefaultIndex();
+            mConnectivityPreference.setValueIndex(defaultIndex);
+            setCaptivePortalURLs(mContext.getContentResolver(), defaultIndex);
         }
+    }
+
+    private int getDefaultIndex() {
+        String config = SystemProperties.get(GAPPS_CONFIG,
+                mContext.getString(R.string.unknown));
+        // Set Google as default for GAPPS builds and Graphene for vanilla
+        if (config.indexOf("gapps") !=-1) {
+            return STANDARD_CAPTIVE_PORTAL_HTTP_URL_INTVAL;
+        }
+        return GRAPHENEOS_CAPTIVE_PORTAL_HTTP_URL_INTVAL;
     }
 
     @Override
@@ -187,9 +204,8 @@ public class ConnectivityCheckPreferenceController
             setCaptivePortalURLs(mContext.getContentResolver(),
                     Integer.parseInt((String)value));
             return true;
-        } else {
-            return false;
         }
+        return false;
     }
 
     private EnforcedAdmin getEnforcedAdmin() {
