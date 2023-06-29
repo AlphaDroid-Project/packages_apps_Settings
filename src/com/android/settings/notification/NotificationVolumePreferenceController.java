@@ -33,7 +33,6 @@ import androidx.lifecycle.OnLifecycleEvent;
 import androidx.preference.PreferenceScreen;
 
 import com.android.settings.R;
-import com.android.settings.Utils;
 import com.android.settingslib.core.lifecycle.Lifecycle;
 
 import java.util.Set;
@@ -99,9 +98,9 @@ public class NotificationVolumePreferenceController extends
 
     @Override
     public int getAvailabilityStatus() {
+        boolean separateNotification = isSeparateNotificationConfigEnabled();
         return mContext.getResources().getBoolean(R.bool.config_show_notification_volume)
-                && Utils.isVoiceCapable(mContext)
-                && !mHelper.isSingleVolume()
+                && separateNotification
                 ? (mRingerMode == AudioManager.RINGER_MODE_NORMAL
                     ? AVAILABLE : DISABLED_DEPENDENT_SETTING)
                 : UNSUPPORTED_ON_DEVICE;

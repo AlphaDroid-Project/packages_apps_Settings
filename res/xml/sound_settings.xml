@@ -99,7 +99,7 @@
         settings:controller="com.android.settings.notification.AlarmVolumePreferenceController"/>
 
     <!-- Link ringtone and notification volumes -->
-    <lineageos.preference.SecureSettingSwitchPreference
+    <SwitchPreference
         android:key="volume_link_notification"
         android:title="@string/volume_link_notification_title"
         android:order="-138"
