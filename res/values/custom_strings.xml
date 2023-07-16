@@ -18,34 +18,4 @@
 
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
 
-    <!--  Alpha settings -->
-    <string name="alpha_settings_title">Alphabet</string>
-    <string name="alpha_settings_summary">There will be goodies!</string>
-
-    <!-- UiBench -->
-    <string name="category_uibench">UiBench</string>
-    <string name="jitter_test_title">Jitter</string>
-    <string name="jitter_test_summary">Calculate rendering jitter</string>
-
-    <!-- SELinux status -->
-    <string name="selinux_status">SELinux status</string>
-    <string name="selinux_status_disabled">Disabled</string>
-    <string name="selinux_status_permissive">Permissive</string>
-    <string name="selinux_status_enforcing">Enforcing</string>
-
-    <!-- Firmware info -->
-    <string name="category_android_info">Android</string>
-    <string name="category_alpha_info">AlphaDroid</string>
-    <string name="category_device_info">Device</string>
-
-    <!-- Build info -->
-    <string name="build_status_title">Build Status: %s</string>
-    <string name="build_status_summary_placeholder">Ahoy</string>
-    <string name="build_status_official">Official</string>
-    <string name="build_status_summary">Maintained by: %s</string>
-    <string name="build_status_oopsie">Searching for maintainer...</string>
-
-    <!-- Ignore window secure -->
-    <string name="ignore_window_secure_title">Ignore secure window flag</string>
-    <string name="ignore_window_secure_summary">Remove screenshot and screenrecord limits for all apps. This can be convenient in some cases but may lead to privacy leaks.</string>
 </resources>
