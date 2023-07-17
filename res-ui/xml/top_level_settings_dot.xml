@@ -24,7 +24,7 @@
         android:key="top_level_about_device"
         android:order="-205"
         android:icon="@drawable/ic_phone_info"
-        android:title="@string/dot_dashboard_device"
+        android:title="@string/about_settings"
         android:summary="@string/summary_placeholder"
         android:fragment="com.android.settings.deviceinfo.aboutphone.MyDeviceInfoFragment"
         settings:controller="com.android.settings.deviceinfo.aboutphone.TopLevelAboutDevicePreferenceController"/>
