@@ -56,7 +56,7 @@
         settings:textStart="@string/back_height_low_label"
         settings:textEnd="@string/back_height_high_label"/>
 
-    <com.alpha.settings.preferences.SecureSettingSwitchPreference
+    <!--com.alpha.settings.preferences.SecureSettingSwitchPreference
         android:key="back_gesture_arrow"
         android:title="@string/back_gesture_arrow_title"
         android:summary="@string/back_gesture_arrow_summary"
@@ -66,7 +66,7 @@
         android:key="back_gesture_haptic"
         android:title="@string/back_gesture_haptic_title"
         android:summary="@string/back_gesture_haptic_summary"
-        android:defaultValue="true" />
+        android:defaultValue="true" /-->
 
     <PreferenceCategory
         android:key="assistant_gesture_category"
