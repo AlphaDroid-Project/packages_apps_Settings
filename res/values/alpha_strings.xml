@@ -10,4 +10,7 @@
     <string name="jitter_test_title">Jitter</string>
     <string name="jitter_test_summary">Calculate rendering jitter</string>
 
+    <!-- Fastcharge -->
+    <string name="restricted_current_summary">Set max allowed current (mA)</string>
+
 </resources>
