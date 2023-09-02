@@ -21,64 +21,101 @@ import android.os.RemoteException;
 import android.util.Log;
 
 import androidx.preference.Preference;
-import androidx.preference.SwitchPreferenceCompat;
+import androidx.preference.PreferenceScreen;
 
+import com.android.settings.R;
 import com.android.settings.core.BasePreferenceController;
 
-import vendor.lineage.fastcharge.V1_0.IFastCharge;
+import com.android.settingslib.core.lifecycle.events.OnStart;
+import com.android.settingslib.core.lifecycle.events.OnResume;
 
 import java.util.NoSuchElementException;
 
-/**
- * Controller to change and update the fast charging toggle
- */
+import vendor.lineage.fastcharge.V1_0.IFastCharge;
+import vendor.lineage.fastcharge.V1_0.IRestrictedCurrent;
+
 public class FastChargingPreferenceController extends BasePreferenceController
-        implements Preference.OnPreferenceChangeListener {
+        implements OnStart, OnResume {
 
     private static final String KEY_FAST_CHARGING = "fast_charging";
     private static final String TAG = "FastChargingPreferenceController";
 
-    private IFastCharge mFastCharge = null;
+    private final boolean DEBUG = false;
+
+    private IFastCharge mFastChargeService = null;
+    private IRestrictedCurrent mRestrictedCurrentService = null;
+
+    private Preference mFastChargePref;
+    private boolean mEnabled = true;
 
     public FastChargingPreferenceController(Context context) {
         super(context, KEY_FAST_CHARGING);
+        String iStr = "IFastCharge";
         try {
-            mFastCharge = IFastCharge.getService();
+            mFastChargeService = IFastCharge.getService();
+            iStr = "IRestrictedCurrent";
+            mRestrictedCurrentService = IRestrictedCurrent.getService();
         } catch (NoSuchElementException | RemoteException e) {
-            Log.e(TAG, "Failed to get IFastCharge interface", e);
+            if (DEBUG) Log.e(TAG, "Failed to get " + iStr + " interface", e);
         }
+    }
+
+    @Override
+    public void displayPreference(PreferenceScreen screen) {
+        super.displayPreference(screen);
+        mFastChargePref = screen.findPreference(KEY_FAST_CHARGING);
+    }
+
+    @Override
+    public void onStart() {
+        updateSummary();
+    }
+
+    @Override
+    public void onResume() {
+        updateSummary();
     }
 
     @Override
     public int getAvailabilityStatus() {
-        return mFastCharge != null ? AVAILABLE : UNSUPPORTED_ON_DEVICE;
+        return mFastChargeService != null ? AVAILABLE : UNSUPPORTED_ON_DEVICE;
     }
 
     @Override
-    public void updateState(Preference preference) {
-        super.updateState(preference);
-        boolean fastChargingEnabled = false;
+    public CharSequence getSummary() {
 
+        if (mContext == null || mFastChargeService == null) return "";
+
+        boolean enabled;
+        int current;
         try {
-            fastChargingEnabled = mFastCharge.isEnabled();
+            enabled = mFastChargeService.isEnabled();
         } catch (RemoteException e) {
-            Log.e(TAG, "isEnabled failed", e);
+            if (DEBUG) Log.e(TAG, "isEnabled failed", e);
+            return "";
+        }
+        if (enabled) {
+            return mContext.getString(R.string.enabled);
         }
 
-        ((SwitchPreferenceCompat) preference).setChecked(fastChargingEnabled);
+        if (mRestrictedCurrentService == null) {
+            return mContext.getString(R.string.disabled);
+        }
+
+        try {
+            current = mRestrictedCurrentService.getRestrictedCurrent();
+        } catch (RemoteException e) {
+            if (DEBUG) Log.e(TAG, "getRestrictedCurrent failed", e);
+            return mContext.getString(R.string.disabled);
+        }
+
+        return mContext.getString(R.string.fastcharge_disabled_extended_summary,
+                String.valueOf(current) + " mA");
     }
 
-    @Override
-    public boolean onPreferenceChange(Preference preference, Object newValue) {
-        final boolean shouldEnableFastCharging = (Boolean) newValue;
-
-        try {
-            mFastCharge.setEnabled(shouldEnableFastCharging);
-            updateState(preference);
-        } catch (RemoteException e) {
-            Log.e(TAG, "setEnabled failed", e);
+    private void updateSummary() {
+        if (mFastChargePref != null) {
+            mFastChargePref.setSummary(getSummary());
         }
-
-        return false;
     }
 }
