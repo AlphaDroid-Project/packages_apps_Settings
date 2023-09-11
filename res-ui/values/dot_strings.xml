@@ -43,4 +43,10 @@
     <string name="top_level_security" translatable="false">@string/security_settings_title</string>
     <string name="top_level_others">Others</string>
 
+    <!-- About phone cards -->
+    <string name="storage_card_title">Storage</string>
+    <string name="storage_card_info">Occupied</string>
+    <string name="about_device_rom_title">Android %s</string>
+    <string name="about_device_nearby">The device name can and will be seen by the nearby devices.</string>
+
 </resources>
