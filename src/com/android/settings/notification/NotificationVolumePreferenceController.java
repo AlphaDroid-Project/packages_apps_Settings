@@ -27,11 +27,13 @@ import android.os.Binder;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
+import android.provider.DeviceConfig;
 import android.service.notification.NotificationListenerService;
 
 import androidx.lifecycle.OnLifecycleEvent;
 import androidx.preference.PreferenceScreen;
 
+import com.android.internal.config.sysui.SystemUiDeviceConfigFlags;
 import com.android.settings.R;
 import com.android.settingslib.core.lifecycle.Lifecycle;
 
@@ -82,11 +84,37 @@ public class NotificationVolumePreferenceController extends
         updateEnabledState();
     }
 
+    /**
+     * Only display the notification slider when the corresponding device config flag is set
+     */
+    private void onDeviceConfigChange(DeviceConfig.Properties properties) {
+        Set<String> changeSet = properties.getKeyset();
+
+        if (changeSet.contains(SystemUiDeviceConfigFlags.VOLUME_SEPARATE_NOTIFICATION)) {
+            boolean newVal = isSeparateNotificationConfigEnabled();
+            if (newVal != mSeparateNotification) {
+                mSeparateNotification = newVal;
+                // Update UI if config change happens when Sound Settings page is on the foreground
+                if (mPreference != null) {
+                    int status = getAvailabilityStatus();
+                    mPreference.setVisible(status == AVAILABLE
+                            || status == DISABLED_DEPENDENT_SETTING);
+                    if (status == DISABLED_DEPENDENT_SETTING) {
+                        mPreference.setEnabled(false);
+                    }
+                }
+            }
+        }
+    }
+
     @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
     @Override
     public void onResume() {
         super.onResume();
         mReceiver.register(true);
+        Binder.withCleanCallingIdentity(()
+                -> DeviceConfig.addOnPropertiesChangedListener(DeviceConfig.NAMESPACE_SYSTEMUI,
+                ActivityThread.currentApplication().getMainExecutor(), this::onDeviceConfigChange));
     }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_PAUSE)
@@ -94,6 +122,8 @@ public class NotificationVolumePreferenceController extends
     public void onPause() {
         super.onPause();
         mReceiver.register(false);
+        Binder.withCleanCallingIdentity(() ->
+                DeviceConfig.removeOnPropertiesChangedListener(this::onDeviceConfigChange));
     }
 
     @Override
