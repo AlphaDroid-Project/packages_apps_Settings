@@ -68,6 +68,12 @@
         android:summary="@string/back_gesture_arrow_summary"
         android:defaultValue="true" />
 
+    <SwitchPreferenceCompat
+        android:key="lock_edge_back_gesture"
+        android:title="@string/lock_edge_back_gesture_title"
+        android:summary="@string/lock_edge_back_gesture_summary"
+        settings:controller="com.android.settings.gestures.EdgeBackSettingsAssistController" />
+
     <PreferenceCategory
         android:key="assistant_gesture_category"
         android:persistent="false"
