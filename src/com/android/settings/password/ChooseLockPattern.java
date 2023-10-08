@@ -925,6 +925,7 @@ public class ChooseLockPattern extends SettingsActivity {
         protected Pair<Boolean, Intent> saveAndVerifyInBackground() {
             final int userId = mUserId;
             boolean success;
+            mUtils.setLockPatternSize(mPatternSize, userId);
             try {
                 success = mUtils.setLockCredential(mChosenPattern, mCurrentCredential, userId);
             } catch (RuntimeException e) {
