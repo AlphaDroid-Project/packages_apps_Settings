@@ -27,6 +27,7 @@ import com.android.settings.R;
 import com.android.settings.core.BasePreferenceController;
 
 import com.android.settingslib.core.lifecycle.events.OnStart;
+import com.android.settingslib.core.lifecycle.events.OnResume;
 
 import java.util.NoSuchElementException;
 
@@ -34,7 +35,7 @@ import vendor.lineage.fastcharge.V1_0.IFastCharge;
 import vendor.lineage.fastcharge.V1_0.IRestrictedCurrent;
 
 public class FastChargingPreferenceController extends BasePreferenceController
-        implements OnStart {
+        implements OnStart, OnResume {
 
     private static final String KEY_FAST_CHARGING = "fast_charging";
     private static final String TAG = "FastChargingPreferenceController";
@@ -67,6 +68,11 @@ public class FastChargingPreferenceController extends BasePreferenceController
 
     @Override
     public void onStart() {
+        updateSummary();
+    }
+
+    @Override
+    public void onResume() {
         updateSummary();
     }
 
