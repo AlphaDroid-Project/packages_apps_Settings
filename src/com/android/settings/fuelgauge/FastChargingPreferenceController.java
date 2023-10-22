@@ -95,6 +95,10 @@ public class FastChargingPreferenceController extends BasePreferenceController
             return mContext.getString(R.string.string_enabled);
         }
 
+        if (mRestrictedCurrentService == null) {
+            return mContext.getString(R.string.string_disabled);
+        }
+
         try {
             current = mRestrictedCurrentService.getRestrictedCurrent();
         } catch (RemoteException e) {
@@ -107,7 +111,7 @@ public class FastChargingPreferenceController extends BasePreferenceController
     }
 
     private void updateSummary() {
-        if (mFastChargePref != null) {
+        if (mFastChargeService != null && mFastChargePref != null) {
             mFastChargePref.setSummary(getSummary());
         }
     }
