@@ -78,6 +78,7 @@ public class PrivateDnsModeDialogPreference extends CustomDialogPreferenceCompat
     private static final int PRIVATE_DNS_MODE_OPEN_DNS = 6;
     private static final int PRIVATE_DNS_MODE_CLEANBROWSING = 7;
     private static final int PRIVATE_DNS_MODE_QUAD9 = 8;
+    private static final int PRIVATE_DNS_MODE_BEBASDNS = 9;
 
     static {
         PRIVATE_DNS_MAP = new HashMap<>();
@@ -87,6 +88,7 @@ public class PrivateDnsModeDialogPreference extends CustomDialogPreferenceCompat
         PRIVATE_DNS_MAP.put(PRIVATE_DNS_MODE_OPEN_DNS, R.id.private_dns_mode_open_dns);
         PRIVATE_DNS_MAP.put(PRIVATE_DNS_MODE_CLEANBROWSING, R.id.private_dns_mode_cleanbrowsing);
         PRIVATE_DNS_MAP.put(PRIVATE_DNS_MODE_QUAD9, R.id.private_dns_mode_quad9);
+        PRIVATE_DNS_MAP.put(PRIVATE_DNS_MODE_BEBASDNS, R.id.private_dns_mode_bebasdns);
         PRIVATE_DNS_MAP.put(PRIVATE_DNS_MODE_OPPORTUNISTIC, R.id.private_dns_mode_opportunistic);
         PRIVATE_DNS_MAP.put(PRIVATE_DNS_MODE_PROVIDER_HOSTNAME, R.id.private_dns_mode_provider);
     }
@@ -169,6 +171,8 @@ public class PrivateDnsModeDialogPreference extends CustomDialogPreferenceCompat
                     context.getString(R.string.private_dns_hostname_cleanbrowsing);
             final String quad9Hostname =
                     context.getString(R.string.private_dns_hostname_quad9);
+            final String bebasdnsHostname =
+                    context.getString(R.string.private_dns_hostname_bebasdns);
             if (privateDnsHostname.equals(cloudflareHostname)) {
                 mMode = PRIVATE_DNS_MODE_CLOUDFLARE;
             } else if (privateDnsHostname.equals(adguardHostname)) {
@@ -179,6 +183,8 @@ public class PrivateDnsModeDialogPreference extends CustomDialogPreferenceCompat
                 mMode = PRIVATE_DNS_MODE_CLEANBROWSING;
             } else if (privateDnsHostname.equals(quad9Hostname)) {
                 mMode = PRIVATE_DNS_MODE_QUAD9;
+            } else if (privateDnsHostname.equals(bebasdnsHostname)) {
+                mMode = PRIVATE_DNS_MODE_BEBASDNS;
             }
         }
 
@@ -208,6 +214,9 @@ public class PrivateDnsModeDialogPreference extends CustomDialogPreferenceCompat
         final RadioButton quad9RadioButton =
                 view.findViewById(R.id.private_dns_mode_quad9);
         quad9RadioButton.setText(R.string.private_dns_mode_quad9);
+        final RadioButton bebasdnsRadioButton =
+                view.findViewById(R.id.private_dns_mode_bebasdns);
+        bebasdnsRadioButton.setText(R.string.private_dns_mode_bebasdns);
         final RadioButton opportunisticRadioButton =
                 view.findViewById(R.id.private_dns_mode_opportunistic);
         opportunisticRadioButton.setText(R.string.private_dns_mode_opportunistic);
@@ -263,6 +272,11 @@ public class PrivateDnsModeDialogPreference extends CustomDialogPreferenceCompat
                         context.getString(R.string.private_dns_hostname_quad9);
                 ConnectivitySettingsManager.setPrivateDnsHostname(context, quad9Hostname);
                 modeToSet = PRIVATE_DNS_MODE_PROVIDER_HOSTNAME;
+            } else if (mMode == PRIVATE_DNS_MODE_BEBASDNS) {
+                final String bebasdnsHostname =
+                        context.getString(R.string.private_dns_hostname_bebasdns);
+                ConnectivitySettingsManager.setPrivateDnsHostname(context, bebasdnsHostname);
+                modeToSet = PRIVATE_DNS_MODE_PROVIDER_HOSTNAME;
             }
 
             FeatureFactory.getFactory(context).getMetricsFeatureProvider().action(context,
@@ -285,6 +299,8 @@ public class PrivateDnsModeDialogPreference extends CustomDialogPreferenceCompat
             mMode = PRIVATE_DNS_MODE_CLEANBROWSING;
         } else if (checkedId == R.id.private_dns_mode_quad9) {
             mMode = PRIVATE_DNS_MODE_QUAD9;
+        } else if (checkedId == R.id.private_dns_mode_bebasdns) {
+            mMode = PRIVATE_DNS_MODE_BEBASDNS;
         } else if (checkedId == R.id.private_dns_mode_opportunistic) {
             mMode = PRIVATE_DNS_MODE_OPPORTUNISTIC;
         } else if (checkedId == R.id.private_dns_mode_provider) {

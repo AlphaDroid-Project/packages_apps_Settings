@@ -71,6 +71,7 @@ public class PrivateDnsPreferenceController extends BasePreferenceController
     private static final int PRIVATE_DNS_MODE_OPEN_DNS = 6;
     private static final int PRIVATE_DNS_MODE_CLEANBROWSING = 7;
     private static final int PRIVATE_DNS_MODE_QUAD9 = 8;
+    private static final int PRIVATE_DNS_MODE_QUAD9 = 9;
 
     private final Handler mHandler;
     private final ContentObserver mSettingsObserver;
@@ -141,6 +142,7 @@ public class PrivateDnsPreferenceController extends BasePreferenceController
             case PRIVATE_DNS_MODE_OPEN_DNS:
             case PRIVATE_DNS_MODE_CLEANBROWSING:
             case PRIVATE_DNS_MODE_QUAD9:
+            case PRIVATE_DNS_MODE_BEBASDNS:
             case PRIVATE_DNS_MODE_OPPORTUNISTIC:
                 return dnsesResolved ? res.getString(R.string.private_dns_mode_on)
                         : res.getString(R.string.private_dns_mode_opportunistic);
@@ -160,6 +162,8 @@ public class PrivateDnsPreferenceController extends BasePreferenceController
                         res.getString(R.string.private_dns_hostname_cleanbrowsing);
                 final String quad9Hostname =
                         res.getString(R.string.private_dns_hostname_quad9);
+                final String quad9Hostname =
+                        res.getString(R.string.private_dns_hostname_bebasdns);
                 if (privateDnsHostname.equals(cloudflareHostname)) {
                     return res.getString(R.string.private_dns_mode_cloudflare);
                 } else if (privateDnsHostname.equals(adguardHostname)) {
