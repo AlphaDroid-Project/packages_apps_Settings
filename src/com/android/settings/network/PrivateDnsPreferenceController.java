@@ -162,7 +162,7 @@ public class PrivateDnsPreferenceController extends BasePreferenceController
                         res.getString(R.string.private_dns_hostname_cleanbrowsing);
                 final String quad9Hostname =
                         res.getString(R.string.private_dns_hostname_quad9);
-                final String quad9Hostname =
+                final String bebasdnsHostname =
                         res.getString(R.string.private_dns_hostname_bebasdns);
                 if (privateDnsHostname.equals(cloudflareHostname)) {
                     return res.getString(R.string.private_dns_mode_cloudflare);
