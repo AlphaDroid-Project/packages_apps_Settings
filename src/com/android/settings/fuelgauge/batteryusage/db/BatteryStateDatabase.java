@@ -27,7 +27,8 @@ import androidx.room.RoomDatabase;
 @Database(
         entities = {AppUsageEventEntity.class, BatteryEventEntity.class, BatteryState.class,
                 BatteryUsageSlotEntity.class},
-        version = 1)
+        version = 1,
+        exportSchema = false)
 public abstract class BatteryStateDatabase extends RoomDatabase {
     private static final String TAG = "BatteryStateDatabase";
 
