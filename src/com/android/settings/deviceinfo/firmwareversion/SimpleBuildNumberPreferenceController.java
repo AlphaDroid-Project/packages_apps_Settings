@@ -21,6 +21,7 @@ import android.os.Build;
 import android.text.BidiFormatter;
 
 import com.android.settings.core.BasePreferenceController;
+import com.android.settings.deviceinfo.VersionUtils;
 
 public class SimpleBuildNumberPreferenceController extends BasePreferenceController {
 
