@@ -144,22 +144,6 @@
             android:fragment="com.android.settings.deviceinfo.firmwareversion.FirmwareVersionSettings"
             settings:controller="com.android.settings.deviceinfo.firmwareversion.FirmwareVersionPreferenceController"/>
 
-        <!-- Lineage version -->
-        <Preference
-            android:key="lineage_os_version"
-            android:order="43"
-            android:title="@*lineageos.platform:string/lineage_version"
-            android:summary="@string/summary_placeholder"
-            settings:enableCopying="true"
-            settings:controller="com.android.settings.deviceinfo.firmwareversion.LineageVersionDetailPreferenceController"/>
-
-        <!-- Battery information -->
-        <Preference
-            android:key="battery_info"
-            android:order="44"
-            android:title="@string/battery_info"
-            android:fragment="com.android.settings.deviceinfo.batteryinfo.BatteryInfoFragment"
-            settings:keywords="@string/keywords_battery_info"/>
     </PreferenceCategory>
 
     <PreferenceCategory
@@ -216,28 +200,6 @@
             android:title="@string/status_sleep_time"
             android:summary="@string/summary_placeholder"
             android:selectable="false"/>
-
-        <!-- Manual -->
-        <Preference
-            android:key="manual"
-            android:order="50"
-            android:title="@string/manual">
-            <intent android:action="android.settings.SHOW_MANUAL"/>
-        </Preference>
-
-        <!-- Feedback on the device -->
-        <Preference
-            android:key="device_feedback"
-            android:order="51"
-            android:title="@string/device_feedback"
-            settings:keywords="@string/keywords_device_feedback"/>
-
-        <!-- Device FCC equipment id -->
-        <Preference
-            android:key="fcc_equipment_id"
-            android:order="52"
-            android:title="@string/fcc_equipment_id"
-            android:summary="@string/summary_placeholder"/>
 
         <!-- Build number -->
         <Preference
