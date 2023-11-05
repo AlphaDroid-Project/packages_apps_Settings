@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2019-2022 The LineageOS Project
+ * Copyright (C) 2019-2023 The LineageOS Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,20 +18,23 @@ package com.android.settings.deviceinfo.firmwareversion;
 
 import android.content.Context;
 import android.os.SystemProperties;
+import android.text.TextUtils;
+import android.util.Log;
 
 import androidx.preference.Preference;
 
 import com.android.settings.R;
 import com.android.settings.core.BasePreferenceController;
 
-public class LineageVersionDetailPreferenceController extends BasePreferenceController {
+public class AlphaVersionPreferenceController extends BasePreferenceController {
 
-    private static final String TAG = "lineageVersionDialogCtrl";
+    private static final String ALPHA_BUILD_VERSION = "ro.alpha.modversion";
+    private static final String KEY_ALPHA_VERSION = "alpha_version";
+    private static final String ALPHA_PACKAGE_TYPE = "ro.alpha.build.package";
 
-    private static final String KEY_LINEAGE_VERSION_PROP = "ro.modversion";
 
-    public LineageVersionDetailPreferenceController(Context context, String key) {
-        super(context, key);
+    public AlphaVersionPreferenceController(Context context, String preferenceKey) {
+        super(context, preferenceKey);
     }
 
     @Override
@@ -40,23 +43,16 @@ public class LineageVersionDetailPreferenceController extends BasePreferenceCont
     }
 
     @Override
-    public boolean useDynamicSliceSummary() {
-        return true;
-    }
-
-    @Override
-    public boolean isSliceable() {
-        return true;
+    public String getPreferenceKey() {
+        return KEY_ALPHA_VERSION;
     }
 
     @Override
     public CharSequence getSummary() {
-        return SystemProperties.get(KEY_LINEAGE_VERSION_PROP,
-                mContext.getString(R.string.unknown));
-    }
-
-    @Override
-    public boolean handlePreferenceTreeClick(Preference preference) {
-        return false;
+        String version = SystemProperties.get(ALPHA_BUILD_VERSION, "");
+        if (TextUtils.isEmpty(version)) return "";
+        String packageType = SystemProperties.get(ALPHA_PACKAGE_TYPE, "");
+        if (TextUtils.isEmpty(packageType)) return version;
+        return version + " (" + packageType + ")";
     }
 }
