@@ -5252,9 +5252,9 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
             <meta-data android:name="com.android.settings.FRAGMENT_CLASS"
-                android:value="com.alpha.settings.fragments.ui.SmartPixels" />
+                android:value="com.alpha.settings.fragments.misc.SmartPixels" />
         </activity>
-        <activity android:name="com.alpha.settings.fragments.ui.DisplayCutoutForceFullscreenActivity"
+        <activity android:name="com.alpha.settings.fragments.misc.DisplayCutoutForceFullscreenActivity"
                 android:label="@string/display_cutout_force_fullscreen_title"
                 android:theme="@style/Theme.SubSettingsBase"
                 android:enabled="true"
@@ -5266,14 +5266,14 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <receiver android:name="com.alpha.settings.fragments.ui.doze.DozeReceiver"
+        <receiver android:name="com.alpha.settings.fragments.lockscreen.doze.DozeReceiver"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </receiver>
-        <service android:name="com.alpha.settings.fragments.ui.doze.DozeService"
+        <service android:name="com.alpha.settings.fragments.lockscreen.doze.DozeService"
                 android:exported="true"
                 android:permission="crDroidDozeService">
         </service>

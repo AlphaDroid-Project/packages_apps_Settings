@@ -202,7 +202,7 @@ import com.android.settings.wifi.savedaccesspoints2.SavedAccessPointsWifiSetting
 import com.android.settings.wifi.tether.WifiTetherSettings;
 
 import com.alpha.settings.AlphaSettings;
-import com.alpha.settings.fragments.ui.SmartPixels;
+import com.alpha.settings.fragments.misc.SmartPixels;
 
 public class SettingsGateway {
 
