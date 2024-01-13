@@ -128,6 +128,7 @@ public class TopLevelBatteryPreferenceController extends BasePreferenceControlle
     }
 
     private void setSummaryAsync(BatteryInfo info) {
+        if (mPreference == null) return;
         ThreadUtils.postOnBackgroundThread(
                 () -> {
                     // Return false if built-in status should be used, will use
