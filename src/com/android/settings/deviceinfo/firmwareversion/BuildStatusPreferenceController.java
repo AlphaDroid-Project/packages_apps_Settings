@@ -63,16 +63,14 @@ public class BuildStatusPreferenceController extends AbstractPreferenceControlle
         super.displayPreference(screen);
         final Preference mBuildStatusPref = screen.findPreference(KEY_BUILD_STATUS);
         if (mBuildStatusPref != null) {
-            if (isOfficial()) {
-                mBuildStatusPref.setTitle(mContext.getString(R.string.build_status_title, getBuildStatus()));
-                mBuildStatusPref.setSummary(mContext.getString(R.string.build_status_summary, getMaintainer()));
-            }
+            mBuildStatusPref.setTitle(mContext.getString(R.string.build_status_title, getBuildStatus()));
+            mBuildStatusPref.setSummary(mContext.getString(R.string.build_status_summary, getMaintainer()));
         }
     }
 
     @Override
     public boolean isAvailable() {
-        return isOfficial();
+        return true;
     }
 
     @Override

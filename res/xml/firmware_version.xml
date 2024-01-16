@@ -27,6 +27,15 @@
         android:key="alpha_logo"
         android:selectable="false" />
 
+
+    <Preference
+        android:key="rom_build_status"
+        android:title="@string/build_status_title"
+        android:summary="@string/build_status_summary_placeholder"
+        android:icon="@drawable/ic_verified"
+        settings:enableCopying="true"
+        android:selectable="true" />
+
     <!-- Device name -->
     <Preference
         android:key="about_device_name"
