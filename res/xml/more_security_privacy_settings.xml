@@ -213,6 +213,13 @@
         android:fragment="com.android.settings.security.EncryptionAndCredential"
         settings:controller="com.android.settings.security.EncryptionStatusPreferenceController" />
 
+    <com.alpha.settings.preferences.SecureSettingSwitchPreference
+        android:order="265"
+        android:key="spoof_storage_encryption_status"
+        android:title="@string/spoof_storage_encryption_status_title"
+        android:summary="@string/spoof_storage_encryption_status_summary"
+        android:defaultValue="false"/>
+
     <Preference
         android:order="270"
         android:key="manage_trust_agents"
