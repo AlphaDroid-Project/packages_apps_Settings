@@ -30,4 +30,8 @@
     <!-- USB configuration -->
     <string name="usb_default_config_title">USB configuration</string>
 
+    <!-- Spoof storage encryption status -->
+    <string name="spoof_storage_encryption_status_title">Use storage encryption spoofing</string>
+    <string name="spoof_storage_encryption_status_summary">Spoof storage encryption status to encrypted</string>
+
 </resources>
