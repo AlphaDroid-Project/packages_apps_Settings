@@ -199,8 +199,6 @@ import com.android.settings.wifi.tether.WifiTetherSettings;
 import com.alpha.settings.AlphaSettings;
 import com.alpha.settings.fragments.misc.SmartPixels;
 
-import com.google.android.settings.security.SecurityHubDashboard;
-
 public class SettingsGateway {
 
     /**
@@ -387,7 +385,6 @@ public class SettingsGateway {
             AlphaSettings.class.getName(),
             RunningServices.class.getName(),
             SmartPixels.class.getName(),
-            SecurityHubDashboard.class.getName(),
     };
 
     public static final String[] SETTINGS_FOR_RESTRICTED = {
