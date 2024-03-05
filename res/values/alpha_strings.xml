@@ -1,41 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
 
-    <!--  Alpha settings -->
-    <string name="alpha_settings_title">Alpha Settings</string>
-    <string name="alpha_settings_summary">There will be goodies!</string>
-
-    <!-- UiBench -->
-    <string name="category_uibench">UiBench</string>
-    <string name="jitter_test_title">Jitter</string>
-    <string name="jitter_test_summary">Calculate rendering jitter</string>
-
-    <!-- Generic support strings -->
-    <string name="string_enabled">Enabled</string>
-    <string name="string_disabled">Disabled</string>
-    <string name="string_on">On</string>
-    <string name="string_off">Off</string>
-
-    <!-- Fastcharge -->
-    <string name="restricted_current_summary">Set max allowed current (mA)</string>
-    <string name="fastcharge_disabled_extended_summary">Charge limited to: <xliff:g id="current" example="3000 mA">%1$s</xliff:g>.</string>
-
-    <!-- Radio Info -->
-    <string name="radio_info_title">Radio info</string>
-
-    <!-- Ignore window secure -->
-    <string name="ignore_window_secure_title">Ignore window secure flags</string>
-    <string name="ignore_window_secure_summary">This removes the screenshots and screenrecords limits for all applications. Normally, special applications are replaced with black areas in records. This can be convenient in some cases but may lead to privacy leaks. After changing this toggle, you may need to restart applications for the change to take effect.</string>
-
-    <!-- USB configuration -->
-    <string name="usb_default_config_title">USB configuration</string>
-
-    <!-- Spoof storage encryption status -->
-    <string name="spoof_storage_encryption_status_title">Use storage encryption spoofing</string>
-    <string name="spoof_storage_encryption_status_summary">Spoof storage encryption status to encrypted</string>
-
-    <!-- Force LTE_CA -->
-    <string name="force_lte_ca">Force LTE CA</string>
-    <string name="force_lte_ca_summary">Force LTE carrier aggregation to work</string>
-
 </resources>
