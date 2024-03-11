@@ -60,11 +60,11 @@ class DeviceCardView : AboutBaseCard {
         layout.setOnClickListener {
             val alert: AlertDialog.Builder = AlertDialog.Builder(mContext, R.style.Theme_AlertDialog)
             val dialogView: View = View.inflate(mContext, R.layout.dot_device_name_dialog, null)
-            val mEditText: EditText = dialogView.findViewById(R.id.device_edit_text)
+            val mEditText: EditText? = dialogView.findViewById(R.id.device_edit_text)
             alert.setTitle(mContext.getString(R.string.my_device_info_device_name_preference_title))
             alert.setView(dialogView)
             alert.setPositiveButton(android.R.string.ok) { dialog, _ ->
-                listener?.invoke(mEditText.text.toString())
+                listener?.invoke(mEditText!!.text.toString())
                 dialog.dismiss()
             }
             alert.setNegativeButton(android.R.string.cancel) { dialog, _ -> dialog.dismiss() }
@@ -74,7 +74,7 @@ class DeviceCardView : AboutBaseCard {
             if (mDeviceName == null) {
                 mDeviceName = Build.MODEL
             }
-            mEditText.setText(mDeviceName)
+            mEditText!!.setText(mDeviceName)
             alert.show() 
         }
     }

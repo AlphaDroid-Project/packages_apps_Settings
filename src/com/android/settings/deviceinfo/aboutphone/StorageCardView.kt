@@ -113,8 +113,8 @@ class StorageCardView(context: Context, attrs: AttributeSet?) : AboutBaseCard(co
                     if (vol.getType() == VolumeInfo.TYPE_PRIVATE) {
                         val stats = context.getSystemService(StorageStatsManager::class.java)
                         try {
-                            totalBytes = stats.getTotalBytes(vol.getFsUuid())
-                            freeBytes = stats.getFreeBytes(vol.getFsUuid())
+                            totalBytes = stats!!.getTotalBytes(vol.getFsUuid())
+                            freeBytes = stats!!.getFreeBytes(vol.getFsUuid())
                             usedBytes = totalBytes - freeBytes
                         } catch (e: IOException) {
                             Log.w("StorageManager", e)
@@ -438,8 +438,8 @@ class StorageCardView(context: Context, attrs: AttributeSet?) : AboutBaseCard(co
 
         override fun onDraw(canvas: Canvas) {
             super.onDraw(canvas)
-            canvas.drawRect(left.toFloat(), 0f, right.toFloat(), bottom.toFloat(), blowWavePaint)
-            canvas.drawRect(left.toFloat(), 0f, right.toFloat(), bottom.toFloat(), aboveWavePaint)
+            canvas.drawRect(left.toFloat(), 0f, right.toFloat(), bottom.toFloat(), blowWavePaint as Paint)
+            canvas.drawRect(left.toFloat(), 0f, right.toFloat(), bottom.toFloat(), aboveWavePaint as Paint)
         }
 
         init {
