@@ -124,6 +124,26 @@
         android:summary="@string/app_and_notification_dashboard_summary"
         settings:highlightableMenuKey="@string/menu_key_apps"/>
 
+     <com.android.settings.widget.HomepagePreference
+        android:fragment="com.android.settings.accessibility.AccessibilitySettings"
+        android:icon="@drawable/ic_settings_accessibility"
+        android:key="top_level_accessibility"
+        android:order="-79"
+        android:title="@string/accessibility_settings"
+        android:summary="@string/accessibility_settings_summary"
+        settings:highlightableMenuKey="@string/menu_key_accessibility"
+        settings:controller="com.android.settings.accessibility.TopLevelAccessibilityPreferenceController"/>
+
+    <com.android.settings.widget.HomepagePreference
+        android:fragment="com.android.settings.accounts.AccountDashboardFragment"
+        android:icon="@drawable/ic_settings_accounts"
+        android:key="top_level_accounts"
+        android:order="-78"
+        android:title="@string/account_dashboard_title"
+        android:summary="@string/summary_placeholder"
+        settings:highlightableMenuKey="@string/menu_key_accounts"
+        settings:controller="com.android.settings.accounts.TopLevelAccountEntryPreferenceController"/>
+
     <com.android.settings.widget.HomepagePreference
         android:fragment="com.android.settings.security.SecuritySettings"
         android:icon="@drawable/ic_settings_security_white"
@@ -173,25 +193,6 @@
         settings:highlightableMenuKey="@string/menu_key_storage"
         settings:controller="com.android.settings.deviceinfo.TopLevelStoragePreferenceController"/>
 
-    <com.android.settings.widget.HomepagePreference
-        android:fragment="com.android.settings.accessibility.AccessibilitySettings"
-        android:icon="@drawable/ic_settings_accessibility"
-        android:key="top_level_accessibility"
-        android:order="-20"
-        android:title="@string/accessibility_settings"
-        android:summary="@string/accessibility_settings_summary"
-        settings:highlightableMenuKey="@string/menu_key_accessibility"
-        settings:controller="com.android.settings.accessibility.TopLevelAccessibilityPreferenceController"/>
-
-    <com.android.settings.widget.HomepagePreference
-        android:fragment="com.android.settings.accounts.AccountDashboardFragment"
-        android:icon="@drawable/ic_settings_accounts"
-        android:key="top_level_accounts"
-        android:order="-10"
-        android:title="@string/account_dashboard_title"
-        android:summary="@string/summary_placeholder"
-        settings:highlightableMenuKey="@string/menu_key_accounts"
-        settings:controller="com.android.settings.accounts.TopLevelAccountEntryPreferenceController"/>
 
     <com.android.settings.widget.HomepagePreference
         android:fragment="com.android.settings.system.SystemDashboardFragment"
