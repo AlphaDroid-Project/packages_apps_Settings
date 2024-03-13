@@ -264,9 +264,10 @@ public class TopLevelSettings extends DashboardFragment implements SplitLayoutLi
                     preference.setLayoutResource(R.layout.dot_dashboard_preference_middle);
                 } else if (key.equals("top_level_apps")) {
                     preference.setLayoutResource(R.layout.dot_dashboard_preference_bottom);
-
-                } else if (key.equals("top_level_security")) {
+                } else if (key.equals("top_level_accessibility")) {
                     preference.setLayoutResource(R.layout.dot_dashboard_preference_top);
+                } else if (key.equals("top_level_accounts")) {
+                    preference.setLayoutResource(R.layout.dot_dashboard_preference_middle);
                 } else if (key.equals("top_level_safety_center")) {
                     preference.setLayoutResource(R.layout.dot_dashboard_preference_middle);
                 } else if (key.equals("top_level_privacy")) {
@@ -276,10 +277,6 @@ public class TopLevelSettings extends DashboardFragment implements SplitLayoutLi
 
                 } else if (key.equals("top_level_storage")) {
                     preference.setLayoutResource(R.layout.dot_dashboard_preference_top);
-                } else if (key.equals("top_level_accessibility")) {
-                    preference.setLayoutResource(R.layout.dot_dashboard_preference_middle);
-                } else if (key.equals("top_level_accounts")) {
-                    preference.setLayoutResource(R.layout.dot_dashboard_preference_middle);
                 } else if (key.equals("top_level_system")) {
                     preference.setLayoutResource(R.layout.dot_dashboard_preference_bottom);
 
