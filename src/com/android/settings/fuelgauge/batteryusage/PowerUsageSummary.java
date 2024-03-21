@@ -75,9 +75,8 @@ public class PowerUsageSummary extends PowerUsageBase
     @VisibleForTesting boolean mNeedUpdateBatteryTip;
     @VisibleForTesting Preference mHelpPreference;
 
-    @VisibleForTesting
-
-    Preference mSleepMode;
+    @VisibleForTesting Preference mSleepMode;
+    @VisibleForTesting Preference mBatteryUsagePreference;
 
     final ContentObserver mSettingsObserver =
             new ContentObserver(new Handler()) {
