@@ -12,7 +12,7 @@ import android.util.Log;
 import androidx.annotation.VisibleForTesting;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceScreen;
-import androidx.preference.SwitchPreference;
+import androidx.preference.SwitchPreferenceCompat;
 
 import com.android.internal.telephony.util.ArrayUtils;
 import com.android.settingslib.core.lifecycle.LifecycleObserver;
@@ -105,7 +105,7 @@ public class ForceLteCaPreferenceController extends TelephonyTogglePreferenceCon
         if (preference == null) {
             return;
         }
-        final SwitchPreference switchPreference = (SwitchPreference) preference;
+        final SwitchPreferenceCompat switchPreference = (SwitchPreferenceCompat) preference;
         switchPreference.setEnabled(isUserControlAllowed());
     }
 
