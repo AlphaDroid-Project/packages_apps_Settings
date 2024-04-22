@@ -21,7 +21,7 @@ import android.graphics.drawable.Drawable;
 import android.util.Log;
 
 import androidx.preference.PreferenceScreen;
-import androidx.preference.SwitchPreference;
+import androidx.preference.SwitchPreferenceCompat;
 
 import com.android.settings.R;
 import com.android.settings.search.BaseSearchIndexProvider;

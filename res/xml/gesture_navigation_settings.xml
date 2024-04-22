@@ -30,7 +30,7 @@
         android:defaultValue="true"
         settings:requiresPackage="com.custom.overlay.systemui.gestural.hidden" />
 
-    <com.crdroid.settings.preferences.SystemSettingSwitchPreference
+    <com.alpha.settings.preferences.SystemSettingSwitchPreference
         android:key="navigation_bar_ime_space"
         android:title="@string/navigation_bar_ime_space_title"
         android:summary="@string/navigation_bar_ime_space_summary" />
