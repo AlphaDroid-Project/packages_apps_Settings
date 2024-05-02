@@ -32,8 +32,32 @@ import com.android.settingslib.search.SearchIndexable;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.google.android.material.appbar.CollapsingToolbarLayout;
+
 @SearchIndexable
 public class FirmwareVersionSettings extends DashboardFragment {
+
+    protected CollapsingToolbarLayout mCollapsingToolbarLayout;
+
+    @Override
+    public void onCreate(Bundle icicle) {
+        super.onCreate(icicle);
+        hideToolbar();
+    }
+
+    private void hideToolbar() {
+        if (mCollapsingToolbarLayout == null) {
+            mCollapsingToolbarLayout = getActivity().findViewById(R.id.collapsing_toolbar);
+        }
+        if (mCollapsingToolbarLayout != null) {
+            mCollapsingToolbarLayout.setVisibility(View.GONE);
+        }
+    }
+
+    public void onResume() {
+        super.onResume();
+        hideToolbar();
+    }
 
 
     @Override
@@ -65,7 +89,7 @@ public class FirmwareVersionSettings extends DashboardFragment {
         return SettingsEnums.DIALOG_FIRMWARE_VERSION;
     }
 
- /**
+    /**
      * For search
      */
     public static final BaseSearchIndexProvider SEARCH_INDEX_DATA_PROVIDER =
