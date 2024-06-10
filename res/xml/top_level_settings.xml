@@ -172,6 +172,7 @@
         android:title="@string/storage_settings"
         android:summary="@string/summary_placeholder"
         settings:highlightableMenuKey="@string/menu_key_storage"
+        settings:searchable="false"
         settings:controller="com.android.settings.deviceinfo.TopLevelStoragePreferenceController"/>
 
     <com.android.settings.widget.HomepagePreference
