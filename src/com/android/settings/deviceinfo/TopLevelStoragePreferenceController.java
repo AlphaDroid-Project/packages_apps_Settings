@@ -49,7 +49,7 @@ public class TopLevelStoragePreferenceController extends BasePreferenceControlle
 
     @Override
     public int getAvailabilityStatus() {
-        return AVAILABLE;
+        return CONDITIONALLY_UNAVAILABLE;
     }
 
     @Override
