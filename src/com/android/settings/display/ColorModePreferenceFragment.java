@@ -31,10 +31,12 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.provider.Settings;
 import android.provider.Settings.Secure;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.VisibleForTesting;
 import androidx.preference.PreferenceScreen;
@@ -79,6 +81,9 @@ public class ColorModePreferenceFragment extends RadioButtonPickerFragment {
 
     private ImageView[] mDotIndicators;
     private View[] mViewPagerImages;
+    
+    private ContentObserver mDisplayEngineModeObserver;
+    private TextView mDisplayEngineModeText;
 
     @Override
     public void onAttach(Context context) {
@@ -105,6 +110,17 @@ public class ColorModePreferenceFragment extends RadioButtonPickerFragment {
         cr.registerContentObserver(
                 Secure.getUriFor(Secure.ACCESSIBILITY_DISPLAY_DALTONIZER_ENABLED),
                 false /* notifyForDescendants */, mContentObserver, mUserId);
+                
+        mDisplayEngineModeObserver = new ContentObserver(new Handler(Looper.getMainLooper())) {
+            @Override
+            public void onChange(boolean selfChange, Uri uri) {
+                super.onChange(selfChange, uri);
+                updateDisplayEngineModeText();
+            }
+        };
+        cr.registerContentObserver(
+                Secure.getUriFor("display_engine_mode"),
+                false /* notifyForDescendants */, mDisplayEngineModeObserver);
     }
 
     @Override
@@ -115,6 +131,7 @@ public class ColorModePreferenceFragment extends RadioButtonPickerFragment {
             mViewPager.setCurrentItem(selectedPosition);
             updateIndicator(selectedPosition);
         }
+        updateDisplayEngineModeText();
     }
 
     @Override
@@ -122,6 +139,10 @@ public class ColorModePreferenceFragment extends RadioButtonPickerFragment {
         if (mContentObserver != null) {
             getContext().getContentResolver().unregisterContentObserver(mContentObserver);
             mContentObserver = null;
+        }
+        if (mDisplayEngineModeObserver != null) {
+            getContext().getContentResolver().unregisterContentObserver(mDisplayEngineModeObserver);
+            mDisplayEngineModeObserver = null;
         }
         super.onDetach();
     }
@@ -154,6 +175,7 @@ public class ColorModePreferenceFragment extends RadioButtonPickerFragment {
 
     void addViewPager(LayoutPreference preview) {
         final ArrayList<Integer> tmpviewPagerList = getViewPagerResource();
+        mDisplayEngineModeText = preview.findViewById(R.id.display_engine_mode_text);
         mViewPager = preview.findViewById(R.id.viewpager);
 
         mViewPagerImages = new View[3];
@@ -197,6 +219,16 @@ public class ColorModePreferenceFragment extends RadioButtonPickerFragment {
         }
 
         updateIndicator(mViewPager.getCurrentItem());
+    }
+
+    @Override
+    public void updateCandidates() {
+        super.updateCandidates();
+        PreferenceScreen screen = getPreferenceScreen();
+        if (ColorDisplayManager.isColorTransformAccelerated(screen.getContext())) {
+            getPreferenceManager().inflateFromResource(screen.getContext(), R.xml.color_mode_settings,
+                    screen);
+        }
     }
 
     @Override
@@ -382,6 +414,32 @@ public class ColorModePreferenceFragment extends RadioButtonPickerFragment {
         @Override
         public boolean isViewFromObject(View view, Object object) {
             return object == view;
+        }
+    }
+
+    private void updateDisplayEngineModeText() {
+        int mode = Secure.getInt(getContext().getContentResolver(), "display_engine_mode", 0);
+        String prefix = getString(R.string.display_engine_category);
+        String modeText = "";
+        switch (mode) {
+            case 0:
+                modeText = getString(R.string.display_engine_default);
+                break;
+            case 1:
+                modeText = getString(R.string.x_reality_engine_mode_title);
+                break;
+            case 2:
+                modeText = getString(R.string.vivid_engine_mode_title);
+                break;
+            case 3:
+                modeText = getString(R.string.triluminous_display_mode_title);
+                break;
+            default:
+                modeText = getString(R.string.display_engine_default);
+                break;
+        }
+        if (mDisplayEngineModeText != null) {
+            mDisplayEngineModeText.setText(prefix + ": " + modeText);
         }
     }
 

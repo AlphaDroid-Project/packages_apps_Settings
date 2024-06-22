@@ -64,5 +64,12 @@
                 android:src="@drawable/ic_color_arrow_right_lt"/>
         </FrameLayout>
     </FrameLayout>
+    
+    <TextView
+        android:id="@+id/display_engine_mode_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="13sp"
+        android:layout_gravity="center_horizontal"/>
 
 </LinearLayout>
