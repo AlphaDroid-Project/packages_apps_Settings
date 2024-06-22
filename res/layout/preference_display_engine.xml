@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="20dp">
+
+    <RadioGroup
+        android:id="@+id/radio_group"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <RadioButton
+            android:id="@+id/radio_default"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/display_engine_default"
+            android:textSize="18sp"
+            android:paddingStart="20dp"
+            android:layout_marginTop="16dp" />
+
+        <RadioButton
+            android:id="@+id/radio_x_reality"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/x_reality_engine_mode_title"
+            android:textSize="18sp"
+            android:paddingStart="20dp"
+            android:layout_marginTop="16dp" />
+
+        <RadioButton
+            android:id="@+id/radio_triluminous"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/triluminous_display_mode_title"
+            android:textSize="18sp"
+            android:paddingStart="20dp"
+            android:layout_marginTop="16dp" />
+
+        <RadioButton
+            android:id="@+id/radio_vivid"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/vivid_engine_mode_title"
+            android:textSize="18sp"
+            android:paddingStart="20dp"
+            android:layout_marginTop="16dp" />
+
+    </RadioGroup>
+
+</LinearLayout>
+
