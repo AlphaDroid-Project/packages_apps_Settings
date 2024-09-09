@@ -118,19 +118,6 @@
             android:summary="@string/content_capture_summary"
             settings:controller="com.android.settings.privacy.EnableContentCaptureWithServiceSettingsPreferenceController"/>
 
-        <com.alpha.settings.preferences.SecureSettingSwitchPreference
-            android:key="window_ignore_secure"
-            android:title="@string/ignore_window_secure_title"
-            android:summary="@string/ignore_window_secure_summary"
-            android:defaultValue="false"/>
-
-        <Preference
-            android:key="hide_developer_status_settings"
-            android:title="@string/hide_developer_status_title"
-            android:summary="@string/hide_developer_status_summary"
-            android:fragment="com.android.settings.security.HideDeveloperStatusSettings"
-            settings:controller="com.android.settings.security.HideDeveloperStatusPreferenceController" />
-
     </PreferenceCategory>
 
     <!-- Security section. -->
@@ -212,20 +199,6 @@
         android:summary="@string/encryption_and_credential_settings_summary"
         android:fragment="com.android.settings.security.EncryptionAndCredential"
         settings:controller="com.android.settings.security.EncryptionStatusPreferenceController" />
-
-    <com.alpha.settings.preferences.SecureSettingSwitchPreference
-        android:order="265"
-        android:key="spoof_storage_encryption_status"
-        android:title="@string/spoof_storage_encryption_status_title"
-        android:summary="@string/spoof_storage_encryption_status_summary"
-        android:defaultValue="false"/>
-
-    <com.alpha.settings.preferences.GlobalSettingSwitchPreference
-        android:order="96"
-        android:key="no_storage_restrict"
-        android:title="@string/no_storage_restrict_title"
-        android:summary="@string/no_storage_restrict_summary"
-        android:defaultValue="false"/>
 
     <Preference
         android:order="270"
