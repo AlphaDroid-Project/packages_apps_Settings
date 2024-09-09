@@ -74,6 +74,7 @@ android_library {
         "res-product",
         "res-ui",
         "AlphaSettings/res",
+        "SettingsGoogle/res",
     ],
 
     static_libs: [
