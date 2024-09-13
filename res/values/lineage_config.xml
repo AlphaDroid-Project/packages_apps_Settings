@@ -43,4 +43,7 @@
 
     <!-- Max network scan search time in seconds -->
     <integer name="config_network_scan_helper_max_search_time_sec">300</integer>
+    
+    <!-- Battery Info: mAh -->
+    <integer name="config_battery_divider" translatable="false">1000</integer>
 </resources>
