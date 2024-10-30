@@ -74,6 +74,7 @@ import com.android.settings.datausage.DataUsagePreference;
 import com.android.settings.datausage.DataUsageUtils;
 import com.android.settings.location.WifiScanningFragment;
 import com.android.settings.network.MobileDataEnabledListener;
+import com.android.settings.network.telephony.MobileDataPreferenceController;
 import com.android.settings.search.BaseSearchIndexProvider;
 import com.android.settings.wifi.AddNetworkFragment;
 import com.android.settings.wifi.AddWifiNetworkPreference;
@@ -263,6 +264,12 @@ public class NetworkProviderSettings extends RestrictedDashboardFragment
     MenuProvider mMenuProvider;
 
     /**
+     * Mobile data toggle
+     */
+    private static final String PREF_KEY_MOBILE_DATA_TOGGLE = "main_toggle_mobile_data";
+    private MobileDataPreferenceController mMobileDataPreferenceController;
+
+    /**
      * Mobile networks list for provider model
      */
     private static final String PREF_KEY_PROVIDER_MOBILE_NETWORK = "provider_model_mobile_network";
@@ -322,6 +329,7 @@ public class NetworkProviderSettings extends RestrictedDashboardFragment
     public void onCreate(Bundle icicle) {
         super.onCreate(icicle);
         final Context context = getContext();
+        final Intent intent = this.getIntent();
         if (context != null && !context.getResources().getBoolean(
                 R.bool.config_show_internet_settings)) {
             finish();
@@ -329,6 +337,7 @@ public class NetworkProviderSettings extends RestrictedDashboardFragment
         }
         mAirplaneModeEnabler = new AirplaneModeEnabler(getContext(), this);
         mDataStateListener = new MobileDataEnabledListener(getContext(), this);
+        mIsInSetupWizard = WizardManagerHelper.isAnySetupWizard(intent);
 
         // TODO(b/37429702): Add animations and preference comparator back after initial screen is
         // loaded (ODR).
@@ -376,8 +385,6 @@ public class NetworkProviderSettings extends RestrictedDashboardFragment
                 fixConnectivityItem.setVisible(!mIsGuest && (!isAirplaneModeOn || isWifiEnabled));
             }
         };
-        final Intent intent = this.getIntent();
-        mIsInSetupWizard = WizardManagerHelper.isAnySetupWizard(intent);
     }
 
     private void updateUserType() {
@@ -428,6 +435,7 @@ public class NetworkProviderSettings extends RestrictedDashboardFragment
         if (mResetInternetPreference != null) {
             mResetInternetPreference.setVisible(false);
         }
+        addMobileDataPreferenceController();
         addNetworkMobileProviderController();
         addConnectedEthernetNetworkController();
         addWifiSwitchPreferenceController();
@@ -448,6 +456,18 @@ public class NetworkProviderSettings extends RestrictedDashboardFragment
     @VisibleForTesting
     boolean showAnySubscriptionInfo(Context context) {
         return (context != null) && SubscriptionUtil.isSimHardwareVisible(context);
+    }
+
+    private void addMobileDataPreferenceController() {
+        if (!showAnySubscriptionInfo(getContext())) {
+            return;
+        }
+        if (mMobileDataPreferenceController == null) {
+            mMobileDataPreferenceController = new MobileDataPreferenceController(
+                    getContext(), PREF_KEY_MOBILE_DATA_TOGGLE, getSettingsLifecycle(),
+                    mSubId, mIsInSetupWizard);
+        }
+        mMobileDataPreferenceController.displayPreference(getPreferenceScreen());
     }
 
     private void addNetworkMobileProviderController() {
