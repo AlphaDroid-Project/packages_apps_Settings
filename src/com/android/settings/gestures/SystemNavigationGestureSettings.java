@@ -44,7 +44,7 @@ import androidx.preference.PreferenceScreen;
 import androidx.preference.SwitchPreferenceCompat;
 
 import com.android.internal.accessibility.common.ShortcutConstants;
-import com.android.internal.util.crdroid.Utils;
+import com.android.internal.util.alpha.Utils;
 import com.android.settings.R;
 import com.android.settings.accessibility.AccessibilityShortcutsTutorial;
 import com.android.settings.core.BasePreferenceController;
@@ -62,7 +62,7 @@ import com.android.settingslib.widget.CandidateInfo;
 import com.android.settingslib.widget.IllustrationPreference;
 import com.android.settingslib.widget.SelectorWithWidgetPreference;
 
-import com.crdroid.settings.utils.SystemUtils;
+import com.alpha.settings.utils.SystemUtils;
 
 import java.util.ArrayList;
 import java.util.List;

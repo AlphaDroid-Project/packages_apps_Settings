@@ -21,6 +21,21 @@
     android:key="top_level_settings">
 
     <PreferenceCategory
+        android:order="-140"
+        android:key="top_level_account_category"
+        android:layout="@layout/settingslib_preference_category_no_title">
+
+        <com.android.settings.widget.HomepagePreference
+            android:fragment="com.alpha.settings.AlphaSettings"
+            android:icon="@drawable/ic_settings_alpha"
+            android:key="top_level_alpha"
+            android:order="-50"
+            android:title="@string/alpha_settings_title"
+            android:summary="@string/alpha_settings_summary"
+            settings:controller="com.alpha.settings.TopLevelSettingsPreferenceController"/>
+    </PreferenceCategory>
+
+    <PreferenceCategory
         android:order="-130"
         android:key="top_level_connectivity_category"
         android:layout="@layout/settingslib_preference_category_no_title">
@@ -242,18 +257,9 @@
     </PreferenceCategory>
 
     <PreferenceCategory
-        android:order="-90"
-        android:key="top_level_account_category"
+        android:order="-20"
+        android:key="top_level_category_undefined"
         android:layout="@layout/settingslib_preference_category_no_title">
-
-        <com.android.settings.widget.HomepagePreference
-            android:fragment="com.crdroid.settings.crDroidSettingsLayout"
-            android:icon="@drawable/ic_settings_cogs_filled"
-            android:key="top_level_crdroid"
-            android:order="-50"
-            android:title="@string/crdroid_settings_title"
-            android:summary="@string/crdroid_settings_summary"
-            settings:controller="com.crdroid.settings.TopLevelSettingsPreferenceController"/>
     </PreferenceCategory>
 
     <PreferenceCategory

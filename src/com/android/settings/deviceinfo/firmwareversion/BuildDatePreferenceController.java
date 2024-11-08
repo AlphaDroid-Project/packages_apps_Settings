@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2019-2024 The LineageOS Project
+ * Copyright (C) 2019 The LineageOS Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,18 +19,16 @@ package com.android.settings.deviceinfo.firmwareversion;
 import android.content.Context;
 import android.os.SystemProperties;
 
-import androidx.preference.Preference;
-
 import com.android.settings.R;
 import com.android.settings.core.BasePreferenceController;
 
-public class LineageVersionDetailPreferenceController extends BasePreferenceController {
+public class BuildDatePreferenceController extends BasePreferenceController {
 
-    private static final String TAG = "lineageVersionDialogCtrl";
+    private static final String TAG = "BuildDateCtrl";
 
-    private static final String KEY_LINEAGE_VERSION_PROP = "ro.crdroid.build.version";
+    private static final String KEY_BUILD_DATE_PROP = "ro.build.date";
 
-    public LineageVersionDetailPreferenceController(Context context, String key) {
+    public BuildDatePreferenceController(Context context, String key) {
         super(context, key);
     }
 
@@ -40,23 +38,8 @@ public class LineageVersionDetailPreferenceController extends BasePreferenceCont
     }
 
     @Override
-    public boolean useDynamicSliceSummary() {
-        return true;
-    }
-
-    @Override
-    public boolean isSliceable() {
-        return true;
-    }
-
-    @Override
     public CharSequence getSummary() {
-        return SystemProperties.get(KEY_LINEAGE_VERSION_PROP,
+        return SystemProperties.get(KEY_BUILD_DATE_PROP,
                 mContext.getString(R.string.unknown));
-    }
-
-    @Override
-    public boolean handlePreferenceTreeClick(Preference preference) {
-        return false;
     }
 }

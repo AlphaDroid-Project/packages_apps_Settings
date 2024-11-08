@@ -57,13 +57,13 @@
         android:layout="@layout/settingslib_preference_category_no_title">
 
         <com.android.settings.widget.HomepagePreference
-            android:fragment="com.crdroid.settings.crDroidSettingsLayout"
-            android:icon="@drawable/ic_homepage_crdroid"
-            android:key="top_level_crdroid"
+            android:fragment="com.alpha.settings.AlphaSettings"
+            android:icon="@drawable/ic_settings_alpha"
+            android:key="top_level_alpha"
             android:order="-60"
-            android:title="@string/crdroid_settings_title"
-            android:summary="@string/crdroid_settings_summary"
-            settings:controller="com.crdroid.settings.TopLevelSettingsPreferenceController"/>
+            android:title="@string/alpha_settings_title"
+            android:summary="@string/alpha_settings_summary"
+            settings:controller="com.alpha.settings.TopLevelSettingsPreferenceController"/>
 
         <com.android.settings.widget.HomepagePreference
             android:fragment="com.android.settings.notification.ConfigureNotificationSettings"

@@ -21,6 +21,7 @@ import android.os.Build;
 import android.text.BidiFormatter;
 
 import com.android.settings.core.BasePreferenceController;
+import com.android.settings.deviceinfo.VersionUtils;
 
 // LINT.IfChange
 public class SimpleBuildNumberPreferenceController extends BasePreferenceController {
@@ -37,8 +38,14 @@ public class SimpleBuildNumberPreferenceController extends BasePreferenceControl
 
     @Override
     public CharSequence getSummary() {
-        String display = Build.DISPLAY.replace("lineage_", "crdroid_");
-        return BidiFormatter.getInstance().unicodeWrap(display);
+        StringBuilder sb = new StringBuilder();
+        sb.append(BidiFormatter.getInstance().unicodeWrap(Build.DISPLAY));
+        String alphaVersion = VersionUtils.getAlphaVersion();
+        if (!alphaVersion.equals("")){
+            sb.append("\n");
+            sb.append(alphaVersion);
+        }
+        return sb.toString();
     }
 }
 // LINT.ThenChange(SimpleBuildNumberPreference.kt)

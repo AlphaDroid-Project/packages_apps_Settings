@@ -29,7 +29,7 @@ import androidx.preference.Preference
 import androidx.preference.forEach
 
 import com.android.internal.logging.nano.MetricsProto
-import com.android.internal.util.crdroid.Utils
+import com.android.internal.util.alpha.Utils
 
 import com.android.settings.R
 import com.android.settings.core.SubSettingLauncher
@@ -140,7 +140,7 @@ class AppLockPackageListFragment : DashboardFragment() {
         }
     }
 
-    override fun getMetricsCategory(): Int = MetricsProto.MetricsEvent.CRDROID_SETTINGS
+    override fun getMetricsCategory(): Int = MetricsProto.MetricsEvent.ALPHA
 
     override protected fun getPreferenceScreenResId() = R.xml.app_lock_package_list_settings
 

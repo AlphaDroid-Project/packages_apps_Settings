@@ -181,7 +181,7 @@ public class LegacyNavigationSettingsFragment extends DashboardFragment implemen
 
     @Override
     public int getMetricsCategory() {
-        return MetricsProto.MetricsEvent.CRDROID_SETTINGS;
+        return MetricsProto.MetricsEvent.ALPHA;
     }
 
     private ListPreference initList(String key, Action value) {

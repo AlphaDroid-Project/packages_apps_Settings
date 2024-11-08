@@ -83,8 +83,14 @@ public class BuildNumberPreferenceController extends BasePreferenceController im
 
     @Override
     public CharSequence getSummary() {
-        String display = Build.DISPLAY.replace("lineage_", "crdroid_");
-        return BidiFormatter.getInstance().unicodeWrap(display);
+        StringBuilder sb = new StringBuilder();
+        sb.append(BidiFormatter.getInstance().unicodeWrap(Build.DISPLAY));
+        String alphaVersion = VersionUtils.getAlphaVersion();
+        if (!alphaVersion.equals("")){
+            sb.append("\n");
+            sb.append(alphaVersion);
+        }
+        return sb.toString();
     }
 
     @Override

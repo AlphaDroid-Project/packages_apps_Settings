@@ -82,9 +82,9 @@ public class RingtonePreference extends Preference {
         String packageName = context.getString(R.string.config_sound_picker_package_name);
         Intent intent = new Intent(RingtoneManager.ACTION_RINGTONE_PICKER);
         // prioritize google sound picker if manually installed by user
-        if (com.android.internal.util.crdroid.Utils.isPackageInstalled(context, GOOGLE_SP_PKG_NAME)) {
+        if (com.android.internal.util.alpha.Utils.isPackageInstalled(context, GOOGLE_SP_PKG_NAME)) {
             intent.setPackage(GOOGLE_SP_PKG_NAME);
-        } else if (com.android.internal.util.crdroid.Utils.isPackageInstalled(context, packageName)) {
+        } else if (com.android.internal.util.alpha.Utils.isPackageInstalled(context, packageName)) {
             intent.setPackage(packageName);
         }
         setIntent(intent);
