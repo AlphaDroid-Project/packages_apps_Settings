@@ -60,22 +60,6 @@ public class SystemNavigationPreferenceController extends BasePreferenceControll
                 com.android.internal.R.bool.config_swipe_up_gesture_setting_available)) {
             return false;
         }
-
-        // Skip if the recents component is not defined
-        final ComponentName recentsComponentName = ComponentName.unflattenFromString(
-                context.getString(com.android.internal.R.string.config_recentsComponentName));
-        if (recentsComponentName == null) {
-            return false;
-        }
-
-        // Skip if the overview proxy service exists
-        final Intent quickStepIntent = new Intent(ACTION_QUICKSTEP)
-                .setPackage(recentsComponentName.getPackageName());
-        if (context.getPackageManager().resolveService(quickStepIntent,
-                PackageManager.MATCH_SYSTEM_ONLY) == null) {
-            return false;
-        }
-
         return true;
     }
 
