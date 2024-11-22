@@ -46,7 +46,6 @@
             settings:searchable="false">
         </Preference>
     </PreferenceCategory>
-
     <PreferenceCategory
         android:key="general_category"
         android:title="@string/category_name_general"
@@ -54,17 +53,25 @@
         android:visibility="gone"
         settings:searchable="false"/>
 
+    <com.alpha.settings.preferences.SystemPropertyListPreference
+        android:key="persist.sys.default_launcher"
+        android:icon="@drawable/ic_home"
+        android:title="@string/quickswitch_launcher_title"
+        android:order="-996"
+        android:summary="%s"
+        />
+
     <Preference
         android:key="default_apps"
         android:title="@string/app_default_dashboard_title"
-        android:order="-996"
+        android:order="-995"
         settings:controller="com.android.settings.applications.DefaultAppsPreferenceController"/>
 
     <Preference
         android:key="cloned_apps"
         android:title="@string/cloned_apps_dashboard_title"
         android:summary="@string/summary_placeholder"
-        android:order="-995"
+        android:order="-994"
         settings:controller="com.android.settings.applications.ClonedAppsPreferenceController"
         android:fragment="com.android.settings.applications.manageapplications.ManageApplications">
         <extra

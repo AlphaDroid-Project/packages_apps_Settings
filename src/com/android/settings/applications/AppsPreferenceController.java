@@ -22,6 +22,7 @@ import android.app.Application;
 import android.app.usage.UsageStats;
 import android.content.Context;
 import android.icu.text.RelativeDateTimeFormatter;
+import android.os.SystemProperties;
 import android.text.TextUtils;
 import android.util.ArrayMap;
 
@@ -30,6 +31,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.LifecycleObserver;
 import androidx.lifecycle.OnLifecycleEvent;
+import androidx.preference.ListPreference;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceCategory;
 import androidx.preference.PreferenceScreen;
@@ -61,6 +63,8 @@ public class AppsPreferenceController extends BasePreferenceController implement
     static final String KEY_ALL_APP_INFO = "all_app_infos";
     @VisibleForTesting
     static final String KEY_SEE_ALL = "see_all_apps";
+    @VisibleForTesting
+    static final String QUICK_SWITCH_KEY = "persist.sys.default_launcher";
 
     private final ApplicationsState mApplicationsState;
 
@@ -74,6 +78,8 @@ public class AppsPreferenceController extends BasePreferenceController implement
     Preference mAllAppsInfoPref;
     @VisibleForTesting
     Preference mSeeAllPref;
+    @VisibleForTesting
+    ListPreference mQuickSwitchPref;
 
     private Fragment mHost;
     private boolean mInitialLaunch = false;
@@ -169,6 +175,10 @@ public class AppsPreferenceController extends BasePreferenceController implement
         mGeneralCategory.setVisible(false);
         mAllAppsInfoPref.setVisible(false);
         mSeeAllPref.setVisible(false);
+        mQuickSwitchPref = screen.findPreference(QUICK_SWITCH_KEY);
+        if (mQuickSwitchPref != null) {
+            mQuickSwitchPref.setVisible(AppUtils.isQuickSwitchAvailable());
+        }
     }
 
     private void displayRecentApps() {
