@@ -532,4 +532,8 @@ public class Settings extends SettingsActivity {
     public static class SmartPixelsActivity extends SettingsActivity {}
 
     public static class PrivateDnsSettingsActivity extends SettingsActivity { /* empty */ }
+
+    // SleepMode
+    public static class SleepModeActivity extends SettingsActivity {}
+
 }

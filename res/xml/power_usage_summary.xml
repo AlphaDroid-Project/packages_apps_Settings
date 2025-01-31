@@ -51,6 +51,11 @@
         settings:keywords="@string/keywords_battery_usage" />
 
     <Preference
+        android:key="sleep_mode"
+        android:title="@string/sleep_mode_title"
+        android:fragment="com.android.settings.fuelgauge.sleepmode.SleepMode" />
+
+    <Preference
         android:fragment="com.android.settings.fuelgauge.batterysaver.BatterySaverSettings"
         android:key="battery_saver_summary"
         android:title="@string/battery_saver"
