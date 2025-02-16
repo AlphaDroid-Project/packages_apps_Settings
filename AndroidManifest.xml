@@ -5634,6 +5634,17 @@
             </intent-filter>
         </activity>
 
+        <activity
+            android:name="Settings$FirmwareVersionActivity"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.settings.FIRMWARE_VERSION_SETTINGS" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+            <meta-data android:name="com.android.settings.FRAGMENT_CLASS"
+                       android:value="com.android.settings.deviceinfo.firmwareversion.FirmwareVersionSettings" />
+        </activity>
+
         <!-- Begin Alpha Settings -->
         <activity android:name="Settings$AlphaSettingsActivity"
                 android:label="@string/alpha_settings_title"
