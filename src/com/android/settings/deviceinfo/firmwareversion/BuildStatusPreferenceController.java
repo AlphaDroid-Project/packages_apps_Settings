@@ -43,11 +43,10 @@ public class BuildStatusPreferenceController extends AbstractPreferenceControlle
     }
 
     private String getBuildStatus() {
-        // if (isOfficial()) {
-        //     return mContext.getString(R.string.build_status_official);
-        // }
-        // return mContext.getString(R.string.build_status_unofficial);
-        return "BETA";
+        if (isOfficial()) {
+            return mContext.getString(R.string.build_status_official);
+        }
+        return mContext.getString(R.string.build_status_unofficial);
     }
 
     @Override
