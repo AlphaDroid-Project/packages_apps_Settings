@@ -229,7 +229,7 @@ public class SatelliteSetting extends RestrictedDashboardFragment {
         if (footerPreference != null) {
             footerPreference.setSummary(
                     getResources().getString(R.string.satellite_setting_summary_more_information,
-                            getSubjectString(), mSimOperatorName));
+                            mSimOperatorName));
 
             final String[] link = new String[1];
             link[0] = readSatelliteMoreInfoString();
