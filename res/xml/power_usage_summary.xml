@@ -74,12 +74,6 @@
         <intent android:action="android.settings.IGNORE_BATTERY_OPTIMIZATION_SETTINGS" />
     </Preference>
 
-    <!-- Battery light
-    <lineageos.preference.LineagePartsPreference
-        android:key="battery_lights"
-        settings:requiresConfig="@*lineageos.platform:integer/config_deviceLightCapabilities"
-        settings:requiresConfigMask="64" /> -->
-
     <SwitchPreferenceCompat
         android:key="battery_percentage"
         android:title="@string/battery_percentage"
@@ -97,10 +91,4 @@
         android:title="@string/battery_info"
         android:fragment="com.android.settings.deviceinfo.batteryinfo.BatteryInfoFragment"
         settings:keywords="@string/keywords_battery_info"/>
-
-    <com.android.settingslib.widget.FooterPreference
-        android:key="power_usage_footer"
-        android:title="@string/battery_footer_summary"
-        android:selectable="false"
-        settings:searchable="false" />
 </PreferenceScreen>

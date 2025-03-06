@@ -92,18 +92,18 @@ public class FastChargingPreferenceController extends BasePreferenceController
             return "";
         }
         if (enabled) {
-            return mContext.getString(R.string.string_enabled);
+            return mContext.getString(R.string.enabled);
         }
 
         if (mRestrictedCurrentService == null) {
-            return mContext.getString(R.string.string_disabled);
+            return mContext.getString(R.string.disabled);
         }
 
         try {
             current = mRestrictedCurrentService.getRestrictedCurrent();
         } catch (RemoteException e) {
             if (DEBUG) Log.e(TAG, "getRestrictedCurrent failed", e);
-            return mContext.getString(R.string.string_disabled);
+            return mContext.getString(R.string.disabled);
         }
 
         return mContext.getString(R.string.fastcharge_disabled_extended_summary,
