@@ -208,5 +208,13 @@
             android:key="notification_lights"
             settings:requiresConfig="@*android:bool/config_intrusiveNotificationLed"
             settings:replacesKey="notification_pulse" /> -->
+
+        <com.alpha.settings.preferences.SystemSettingSwitchPreference
+            android:key="ongoing_action_chip"
+            android:order="30"
+            android:title="@string/ongoing_action_chip_title"
+            android:summary="@string/ongoing_action_chip_summary"
+            android:defaultValue="true" />
+
     </PreferenceCategory>
 </PreferenceScreen>
