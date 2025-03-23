@@ -20,11 +20,14 @@ import static android.app.contextualsearch.ContextualSearchManager.FEATURE_CONTE
 
 import static com.google.common.truth.Truth.assertThat;
 
+import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.when;
 
 import android.content.Context;
+import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.provider.Settings;
 
@@ -58,14 +61,34 @@ public class NavigationSettingsContextualSearchControllerTest {
     }
 
     @Test
-    public void isAvailable_hasContextualSearchSystemFeature_shouldReturnTrue() {
+    public void isAvailable_hasContextualSearchSystemFeature_shouldReturnTrue() throws Exception {
         when(mPackageManager.hasSystemFeature(FEATURE_CONTEXTUAL_SEARCH)).thenReturn(true);
+        ApplicationInfo ai = new ApplicationInfo();
+        ai.enabled = true;
+        when(mPackageManager.getApplicationInfo(anyString(), anyInt())).thenReturn(ai);
         assertThat(mController.isAvailable()).isTrue();
     }
 
     @Test
     public void isAvailable_doesNotHaveContextualSearchSystemFeature_shouldReturnFalse() {
         when(mPackageManager.hasSystemFeature(FEATURE_CONTEXTUAL_SEARCH)).thenReturn(false);
+        assertThat(mController.isAvailable()).isFalse();
+    }
+
+    @Test
+    public void isAvailable_contextualSearchPackageMissing_shouldReturnFalse() throws Exception {
+        when(mPackageManager.hasSystemFeature(FEATURE_CONTEXTUAL_SEARCH)).thenReturn(true);
+        when(mPackageManager.getApplicationInfo(anyString(), anyInt()))
+                .thenThrow(new PackageManager.NameNotFoundException());
+        assertThat(mController.isAvailable()).isFalse();
+    }
+
+    @Test
+    public void isAvailable_contextualSearchPackageDisabled_shouldReturnFalse() throws Exception {
+        when(mPackageManager.hasSystemFeature(FEATURE_CONTEXTUAL_SEARCH)).thenReturn(true);
+        ApplicationInfo ai = new ApplicationInfo();
+        ai.enabled = false;
+        when(mPackageManager.getApplicationInfo(anyString(), anyInt())).thenReturn(ai);
         assertThat(mController.isAvailable()).isFalse();
     }
 
