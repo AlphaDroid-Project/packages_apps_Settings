@@ -5,6 +5,10 @@
 
 package com.android.settings.lineage.health;
 
+import static lineageos.health.HealthInterface.MODE_AUTO;
+import static lineageos.health.HealthInterface.MODE_LIMIT;
+import static lineageos.health.HealthInterface.MODE_MANUAL;
+
 import android.content.Context;
 import android.content.res.Resources;
 import android.os.Bundle;
@@ -16,24 +20,20 @@ import android.view.MenuItem;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceScreen;
 
-import java.lang.reflect.Array;
-import java.util.Arrays;
-import java.util.Set;
-import java.util.stream.Stream;
+import lineageos.health.HealthInterface;
+import lineageos.preference.LineageSystemSettingDropDownPreference;
+import lineageos.preference.LineageSystemSettingMainSwitchPreference;
+import android.provider.Settings;
 
 import com.android.settings.R;
 import com.android.settings.lineage.SettingsPreferenceFragment;
 import com.android.settings.lineage.search.BaseSearchIndexProvider;
 import com.android.settings.lineage.search.Searchable;
 
-import lineageos.health.HealthInterface;
-import lineageos.preference.LineageSystemSettingDropDownPreference;
-import lineageos.preference.LineageSystemSettingMainSwitchPreference;
-import android.provider.Settings;
-
-import static lineageos.health.HealthInterface.MODE_AUTO;
-import static lineageos.health.HealthInterface.MODE_MANUAL;
-import static lineageos.health.HealthInterface.MODE_LIMIT;
+import java.lang.reflect.Array;
+import java.util.Arrays;
+import java.util.Set;
+import java.util.stream.Stream;
 
 public class ChargingControlSettings extends SettingsPreferenceFragment implements
         Preference.OnPreferenceChangeListener, Searchable {

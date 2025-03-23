@@ -14,10 +14,10 @@ import androidx.preference.Preference;
 
 import lineageos.preference.LineageSecureSettingSwitchPreference;
 import android.provider.Settings;
+
 import com.android.settings.R;
 import com.android.settings.lineage.SettingsPreferenceFragment;
 import com.android.settings.lineage.utils.DeviceUtils;
-
 
 public class NetworkTrafficSettings extends SettingsPreferenceFragment
         implements Preference.OnPreferenceChangeListener  {

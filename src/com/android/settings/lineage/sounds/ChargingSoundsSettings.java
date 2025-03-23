@@ -7,9 +7,9 @@
 package com.android.settings.lineage.sounds;
 
 import android.app.Activity;
-import android.database.Cursor;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;

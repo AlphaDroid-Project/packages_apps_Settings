@@ -5,6 +5,19 @@
  */
 package com.android.settings.lineage.livedisplay;
 
+import static lineageos.hardware.LiveDisplayManager.FEATURE_ANTI_FLICKER;
+import static lineageos.hardware.LiveDisplayManager.FEATURE_CABC;
+import static lineageos.hardware.LiveDisplayManager.FEATURE_COLOR_ADJUSTMENT;
+import static lineageos.hardware.LiveDisplayManager.FEATURE_COLOR_ENHANCEMENT;
+import static lineageos.hardware.LiveDisplayManager.FEATURE_DISPLAY_MODES;
+import static lineageos.hardware.LiveDisplayManager.FEATURE_PICTURE_ADJUSTMENT;
+import static lineageos.hardware.LiveDisplayManager.FEATURE_READING_ENHANCEMENT;
+import static lineageos.hardware.LiveDisplayManager.MODE_AUTO;
+import static lineageos.hardware.LiveDisplayManager.MODE_DAY;
+import static lineageos.hardware.LiveDisplayManager.MODE_NIGHT;
+import static lineageos.hardware.LiveDisplayManager.MODE_OFF;
+import static lineageos.hardware.LiveDisplayManager.MODE_OUTDOOR;
+
 import android.content.Context;
 import android.content.res.Resources;
 import android.hardware.display.ColorDisplayManager;
@@ -22,6 +35,13 @@ import androidx.preference.SwitchPreferenceCompat;
 
 import com.android.internal.util.ArrayUtils;
 
+import lineageos.hardware.DisplayMode;
+import lineageos.hardware.LineageHardwareManager;
+import lineageos.hardware.LiveDisplayConfig;
+import lineageos.hardware.LiveDisplayManager;
+import lineageos.preference.SettingsHelper;
+import android.provider.Settings;
+
 import com.android.settings.R;
 import com.android.settings.lineage.SettingsPreferenceFragment;
 import com.android.settings.lineage.search.BaseSearchIndexProvider;
@@ -32,26 +52,6 @@ import com.android.settings.lineage.utils.ResourceUtils;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
-
-import lineageos.hardware.LineageHardwareManager;
-import lineageos.hardware.DisplayMode;
-import lineageos.hardware.LiveDisplayConfig;
-import lineageos.hardware.LiveDisplayManager;
-import lineageos.preference.SettingsHelper;
-import android.provider.Settings;
-
-import static lineageos.hardware.LiveDisplayManager.FEATURE_ANTI_FLICKER;
-import static lineageos.hardware.LiveDisplayManager.FEATURE_CABC;
-import static lineageos.hardware.LiveDisplayManager.FEATURE_COLOR_ADJUSTMENT;
-import static lineageos.hardware.LiveDisplayManager.FEATURE_COLOR_ENHANCEMENT;
-import static lineageos.hardware.LiveDisplayManager.FEATURE_DISPLAY_MODES;
-import static lineageos.hardware.LiveDisplayManager.FEATURE_PICTURE_ADJUSTMENT;
-import static lineageos.hardware.LiveDisplayManager.FEATURE_READING_ENHANCEMENT;
-import static lineageos.hardware.LiveDisplayManager.MODE_AUTO;
-import static lineageos.hardware.LiveDisplayManager.MODE_DAY;
-import static lineageos.hardware.LiveDisplayManager.MODE_NIGHT;
-import static lineageos.hardware.LiveDisplayManager.MODE_OFF;
-import static lineageos.hardware.LiveDisplayManager.MODE_OUTDOOR;
 
 public class LiveDisplaySettings extends SettingsPreferenceFragment implements Searchable,
         Preference.OnPreferenceChangeListener, SettingsHelper.OnSettingsChangeListener {

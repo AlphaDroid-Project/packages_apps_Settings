@@ -17,11 +17,11 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
 
+import lineageos.hardware.LiveDisplayManager;
+
+import com.android.settings.R;
 import com.android.settings.lineage.widget.CustomDialogPreference;
 import com.android.settings.lineage.widget.IntervalSeekBar;
-import com.android.settings.R;
-
-import lineageos.hardware.LiveDisplayManager;
 
 /**
  * Special preference type that allows configuration of Color settings
