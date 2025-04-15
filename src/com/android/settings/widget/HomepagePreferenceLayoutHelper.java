@@ -16,13 +16,19 @@
 
 package com.android.settings.widget;
 
+import static com.android.settings.alpha.AlphaConstants.DASHBOARD_STYLE_AOSP_LEGACY;
+import static com.android.settings.alpha.AlphaConstants.DASHBOARD_STYLE_AOSP_REVAMPED;
+import static com.android.settings.alpha.AlphaConstants.DASHBOARD_STYLE_DOT;
+import static com.android.settings.alpha.AlphaConstants.DASHBOARD_STYLE_NAD;
+
 import android.view.View;
 
 import androidx.preference.Preference;
 import androidx.preference.PreferenceViewHolder;
 
 import com.android.settings.R;
-import com.android.settings.flags.Flags;
+import com.android.settings.Utils;
+
 
 /** Helper for homepage preference to manage layout. */
 public class HomepagePreferenceLayoutHelper {
@@ -40,10 +46,26 @@ public class HomepagePreferenceLayoutHelper {
     }
 
     public HomepagePreferenceLayoutHelper(Preference preference) {
-        preference.setLayoutResource(
-                Flags.homepageRevamp()
-                        ? R.layout.homepage_preference_v2
-                        : R.layout.homepage_preference);
+        int dashBoardStyle = Utils.getDashboardStyle(preference.getContext());
+
+        if (preference == null) return;
+
+        switch (dashBoardStyle) {
+            case DASHBOARD_STYLE_AOSP_LEGACY:
+                preference.setLayoutResource(R.layout.homepage_preference);
+                break;
+            case DASHBOARD_STYLE_AOSP_REVAMPED:
+                preference.setLayoutResource(R.layout.homepage_preference_v2);
+                break;
+            case DASHBOARD_STYLE_DOT:
+                preference.setLayoutResource(R.layout.dot_homepage_preference);
+                break;
+            case DASHBOARD_STYLE_NAD:
+                preference.setLayoutResource(R.layout.nad_homepage_preference);
+                break;
+            default:
+                break;
+        }
     }
 
     /** Sets whether the icon should be visible */

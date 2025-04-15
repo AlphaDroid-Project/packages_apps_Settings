@@ -1,0 +1,92 @@
+<resources
+    xmlns:androidprv="http://schemas.android.com/apk/prv/res/android">
+
+    <!-- About device -->
+    <declare-styleable name="Themes">
+        <attr name="waveViewStyle" format="reference"/>
+    </declare-styleable>
+    <declare-styleable name="DeviceCardView">
+        <attr name="extra_title" format="string"/>
+    </declare-styleable>
+
+    <!-- Dot preference styles -->
+    <style name="DotPreferenceTop">
+        <item name="android:layout_marginBottom">2dp</item>
+        <item name="android:layout_marginTop">4dp</item>
+        <item name="android:background">@drawable/dot_preference_background_top</item>
+    </style>
+    <style name="DotPreferenceMiddle">
+        <item name="android:layout_marginBottom">2dp</item>
+        <item name="android:background">@drawable/dot_preference_background_middle</item>
+    </style>
+    <style name="DotPreferenceBottom">
+        <item name="android:layout_marginBottom">6dp</item>
+        <item name="android:background">@drawable/dot_preference_background_bottom</item>
+    </style>
+    <style name="DotPreferenceSingle">
+        <item name="android:layout_marginBottom">6dp</item>
+        <item name="android:layout_marginTop">6dp</item>
+        <item name="android:background">@drawable/dot_preference_background_single</item>
+    </style>
+
+    <!-- Dashboard preference title -->
+    <style name="AlphaPreferenceTitle">
+        <item name="android:textAppearance">?android:attr/textAppearanceListItem</item>
+        <item name="android:textColor">?androidprv:attr/materialColorOnSurface</item>
+        <item name="android:layout_gravity">start</item>
+        <item name="android:textAlignment">viewStart</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:textAppearance">?android:attr/textAppearanceListItem</item>
+        <item name="android:hyphenationFrequency">normalFast</item>
+        <item name="android:lineBreakWordStyle">phrase</item>
+        <item name="android:ellipsize">marquee</item>
+        <item name="android:cursorVisible">false</item>
+        <item name="android:gravity">center_vertical</item>
+    </style>
+
+    <!-- Dashboard preference summary -->
+    <style name="AlphaPreferenceSummary" parent="@style/PreferenceSummaryTextStyle">
+        <item name="android:layout_below">@android:id/title</item>
+        <item name="android:layout_alignStart">@android:id/title</item>
+        <item name="android:layout_gravity">start</item>
+        <item name="android:textAlignment">viewStart</item>
+        <item name="android:textAppearance">?android:attr/textAppearanceSmall</item>
+        <item name="android:textColor">?androidprv:attr/materialColorOnSurfaceVariant</item>
+        <item name="android:maxLines">2</item>
+        <item name="android:hyphenationFrequency">normalFast</item>
+        <item name="android:lineBreakWordStyle">phrase</item>
+        <item name="android:cursorVisible">false</item>
+        <item name="android:gravity">center_vertical</item>
+    </style>
+
+    <!-- Top menu small tiles -->
+    <style name="AlphaPreferenceSmallTitle" parent="@style/AlphaPreferenceTitle">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+    <style name="AlphaPreferenceSmallSummary" parent="@style/PreferenceSummaryTextStyle">
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:singleLine">true</item>
+    </style>
+
+    <!-- Dynamic text size preference summary -->
+    <style name="AlphaDynamicSizePreferenceSummary" parent="@style/AlphaPreferenceSummary">
+        <item name="android:autoSizeTextType">uniform</item>
+        <item name="android:autoSizeMinTextSize">12sp</item>
+        <item name="android:autoSizeMaxTextSize">14sp</item>
+        <item name="android:autoSizeStepGranularity">2sp</item>
+    </style>
+
+    <style name="AlphaSettingsPreferenceTitle">
+        <item name="android:textAppearance">?android:attr/textAppearanceListItem</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:layout_gravity">bottom</item>
+        <item name="android:textAlignment">viewStart</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:alpha">0.7</item>
+        <item name="android:paddingLeft">6dp</item>
+        <item name="android:paddingBottom">2dp</item>
+    </style>
+
+</resources>

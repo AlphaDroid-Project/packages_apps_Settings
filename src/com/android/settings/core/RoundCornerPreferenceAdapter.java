@@ -16,9 +16,12 @@
 
 package com.android.settings.core;
 
+import static com.android.settings.alpha.AlphaConstants.DASHBOARD_STYLE_NAD;
+
 import android.os.Handler;
 import android.os.Looper;
 import android.view.View;
+import android.widget.LinearLayout;
 
 import androidx.annotation.DrawableRes;
 import androidx.annotation.NonNull;
@@ -28,7 +31,7 @@ import androidx.preference.PreferenceGroup;
 import androidx.preference.PreferenceGroupAdapter;
 import androidx.preference.PreferenceViewHolder;
 
-import com.android.settings.flags.Flags;
+import com.android.settings.Utils;
 import com.android.settingslib.widget.theme.R;
 
 import java.util.ArrayList;
@@ -36,15 +39,21 @@ import java.util.List;
 
 public class RoundCornerPreferenceAdapter extends PreferenceGroupAdapter {
 
+    private static final String NAD_TOP_MENU = "nad_top_menu_key";
+    private static final String DOT_TOP_MENU = "dot_top_menu_key";
+
     private static final int ROUND_CORNER_CENTER = 1;
     private static final int ROUND_CORNER_TOP = 1 << 1;
     private static final int ROUND_CORNER_BOTTOM = 1 << 2;
+    private static final int ROUND_CORNER_CUSTOM = 9999;
 
     private final PreferenceGroup mPreferenceGroup;
 
     private List<Integer> mRoundCornerMappingList;
 
     private final Handler mHandler;
+
+    private int mDashboardStyle;
 
     private final Runnable mSyncRunnable = new Runnable() {
         @Override
@@ -70,7 +79,8 @@ public class RoundCornerPreferenceAdapter extends PreferenceGroupAdapter {
     @Override
     public void onBindViewHolder(@NonNull PreferenceViewHolder holder, int position) {
         super.onBindViewHolder(holder, position);
-        if (Flags.homepageRevamp()) {
+        int mDashboardStyle = Utils.getDashboardStyle(holder.itemView.getContext());
+        if (mDashboardStyle != DASHBOARD_STYLE_NAD) {
             updateBackground(holder, position);
         }
     }
@@ -78,7 +88,11 @@ public class RoundCornerPreferenceAdapter extends PreferenceGroupAdapter {
     protected @DrawableRes int getRoundCornerDrawableRes(int position, boolean isSelected) {
         int CornerType = mRoundCornerMappingList.get(position);
 
-        if ((CornerType & ROUND_CORNER_CENTER) == 0) {
+        if (CornerType == ROUND_CORNER_CUSTOM) {
+            return -1;
+        }
+
+        if ((CornerType & ROUND_CORNER_CENTER) == 0 || CornerType == ROUND_CORNER_CUSTOM) {
             return 0;
         }
 
@@ -105,10 +119,8 @@ public class RoundCornerPreferenceAdapter extends PreferenceGroupAdapter {
 
     @SuppressWarnings("WeakerAccess") /* synthetic access */
     private void updatePreferences() {
-        if (Flags.homepageRevamp()) {
-            mRoundCornerMappingList = new ArrayList<>();
-            mappingPreferenceGroup(mRoundCornerMappingList, mPreferenceGroup);
-        }
+        mRoundCornerMappingList = new ArrayList<>();
+        mappingPreferenceGroup(mRoundCornerMappingList, mPreferenceGroup);
     }
 
     private void mappingPreferenceGroup(List<Integer> visibleList, PreferenceGroup group) {
@@ -147,7 +159,14 @@ public class RoundCornerPreferenceAdapter extends PreferenceGroupAdapter {
                     }
 
                     value |= ROUND_CORNER_CENTER;
-                    visibleList.add(value);
+
+                    if (DOT_TOP_MENU.equals(pref.getKey())
+                            || NAD_TOP_MENU.equals(pref.getKey())) {
+                        visibleList.add(ROUND_CORNER_CUSTOM);
+                    }
+                    else {
+                        visibleList.add(value);
+                    }
                 }
             } else {
                 visibleList.add(value);
@@ -161,8 +180,9 @@ public class RoundCornerPreferenceAdapter extends PreferenceGroupAdapter {
     /** handle roundCorner background */
     private void updateBackground(PreferenceViewHolder holder, int position) {
         @DrawableRes int backgroundRes = getRoundCornerDrawableRes(position, false /* isSelected*/);
-
         View v = holder.itemView;
-        v.setBackgroundResource(backgroundRes);
+        if (backgroundRes > -1) {
+            v.setBackgroundResource(backgroundRes);
+        }
     }
 }

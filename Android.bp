@@ -73,7 +73,7 @@ android_library {
         "res-export", // for external usage
         "res-product",
         "res-lineage",
-        "res-ui",
+        "res-alpha",
         "AlphaSettings/res",
     ],
 

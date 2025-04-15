@@ -36,7 +36,6 @@ import androidx.window.embedding.ActivityEmbeddingController;
 import com.android.settings.R;
 import com.android.settings.Utils;
 import com.android.settings.core.RoundCornerPreferenceAdapter;
-import com.android.settings.flags.Flags;
 import com.android.settings.homepage.SettingsHomepageActivity;
 
 /**
@@ -68,6 +67,7 @@ public class HighlightableTopLevelPreferenceAdapter extends RoundCornerPreferenc
     private boolean mHighlightNeeded;
     private boolean mScrolled;
     private SparseArray<PreferenceViewHolder> mViewHolders;
+    private boolean mRevamped;
 
     public HighlightableTopLevelPreferenceAdapter(SettingsHomepageActivity homepageActivity,
             PreferenceGroup preferenceGroup, RecyclerView recyclerView, String key,
@@ -87,6 +87,7 @@ public class HighlightableTopLevelPreferenceAdapter extends RoundCornerPreferenc
         mSummaryColorHighlight = context.getColor(R.color.accent_select_secondary_text);
         mIconColorNormal = Utils.getHomepageIconColor(context);
         mIconColorHighlight = Utils.getHomepageIconColorHighlight(context);
+        mRevamped = Utils.revamped(context);
     }
 
     @Override
@@ -216,7 +217,7 @@ public class HighlightableTopLevelPreferenceAdapter extends RoundCornerPreferenc
         // get the visible area of the recycler view
         Rect rvRect = new Rect();
         mRecyclerView.getGlobalVisibleRect(rvRect);
-        if (Flags.homepageRevamp() && view.getBottom() <= rvRect.height()) {
+        if (mRevamped && view.getBottom() <= rvRect.height()) {
             // the request position already fully visible in the visible area
             return;
         }
@@ -240,7 +241,7 @@ public class HighlightableTopLevelPreferenceAdapter extends RoundCornerPreferenc
 
     private void addHighlightBackground(PreferenceViewHolder holder, int position) {
         final View v = holder.itemView;
-        if (Flags.homepageRevamp()) {
+        if (mRevamped) {
             @DrawableRes int bgRes = getRoundCornerDrawableRes(position, true /*isSelected*/);
             v.setBackgroundResource(bgRes);
         } else {
@@ -256,7 +257,7 @@ public class HighlightableTopLevelPreferenceAdapter extends RoundCornerPreferenc
 
     private void removeHighlightBackground(PreferenceViewHolder holder, int position) {
         final View v = holder.itemView;
-        if (Flags.homepageRevamp()) {
+        if (mRevamped) {
             @DrawableRes int bgRes = getRoundCornerDrawableRes(position, false /*isSelected*/);
             v.setBackgroundResource(bgRes);
         } else {

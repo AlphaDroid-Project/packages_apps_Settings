@@ -21,17 +21,13 @@
     android:key="top_level_settings">
 
     <PreferenceCategory
-        android:order="-140"
+        android:layout="@layout/settingslib_preference_category_no_title"
         android:key="top_level_alpha_category"
-        android:layout="@layout/settingslib_preference_category_no_title">
-        <com.android.settings.widget.HomepagePreference
-            android:fragment="com.alpha.settings.AlphaSettings"
-            android:icon="@drawable/ic_settings_alpha"
-            android:key="top_level_alpha_settings"
-            android:order="-140"
-            android:title="@string/alpha_settings_title"
-            android:summary="@string/alpha_settings_summary"
-            settings:controller="com.alpha.settings.TopLevelSettingsPreferenceController"/>
+        android:order="-140">
+
+        <com.android.settings.alpha.homepage.NadTopMenu
+            android:key="nad_top_menu_key"
+            android:order="-10"/>
 
     </PreferenceCategory>
 
@@ -39,16 +35,6 @@
         android:order="-130"
         android:key="top_level_connectivity_category"
         android:layout="@layout/settingslib_preference_category_no_title">
-
-        <com.android.settings.widget.HomepagePreference
-            android:fragment="com.android.settings.network.NetworkDashboardFragment"
-            android:icon="@drawable/ic_settings_wireless_filled"
-            android:key="top_level_network"
-            android:order="-20"
-            android:title="@string/network_dashboard_title"
-            android:summary="@string/summary_placeholder"
-            settings:highlightableMenuKey="@string/menu_key_network"
-            settings:controller="com.android.settings.network.TopLevelNetworkEntryPreferenceController"/>
 
         <com.android.settings.widget.HomepagePreference
             android:fragment="com.android.settings.connecteddevice.ConnectedDeviceDashboardFragment"
@@ -152,16 +138,6 @@
             settings:controller="com.android.settings.deviceinfo.TopLevelStoragePreferenceController"/>
 
         <com.android.settings.widget.HomepagePreference
-            android:fragment="com.android.settings.fuelgauge.batteryusage.PowerUsageSummary"
-            android:icon="@drawable/ic_settings_battery_filled"
-            android:key="top_level_battery"
-            android:order="-30"
-            android:title="@string/power_usage_summary_title"
-            android:summary="@string/summary_placeholder"
-            settings:highlightableMenuKey="@string/menu_key_battery"
-            settings:controller="com.android.settings.fuelgauge.TopLevelBatteryPreferenceController"/>
-
-        <com.android.settings.widget.HomepagePreference
             android:fragment="com.android.settings.system.SystemDashboardFragment"
             android:icon="@drawable/ic_settings_system_dashboard_filled"
             android:key="top_level_system"
@@ -262,7 +238,7 @@
         android:key="top_level_account_category"
         android:layout="@layout/settingslib_preference_category_no_title" >
 
-       <com.android.settings.widget.HomepagePreference
+        <com.android.settings.widget.HomepagePreference
             android:fragment="com.android.settings.accounts.AccountDashboardFragment"
             android:icon="@drawable/ic_settings_passwords_filled"
             android:key="top_level_accounts"
@@ -278,5 +254,4 @@
         android:order="-20"
         android:key="top_level_category_undefined"
         android:layout="@layout/settingslib_preference_category_no_title" />
-
 </PreferenceScreen>

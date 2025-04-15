@@ -15,15 +15,28 @@
      limitations under the License.
 -->
 <resources>
+    <!-- About phone | device info -->
     <dimen name="contextual_card_stroke_width">1dp</dimen>
-
     <dimen name="storage_card_min_width">148dp</dimen>
     <dimen name="storage_card_min_height">@dimen/storage_card_min_width</dimen>
 
     <!-- Alpha preference category -->
-    <dimen name="alpha_preference_category_padding_top">8.0dip</dimen>
+    <dimen name="alpha_preference_category_margin_top">16.0dip</dimen>
+    <dimen name="alpha_preference_category_padding_top">4.0dip</dimen>
     <dimen name="alpha_preference_category_padding_bottom">0.0dip</dimen>
     <dimen name="alpha_preference_category_line_margin_start">10.0dip</dimen>
     <dimen name="alpha_preference_category_line_margin_end">10.0dip</dimen>
-    <dimen name="alpha_preference_category_height">48.0dip</dimen>
+    <dimen name="alpha_preference_category_height">44.0dip</dimen>
+
+    <!-- Alpha Settings -->
+    <dimen name="alpha_settings_preference_height">128dp</dimen>
+
+    <!-- Settings dashboard styles -->
+    <dimen name="dot_round_background_radius">22dp</dimen>
+    <dimen name="dot_merge_background_radius">5dp</dimen>
+    <dimen name="dot_preference_height">82dp</dimen>
+    <dimen name="nad_round_background_radius">28dp</dimen>
+    <dimen name="nad_merge_background_radius">3dp</dimen>
+    <dimen name="nad_preference_height">76dp</dimen>
+    <dimen name="nad_stroke_width">1dp</dimen>
 </resources>

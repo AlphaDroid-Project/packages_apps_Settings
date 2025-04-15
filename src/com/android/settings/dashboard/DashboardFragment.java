@@ -15,6 +15,8 @@
  */
 package com.android.settings.dashboard;
 
+import static com.android.settings.alpha.AlphaConstants.DASHBOARD_STYLE_AOSP_LEGACY;
+
 import android.app.Activity;
 import android.app.settings.SettingsEnums;
 import android.content.ContentResolver;
@@ -57,6 +59,7 @@ import com.android.settingslib.drawer.Tile;
 import com.android.settingslib.preference.PreferenceScreenBindingHelper;
 import com.android.settingslib.preference.PreferenceScreenCreator;
 import com.android.settingslib.search.Indexable;
+import com.android.settings.Utils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -81,27 +84,22 @@ public abstract class DashboardFragment extends SettingsPreferenceFragment
     private static final String TAG = "DashboardFragment";
     private static final long TIMEOUT_MILLIS = 50L;
 
-    private static final List<String> ACCOUNT_INJECTED_KEYS = Arrays.asList(
-        "dashboard_tile_pref_com.google.android.gms.backup.component.BackupOrRestoreSettingsActivity"
-    );
-
     private static final List<String> PERSONALIZATION_INJECTED_KEYS = Arrays.asList(
         "alpha_device_parts_settings"
     );
 
-    private static final List<String> SECURITY_PRIVACY_INJECTED_KEYS = Arrays.asList(
+    private static final List<String> GOOGLE_INJECTED_KEYS = Arrays.asList(
         "top_level_wellbeing",
-        "top_level_google"
+        "top_level_google",
+        "dashboard_tile_pref_com.google.android.gms.backup.component.BackupOrRestoreSettingsActivity"
     );
 
     private static final ArrayMap<String, Integer> KEY_ORDER = new ArrayMap<>();
     static {
-        // Snuggle up just under Alpha Settings at "-60" above, and something else at -50 below
         KEY_ORDER.put("alpha_device_parts_settings", -55);
-        // We have "Passwords, passkeys & accounts with order "-10" above
-        KEY_ORDER.put("top_level_wellbeing", -5);
-        KEY_ORDER.put("top_level_google", 0);
-        // We have "Safety & emergency with order "10" below
+        KEY_ORDER.put("top_level_wellbeing", -30);
+        KEY_ORDER.put("top_level_google", -20);
+        KEY_ORDER.put("dashboard_tile_pref_com.google.android.gms.backup.component.BackupOrRestoreSettingsActivity", -10);
     }
 
     @VisibleForTesting
@@ -118,10 +116,12 @@ public abstract class DashboardFragment extends SettingsPreferenceFragment
     private List<String> mSuppressInjectedTileKeys;
 
     private @Nullable UserRestrictionBindingHelper mUserRestrictionBindingHelper;
+    private int mDashboardStyle;
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
+        mDashboardStyle = Utils.getDashboardStyle(context);
         mSuppressInjectedTileKeys = Arrays.asList(context.getResources().getStringArray(
                 R.array.config_suppress_injected_tile_keys));
         mDashboardFeatureProvider =
@@ -654,45 +654,26 @@ public abstract class DashboardFragment extends SettingsPreferenceFragment
                 observers = mDashboardFeatureProvider.bindPreferenceToTileAndGetObservers(
                         getActivity(), this, forceRoundedIcons, pref, tile, key,
                         mPlaceholderPreferenceController.getOrder());
+                Preference group = null;
+                if (tile.hasGroupKey()
+                        && mDashboardTilePrefKeys.containsKey(tile.getGroupKey())) {
+                    group = screen.findPreference(tile.getGroupKey());
+                } else if (PERSONALIZATION_INJECTED_KEYS.contains(key)) {
+                    group = screen.findPreference("top_level_personalize_category");
+                } else if (GOOGLE_INJECTED_KEYS.contains(key)) {
+                    group = screen.findPreference("top_level_account_category");
+                } else if (mDashboardStyle != DASHBOARD_STYLE_AOSP_LEGACY)  {
+                    group = screen.findPreference("top_level_category_undefined");
+                }
                 // Order the prefs within their respective category
                 if (KEY_ORDER.containsKey(key)) {
                     pref.setOrder(KEY_ORDER.get(key));
                 }
-                if (Flags.dynamicInjectionCategory()) {
-                    if (tile.hasGroupKey()) {
-                        Preference group = screen.findPreference(tile.getGroupKey());
-                        if (group instanceof PreferenceCategory) {
-                            ((PreferenceCategory) group).addPreference(pref);
-                        } else {
-                            screen.addPreference(pref);
-                        }
-                    } else {
-                        screen.addPreference(pref);
-                    }
+                if (group instanceof PreferenceCategory) {
+                    ((PreferenceCategory) group).addPreference(pref);
                 } else {
-                    Preference group = null;
-                    if (tile.hasGroupKey()
-                            && mDashboardTilePrefKeys.containsKey(tile.getGroupKey())) {
-                        group = screen.findPreference(tile.getGroupKey());
-                    } else if (ACCOUNT_INJECTED_KEYS.contains(key)) {
-                        group = screen.findPreference("top_level_account_category");
-                    } else if (PERSONALIZATION_INJECTED_KEYS.contains(key)) {
-                        group = screen.findPreference("top_level_personalize_category");
-                    } else if (SECURITY_PRIVACY_INJECTED_KEYS.contains(key)) {
-                        group = screen.findPreference("top_level_security_privacy_category");
-                    } else {
-                        group = screen.findPreference("top_level_category_undefined");
-                    }
-                    // Order the prefs within their respective category
-                    if (KEY_ORDER.containsKey(key)) {
-                        pref.setOrder(KEY_ORDER.get(key));
-                    }
-                    if (group instanceof PreferenceCategory) {
-                        ((PreferenceCategory) group).addPreference(pref);
-                    } else {
-                        // Should never get here now
-                        screen.addPreference(pref);
-                    }
+                    // we still need this for AOSP Legacy style
+                    screen.addPreference(pref);
                 }
                 registerDynamicDataObservers(observers);
                 mDashboardTilePrefKeys.put(key, observers);
@@ -707,13 +688,9 @@ public abstract class DashboardFragment extends SettingsPreferenceFragment
         for (Map.Entry<String, List<DynamicDataObserver>> entry : remove.entrySet()) {
             final String key = entry.getKey();
             mDashboardTilePrefKeys.remove(key);
-            if (Flags.dynamicInjectionCategory()) {
-                screen.removePreferenceRecursively(key);
-            } else {
-                Preference preference = screen.findPreference(key);
-                if (preference != null) {
-                    screen.removePreference(preference);
-                }
+            Preference preference = screen.findPreference(key);
+            if (preference != null) {
+                screen.removePreference(preference);
             }
             unregisterDynamicDataObservers(entry.getValue());
         }

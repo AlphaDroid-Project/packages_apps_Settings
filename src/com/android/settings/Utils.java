@@ -24,6 +24,8 @@ import static android.os.UserManager.USER_TYPE_PROFILE_PRIVATE;
 import static android.text.format.DateUtils.FORMAT_ABBREV_MONTH;
 import static android.text.format.DateUtils.FORMAT_SHOW_DATE;
 
+import static com.android.settings.alpha.AlphaConstants.DASHBOARD_STYLE_AOSP_REVAMPED;
+import static com.android.settings.alpha.AlphaConstants.DASHBOARD_STYLE_NAD;
 import static com.android.settings.password.ConfirmDeviceCredentialActivity.BIOMETRIC_PROMPT_AUTHENTICATORS;
 import static com.android.settings.password.ConfirmDeviceCredentialActivity.BIOMETRIC_PROMPT_HIDE_BACKGROUND;
 import static com.android.settings.password.ConfirmDeviceCredentialActivity.BIOMETRIC_PROMPT_NEGATIVE_BUTTON_TEXT;
@@ -1615,5 +1617,19 @@ public final class Utils extends com.android.settingslib.Utils {
                 .getStringArray(com.android.internal.R.array
                         .config_biometric_protected_package_names));
         return protectedPackageNames != null && protectedPackageNames.contains(packageName);
+    }
+
+    public static boolean revamped(Context context) {
+        return getDashboardStyle(context) == DASHBOARD_STYLE_AOSP_REVAMPED;
+    }
+
+    public static int getDashboardStyle(Context context) {
+        int style = DASHBOARD_STYLE_AOSP_REVAMPED; // fallback
+        if (context != null && context.getContentResolver() != null) {
+            style = android.provider.Settings.System.getIntForUser(context.getContentResolver(),
+                    android.provider.Settings.System.SETTINGS_DASHBOARD_STYLE,
+                    DASHBOARD_STYLE_NAD /* default */, UserHandle.USER_CURRENT);
+        }
+        return style;
     }
 }

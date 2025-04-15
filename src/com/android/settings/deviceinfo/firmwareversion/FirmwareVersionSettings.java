@@ -32,12 +32,29 @@ import com.android.settings.dashboard.DashboardFragment;
 import com.android.settings.search.BaseSearchIndexProvider;
 import com.android.settingslib.search.SearchIndexable;
 
+import com.google.android.material.appbar.CollapsingToolbarLayout;
+
 import java.util.ArrayList;
 import java.util.List;
 
 @SearchIndexable
 public class FirmwareVersionSettings extends DashboardFragment {
 
+    protected CollapsingToolbarLayout mCollapsingToolbarLayout;
+
+    public void onResume() {
+        super.onResume();
+        hideToolbar();
+    }
+
+    private void hideToolbar() {
+        if (mCollapsingToolbarLayout == null) {
+            mCollapsingToolbarLayout = getActivity().findViewById(com.android.settingslib.collapsingtoolbar.R.id.collapsing_toolbar);
+        }
+        if (mCollapsingToolbarLayout != null) {
+            mCollapsingToolbarLayout.setVisibility(View.GONE);
+        }
+    }
 
     @Override
     protected List<AbstractPreferenceController> createPreferenceControllers(Context context) {

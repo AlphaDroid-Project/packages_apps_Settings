@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ripple xmlns:android="http://schemas.android.com/apk/res/android" android:color="@color/alpha_color_ripple">
+    <item android:id="@android:id/mask">
+        <shape>
+            <solid android:color="#ffffffff"/>
+            <corners
+                android:topLeftRadius="@dimen/nad_round_background_radius"
+                android:topRightRadius="@dimen/nad_merge_background_radius"
+                android:bottomLeftRadius="@dimen/nad_merge_background_radius"
+                android:bottomRightRadius="@dimen/nad_merge_background_radius"/>
+        </shape>
+    </item>
+    <item android:id="@android:id/background">
+        <shape android:shape="rectangle">
+            <solid android:color="@android:color/transparent"/>
+            <corners
+                android:topLeftRadius="@dimen/nad_round_background_radius"
+                android:topRightRadius="@dimen/nad_merge_background_radius"
+                android:bottomLeftRadius="@dimen/nad_merge_background_radius"
+                android:bottomRightRadius="@dimen/nad_merge_background_radius"/>
+        </shape>
+    </item>
+</ripple>

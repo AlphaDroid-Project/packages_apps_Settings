@@ -20,6 +20,10 @@ import static android.provider.Settings.ACTION_SETTINGS_EMBED_DEEP_LINK_ACTIVITY
 import static android.provider.Settings.EXTRA_SETTINGS_EMBEDDED_DEEP_LINK_HIGHLIGHT_MENU_KEY;
 import static android.provider.Settings.EXTRA_SETTINGS_EMBEDDED_DEEP_LINK_INTENT_URI;
 
+import static com.android.settings.alpha.AlphaConstants.DASHBOARD_STYLE_AOSP_LEGACY;
+import static com.android.settings.alpha.AlphaConstants.DASHBOARD_STYLE_AOSP_REVAMPED;
+import static com.android.settings.alpha.AlphaConstants.DASHBOARD_STYLE_DOT;
+import static com.android.settings.alpha.AlphaConstants.DASHBOARD_STYLE_NAD;
 import static com.android.settings.SettingsActivity.EXTRA_USER_HANDLE;
 
 import android.animation.LayoutTransition;
@@ -123,6 +127,8 @@ public class SettingsHomepageActivity extends FragmentActivity implements
     private SplitInfoCallback mCallback;
     private boolean mAllowUpdateSuggestion = true;
 
+    private int mDashboardStyle = DASHBOARD_STYLE_AOSP_REVAMPED;
+
     /** A listener receiving homepage loaded events. */
     public interface HomepageLoadedListener {
         /** Called when the homepage is loaded. */
@@ -161,10 +167,8 @@ public class SettingsHomepageActivity extends FragmentActivity implements
         if (mAllowUpdateSuggestion) {
             Log.i(TAG, "showHomepageWithSuggestion: " + showSuggestion);
             mAllowUpdateSuggestion = false;
-            if (Flags.homepageRevamp()) {
-                mSuggestionView.setVisibility(showSuggestion ? View.VISIBLE : View.GONE);
-            } else {
-                mSuggestionView.setVisibility(showSuggestion ? View.VISIBLE : View.GONE);
+            mSuggestionView.setVisibility(showSuggestion ? View.VISIBLE : View.GONE);
+            if (mDashboardStyle == DASHBOARD_STYLE_AOSP_LEGACY) {
                 mTwoPaneSuggestionView.setVisibility(showSuggestion ? View.VISIBLE : View.GONE);
             }
         }
@@ -205,6 +209,8 @@ public class SettingsHomepageActivity extends FragmentActivity implements
 
         // Settings homepage should be the task root, otherwise there will be UI issues.
         boolean isTaskRoot = isTaskRoot();
+
+        mDashboardStyle = getDashboardStyle();
 
         mIsEmbeddingActivityEnabled = ActivityEmbeddingUtils.isEmbeddingActivityEnabled(this);
         if (mIsEmbeddingActivityEnabled) {
@@ -250,11 +256,20 @@ public class SettingsHomepageActivity extends FragmentActivity implements
         }
 
         setupEdgeToEdge();
-        setContentView(
-                Flags.homepageRevamp()
-                        ? R.layout.settings_homepage_container_v2
-                        : R.layout.settings_homepage_container);
-
+        switch (mDashboardStyle) {
+            case DASHBOARD_STYLE_AOSP_LEGACY:
+                setContentView(R.layout.settings_homepage_container);
+                break;
+            case DASHBOARD_STYLE_DOT:
+                setContentView(R.layout.settings_dot_homepage_container_v2);
+                break;
+            case DASHBOARD_STYLE_NAD:
+                setContentView(R.layout.settings_nad_homepage_container_v2);
+                break;
+            default:
+                setContentView(R.layout.settings_homepage_container_v2);
+                break;
+        }
         mIsTwoPane = ActivityEmbeddingUtils.isAlreadyEmbedded(this);
 
         updateAppBarMinHeight();
@@ -406,7 +421,8 @@ public class SettingsHomepageActivity extends FragmentActivity implements
     }
 
     private void initSearchBarView() {
-        if (Flags.homepageRevamp()) {
+        if (mDashboardStyle == DASHBOARD_STYLE_NAD) return;
+        if (mDashboardStyle != DASHBOARD_STYLE_AOSP_LEGACY) {
             View toolbar = findViewById(R.id.search_action_bar);
             FeatureFactory.getFeatureFactory().getSearchFeatureProvider()
                     .initSearchToolbar(this /* activity */, toolbar,
@@ -427,7 +443,7 @@ public class SettingsHomepageActivity extends FragmentActivity implements
     }
 
     private void initAvatarView() {
-        if (Flags.homepageRevamp()) {
+        if (mDashboardStyle != DASHBOARD_STYLE_AOSP_LEGACY) {
             return;
         }
 
@@ -456,7 +472,7 @@ public class SettingsHomepageActivity extends FragmentActivity implements
     }
 
     private void updateHomepageBackground() {
-        if (!Flags.homepageRevamp() && !mIsEmbeddingActivityEnabled) {
+        if (mDashboardStyle == DASHBOARD_STYLE_AOSP_LEGACY && !mIsEmbeddingActivityEnabled) {
             return;
         }
 
@@ -470,7 +486,7 @@ public class SettingsHomepageActivity extends FragmentActivity implements
         window.setStatusBarColor(color);
         // Update content background.
         findViewById(android.R.id.content).setBackgroundColor(color);
-        if (Flags.homepageRevamp()) {
+        if (mDashboardStyle == DASHBOARD_STYLE_AOSP_REVAMPED || mDashboardStyle == DASHBOARD_STYLE_DOT) {
             //Update search bar background
             findViewById(R.id.app_bar_container).setBackgroundColor(color);
         }
@@ -483,10 +499,8 @@ public class SettingsHomepageActivity extends FragmentActivity implements
             return;
         }
 
-        if (Flags.homepageRevamp()) {
-            mSuggestionView = findViewById(R.id.suggestion_content);
-        } else {
-            mSuggestionView = findViewById(R.id.suggestion_content);
+        mSuggestionView = findViewById(R.id.suggestion_content);
+        if (mDashboardStyle == DASHBOARD_STYLE_AOSP_LEGACY) {
             mTwoPaneSuggestionView = findViewById(R.id.two_pane_suggestion_content);
         }
         mHomepageView = findViewById(R.id.settings_homepage_container);
@@ -496,7 +510,7 @@ public class SettingsHomepageActivity extends FragmentActivity implements
         // Schedule a timer to show the homepage and hide the suggestion on timeout.
         mHomepageView.postDelayed(() -> showHomepageWithSuggestion(false),
                 HOMEPAGE_LOADING_TIMEOUT_MS);
-        if (Flags.homepageRevamp()) {
+        if (mDashboardStyle != DASHBOARD_STYLE_AOSP_LEGACY) {
             showFragment(new SuggestionFragCreator(fragmentClass, true),
                     R.id.suggestion_content);
         } else {
@@ -769,8 +783,12 @@ public class SettingsHomepageActivity extends FragmentActivity implements
         view.requestFocus();
     }
 
+    private int getDashboardStyle() {
+        return com.android.settings.Utils.getDashboardStyle(getApplicationContext());
+    }
+
     private void updateHomepageAppBar() {
-        if (Flags.homepageRevamp() || !mIsEmbeddingActivityEnabled) {
+        if (mDashboardStyle != DASHBOARD_STYLE_AOSP_LEGACY || !mIsEmbeddingActivityEnabled) {
             return;
         }
         updateAppBarMinHeight();
@@ -786,7 +804,7 @@ public class SettingsHomepageActivity extends FragmentActivity implements
     }
 
     private void updateHomepagePaddings() {
-        if (Flags.homepageRevamp() || !mIsEmbeddingActivityEnabled) {
+        if (mDashboardStyle != DASHBOARD_STYLE_AOSP_LEGACY) {
             return;
         }
         if (mIsTwoPane) {
@@ -800,7 +818,7 @@ public class SettingsHomepageActivity extends FragmentActivity implements
     }
 
     private void updateAppBarMinHeight() {
-        if (Flags.homepageRevamp()) {
+        if (mDashboardStyle != DASHBOARD_STYLE_AOSP_LEGACY) {
             return;
         }
         final int searchBarHeight = getResources().getDimensionPixelSize(R.dimen.search_bar_height);

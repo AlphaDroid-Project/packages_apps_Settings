@@ -27,10 +27,9 @@
         android:key="alpha_logo"
         android:selectable="false" />
 
-    <Preference
+    <PreferenceCategory
         android:key="category_android"
-        android:title="@string/category_android_info"
-        android:selectable="false"/>
+        android:title="@string/category_android_info">
 
     <!-- Android version -->
     <Preference
@@ -50,10 +49,11 @@
         settings:enableCopying="true"
         settings:controller="com.android.settings.deviceinfo.firmwareversion.SecurityPatchLevelPreferenceController"/>
 
-    <Preference
+    </PreferenceCategory>
+
+    <PreferenceCategory
         android:key="category_alpha"
-        android:title="@string/category_alpha_info"
-        android:selectable="false"/>
+        android:title="@string/category_alpha_info">
 
     <Preference
         android:key="rom_build_status"
@@ -99,10 +99,11 @@
         settings:enableCopying="true"
         settings:controller="com.android.settings.deviceinfo.firmwareversion.SimpleBuildNumberPreferenceController"/>
 
-    <Preference
+    </PreferenceCategory>
+
+    <PreferenceCategory
         android:key="category_device"
-        android:title="@string/category_device_info"
-        android:selectable="false"/>
+        android:title="@string/category_device_info">
 
     <!-- Device name -->
     <Preference
@@ -139,5 +140,7 @@
         android:icon="@drawable/ic_kernel"
         settings:enableCopying="true"
         settings:controller="com.android.settings.deviceinfo.firmwareversion.KernelVersionPreferenceController"/>
+
+    </PreferenceCategory>
 
 </PreferenceScreen>
