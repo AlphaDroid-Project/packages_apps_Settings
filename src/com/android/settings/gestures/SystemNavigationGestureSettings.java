@@ -62,12 +62,11 @@ import com.android.settingslib.widget.CandidateInfo;
 import com.android.settingslib.widget.IllustrationPreference;
 import com.android.settingslib.widget.SelectorWithWidgetPreference;
 
-import com.alpha.settings.utils.SystemUtils;
+import com.android.internal.util.alpha.SystemRestartUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import android.provider.Settings;
 
 @SearchIndexable
 public class SystemNavigationGestureSettings extends RadioButtonPickerFragment implements
@@ -241,7 +240,7 @@ public class SystemNavigationGestureSettings extends RadioButtonPickerFragment i
             if (threeButtonNav != null) threeButtonNav.setEnabled(showing);
             if (twoButtonNav != null) twoButtonNav.setEnabled(showing);
             if (gesturalNav != null) gesturalNav.setEnabled(showing);
-            SystemUtils.showSystemUiRestartDialog(getContext());
+            SystemRestartUtils.showSystemUIRestartDialog(getContext());
             return true;
         }
         return false;

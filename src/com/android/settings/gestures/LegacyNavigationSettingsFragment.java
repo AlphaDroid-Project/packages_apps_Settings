@@ -38,8 +38,6 @@ import com.android.settingslib.search.SearchIndexable;
 
 import com.android.internal.logging.nano.MetricsProto;
 
-import android.provider.Settings;
-
 import static com.android.systemui.shared.recents.utilities.Utilities.isLargeScreen;
 
 import static org.lineageos.internal.util.DeviceKeysConstants.*;
