@@ -67,7 +67,7 @@
     <string name="fingerprint_enroll_touch_dialog_message_side" product="default">Dotknij czujnika znajdującego się z boku twojego telefonu.</string>
     <string name="security_settings_require_screen_on_to_auth_with_proximity_description">Dotknij czujnika, aby odblokować, nawet gdy ekran jest wyłączony. Czujnik zbliżeniowy zapobiega przypadkowemu odblokowaniu.</string>
     <string name="show_navbar_hint_title">Pasek nawigacji</string>
-    <string name="show_navbar_hint_summary">Pokaż pasek nawigacji w dolnej części ekranu</string>
+    <string name="show_navbar_hint_summary">Pokazuj pasek nawigacji w dolnej części ekranu</string>
     <string name="app_notification_sound_timeout_title">Minimalny czas między dźwiękami powiadomień</string>
     <string name="app_notification_sound_timeout_summary_template">Zezwól na dźwięki i wibracje, nie więcej niż jeden raz co każde <xliff:g id="duration">%1$s </xliff:g></string>
     <string name="app_notification_sound_timeout_value_none">Brak ograniczeń</string>
@@ -95,7 +95,7 @@
     <string name="touchscreen_gesture_settings_summary">Wykonuj różne gesty na ekranie dotykowym, aby wykonać szybkie akcje</string>
     <string name="touchscreen_hovering_title">Wskazywanie ekranu dotykowego</string>
     <string name="touchscreen_hovering_summary">Pozwala na wskazywanie na ekranie jak myszką w przeglądarce internetowej, pulpicie zdalnym itd.</string>
-    <string name="wake_when_plugged_or_unplugged_title">Wybudź przy podłączaniu</string>
+    <string name="wake_when_plugged_or_unplugged_title">Wybudzaj przy podłączaniu</string>
     <string name="wake_when_plugged_or_unplugged_summary">Włącz ekran podczas podłączania i odłączania od źródła zasilania</string>
     <string name="fast_charging_title">Szybkie ładowanie</string>
     <string name="fast_charging_summary">Wyłącz, aby zmniejszyć ciepło wytwarzane przez urządzenie podczas ładowania lub wydłużyć żywotność baterii</string>
