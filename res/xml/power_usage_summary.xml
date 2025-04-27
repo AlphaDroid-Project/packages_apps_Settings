@@ -83,12 +83,6 @@
         <intent android:action="android.settings.IGNORE_BATTERY_OPTIMIZATION_SETTINGS" />
     </Preference>
 
-    <Preference
-        android:key="high_power_apps"
-        android:title="@string/high_power_apps">
-        <intent android:action="android.settings.IGNORE_BATTERY_OPTIMIZATION_SETTINGS" />
-    </Preference>
-
     <SwitchPreferenceCompat
         android:key="status_bar_show_battery_percent"
         android:title="@string/battery_percentage"
