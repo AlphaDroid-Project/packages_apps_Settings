@@ -19,6 +19,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
+import androidx.fragment.app.DialogFragment;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceScreen;
 
@@ -29,6 +30,7 @@ import lineageos.preference.LineageSystemSettingMainSwitchPreference;
 import com.android.internal.logging.nano.MetricsProto.MetricsEvent;
 import com.android.settings.R;
 import com.android.settings.SettingsPreferenceFragment;
+import com.android.settings.lineage.widget.CustomDialogPreference;
 import com.android.settings.search.BaseSearchIndexProvider;
 import com.android.settingslib.search.SearchIndexable;
 
@@ -36,6 +38,7 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Stream;
 
 @SearchIndexable
@@ -210,6 +213,25 @@ public class ChargingControlSettings extends SettingsPreferenceFragment implemen
     @Override
     public int getMetricsCategory() {
         return MetricsEvent.LINEAGE;
+    }
+
+    @Override
+    public void onDisplayPreferenceDialog(Preference preference) {
+        if (preference.getKey() == null) {
+            // Auto-key preferences that don't have a key, so the dialog can find them.
+            preference.setKey(UUID.randomUUID().toString());
+        }
+        DialogFragment f = null;
+        if (preference instanceof CustomDialogPreference) {
+            f = CustomDialogPreference.CustomPreferenceDialogFragment
+                    .newInstance(preference.getKey());
+        } else {
+            super.onDisplayPreferenceDialog(preference);
+            return;
+        }
+        f.setTargetFragment(this, 0);
+        f.show(getFragmentManager(), "dialog_preference");
+        onDialogShowing();
     }
 
     private void resetToDefaults() {
