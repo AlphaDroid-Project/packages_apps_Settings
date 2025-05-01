@@ -33,12 +33,16 @@ public class ChargingControlPreferenceController extends BasePreferenceControlle
     private static final String KEY_CHARGING_CONTROL = "charging_control";
     private static final String TAG = "ChargingControlPreferenceController";
 
-    private HealthInterface mHealthInterface;
+    private HealthInterface mHealthInterface = null;
     private Preference mChargingControl;
 
     public ChargingControlPreferenceController(Context context) {
         super(context, KEY_CHARGING_CONTROL);
-        mHealthInterface = HealthInterface.getInstance(context);
+        boolean supported = context.getResources().getBoolean(
+                com.android.internal.R.bool.config_supportsChargingControl);
+        if (supported) {
+            mHealthInterface = HealthInterface.getInstance(context);
+        }
     }
 
     @Override
@@ -54,8 +58,7 @@ public class ChargingControlPreferenceController extends BasePreferenceControlle
 
     @Override
     public int getAvailabilityStatus() {
-        return mHealthInterface != null && mHealthInterface.isChargingControlSupported()
-                ? AVAILABLE : UNSUPPORTED_ON_DEVICE;
+        return mHealthInterface != null ? AVAILABLE : UNSUPPORTED_ON_DEVICE;
     }
 
     @Override
