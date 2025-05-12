@@ -5725,8 +5725,8 @@
         </service>
 
         <activity
-            android:name="Settings$AboutActivity"
-            android:exported="false">
+            android:name="com.alpha.settings.trampoline.AboutActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="alpha.settings.ABOUT_ALPHA" />
                 <category android:name="android.intent.category.DEFAULT" />
@@ -5736,8 +5736,8 @@
         </activity>
 
         <activity
-            android:name="Settings$ButtonsActivity"
-            android:exported="false">
+            android:name="com.alpha.settings.trampoline.ButtonsActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="alpha.settings.BUTTON_SETTINGS" />
                 <category android:name="android.intent.category.DEFAULT" />
@@ -5747,8 +5747,8 @@
         </activity>
 
         <activity
-            android:name="Settings$LockScreenActivity"
-            android:exported="false">
+            android:name="com.alpha.settings.trampoline.LockScreenActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="alpha.settings.LOCKSCREEN_SETTINGS" />
                 <category android:name="android.intent.category.DEFAULT" />
@@ -5757,10 +5757,9 @@
                        android:value="com.alpha.settings.fragments.LockScreen" />
         </activity>
 
-
         <activity
-            android:name="Settings$MiscellaneousActivity"
-            android:exported="false">
+            android:name="com.alpha.settings.trampoline.MiscellaneousActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="alpha.settings.MISCELLANEOUS_SETTINGS" />
                 <category android:name="android.intent.category.DEFAULT" />
@@ -5770,8 +5769,8 @@
         </activity>
 
         <activity
-            android:name="Settings$NotificationsActivity"
-            android:exported="false">
+            android:name="com.alpha.settings.trampoline.NotificationsActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="alpha.settings.NOTIFICATION_SETTINGS" />
                 <category android:name="android.intent.category.DEFAULT" />
@@ -5781,8 +5780,8 @@
         </activity>
 
         <activity
-            android:name="Settings$QuickSettingsActivity"
-            android:exported="false">
+            android:name="com.alpha.settings.trampoline.QuickSettingsActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="alpha.settings.QUICK_SETTINGS" />
                 <category android:name="android.intent.category.DEFAULT" />
@@ -5792,8 +5791,8 @@
         </activity>
 
         <activity
-            android:name="Settings$SoundActivity"
-            android:exported="false">
+            android:name="com.alpha.settings.trampoline.SoundActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="alpha.settings.SOUND_SETTINGS" />
                 <category android:name="android.intent.category.DEFAULT" />
@@ -5803,8 +5802,8 @@
         </activity>
 
         <activity
-            android:name="Settings$StatusBarActivity"
-            android:exported="false">
+            android:name="com.alpha.settings.trampoline.StatusBarActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="alpha.settings.STATUSBAR_SETTINGS" />
                 <category android:name="android.intent.category.DEFAULT" />
@@ -5814,8 +5813,8 @@
         </activity>
 
         <activity
-            android:name="Settings$UserInterfaceActivity"
-            android:exported="false">
+            android:name="com.alpha.settings.trampoline.UserInterfaceActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="alpha.settings.USER_INTERFACE_SETTINGS" />
                 <category android:name="android.intent.category.DEFAULT" />

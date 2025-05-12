@@ -91,10 +91,7 @@ class RomCardView(context: Context, attrs: AttributeSet?) : AboutBaseCard(contex
         layout.addView(rom_logo, rlparams)
         layout.addView(linearLayout, lparamas)
         layout.setOnClickListener {
-            Intent intent = Intent()
-            intent.setComponent(ComponentName("com.android.settings",
-                    "com.android.settings.Settings$FirmwareVersionActivity"))
-            context.startActivity(intent)
+            context.startActivity(Intent("android.settings.FIRMWARE_VERSION_SETTINGS"))
         }
     }
 }
