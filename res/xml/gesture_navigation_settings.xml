@@ -43,6 +43,13 @@
         settings:textEnd="@string/long_label"
         android:dependency="navigation_bar_hint" />
 
+    <!-- Show IME Space -->
+    <com.alpha.settings.preferences.SecureSettingSwitchPreference
+        android:key="sysui_show_nav_bar_ime"
+        android:title="@string/show_ime_space_title"
+        android:summary="@string/show_ime_space_summary"
+        android:defaultValue="true" />
+
     <com.android.settings.widget.LabeledSeekBarPreference
         android:key="gesture_navbar_height_preference"
         android:title="@string/gesture_navbar_radius_title"
