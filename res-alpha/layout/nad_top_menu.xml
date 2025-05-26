@@ -94,32 +94,47 @@
             android:orientation="horizontal"
             android:id="@+id/wifi"
             android:background="@drawable/nad_top_menu_wifi_bg"
-            android:paddingHorizontal="9dp"
+            android:paddingHorizontal="10dp"
             android:paddingVertical="6dp"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:layout_marginEnd="1dp">
+ 
             <androidx.preference.internal.PreferenceImageView
-                android:id="@+id/wifi_icon"
+                android:id="@android:id/icon"
                 android:background="@android:color/transparent"
                 android:layout_width="32dp"
                 android:layout_height="match_parent"
-                android:src="@drawable/ic_top_menu_wifi"
+                android:src="@drawable/ic_wifi_signal_4"
                 android:scaleType="centerInside"
                 android:layout_marginStart="8dp"
                 android:layout_marginEnd="4dp"
                 android:paddingHorizontal="4dp"
                 android:paddingVertical="2dp"/>
-            <TextView
-                android:id="@+id/wifi_title"
-                android:padding="2dp"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:text="@string/network_dashboard_title"
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:layout_marginStart="10dp"
-                style="@style/AlphaPreferenceSmallTitle"/>
+                android:layout_marginStart="10dp">
+
+                <TextView
+                    android:id="@+id/wifi_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/network_dashboard_title"
+                    style="@style/AlphaPreferenceSmallTitle"/>
+
+                <TextView
+                    android:id="@android:id/summary"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/wifi_title"
+                    android:layout_alignStart="@id/wifi_title"
+                    android:text="@string/summary_placeholder"
+                    style="@style/AlphaPreferenceSmallSummary"/>
+            </RelativeLayout>
         </LinearLayout>
         <LinearLayout
             android:gravity="center_vertical"
@@ -132,6 +147,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:layout_marginStart="1dp">
+ 
             <androidx.preference.internal.PreferenceImageView
                 android:id="@+id/battery_icon"
                 android:background="@android:color/transparent"
@@ -164,6 +180,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@id/battery_title"
                     android:layout_alignStart="@id/battery_title"
+                    android:text="@string/summary_placeholder"
                     style="@style/AlphaPreferenceSmallSummary"/>
             </RelativeLayout>
         </LinearLayout>
