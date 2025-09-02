@@ -17,8 +17,7 @@
 package com.android.settings.display;
 
 import android.content.Context;
-
-import lineageos.providers.LineageSettings;
+import android.provider.Settings;
 
 import com.android.settings.R;
 import com.android.settings.core.TogglePreferenceController;
@@ -31,14 +30,14 @@ public class AutoBrightnessOneShotPreferenceController extends TogglePreferenceC
 
     @Override
     public boolean isChecked() {
-        return LineageSettings.System.getInt(mContext.getContentResolver(),
-                LineageSettings.System.AUTO_BRIGHTNESS_ONE_SHOT, 0) == 1;
+        return Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.AUTO_BRIGHTNESS_ONE_SHOT, 0) == 1;
     }
 
     @Override
     public boolean setChecked(boolean isChecked) {
-        LineageSettings.System.putInt(mContext.getContentResolver(),
-                LineageSettings.System.AUTO_BRIGHTNESS_ONE_SHOT, isChecked ? 1 : 0);
+        Settings.System.putInt(mContext.getContentResolver(),
+                Settings.System.AUTO_BRIGHTNESS_ONE_SHOT, isChecked ? 1 : 0);
         return true;
     }
 

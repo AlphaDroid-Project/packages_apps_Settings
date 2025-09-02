@@ -78,18 +78,18 @@
 
     <!-- Charging speed -->
     <ListPreference
-        android:entries="@*lineageos.platform:array/charging_speed_entries"
-        android:entryValues="@*lineageos.platform:array/charging_speed_values"
+        android:entries="@*android:array/charging_speed_entries"
+        android:entryValues="@*android:array/charging_speed_values"
         android:key="charging_speed"
         android:summary="%s"
-        android:title="@*lineageos.platform:string/charging_speed"
+        android:title="@*android:string/charging_speed"
         settings:controller="com.android.settings.fuelgauge.ChargingSpeedPreferenceController"
         settings:requiresService="lineagehealth" />
 
     <!-- Battery light
     <lineageos.preference.LineagePartsPreference
         android:key="battery_lights"
-        settings:requiresConfig="@*lineageos.platform:integer/config_deviceLightCapabilities"
+        settings:requiresConfig="@*android:integer/config_deviceLightCapabilities"
         settings:requiresConfigMask="64" /> -->
 
     <SwitchPreferenceCompat

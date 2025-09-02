@@ -38,8 +38,6 @@ import androidx.preference.PreferenceViewHolder;
 
 import com.android.settings.R;
 
-import lineageos.providers.LineageSettings;
-
 public class IncreasingRingVolumePreference extends Preference
         implements Handler.Callback, SeekBar.OnSeekBarChangeListener {
     private static final String TAG = "IncreasingRingMinVolumePreference";
@@ -135,10 +133,10 @@ public class IncreasingRingVolumePreference extends Preference
         mRampUpTimeValue = (TextView) holder.findViewById(R.id.ramp_up_time_value);
 
         final ContentResolver cr = getContext().getContentResolver();
-        float startVolume = LineageSettings.System.getFloat(cr,
-                LineageSettings.System.INCREASING_RING_START_VOLUME, 0.1f);
-        int rampUpTime = LineageSettings.System.getInt(cr,
-                LineageSettings.System.INCREASING_RING_RAMP_UP_TIME, 10);
+        float startVolume = Settings.System.getFloat(cr,
+                Settings.System.INCREASING_RING_START_VOLUME, 0.1f);
+        int rampUpTime = Settings.System.getInt(cr,
+                Settings.System.INCREASING_RING_RAMP_UP_TIME, 10);
 
         mStartVolumeSeekBar.setProgress(Math.round(startVolume * 1000F));
         mStartVolumeSeekBar.setOnSeekBarChangeListener(this);
@@ -163,15 +161,15 @@ public class IncreasingRingVolumePreference extends Preference
     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromTouch) {
         ContentResolver cr = getContext().getContentResolver();
         if (fromTouch && seekBar == mStartVolumeSeekBar) {
-            LineageSettings.System.putFloat(cr,
-                    LineageSettings.System.INCREASING_RING_START_VOLUME, (float) progress / 1000F);
+            Settings.System.putFloat(cr,
+                    Settings.System.INCREASING_RING_START_VOLUME, (float) progress / 1000F);
         } else if (seekBar == mRampUpTimeSeekBar) {
             int seconds = (progress + 1) * 5;
             mRampUpTimeValue.setText(
                     Formatter.formatShortElapsedTime(getContext(), seconds * 1000));
             if (fromTouch) {
-                LineageSettings.System.putInt(cr,
-                        LineageSettings.System.INCREASING_RING_RAMP_UP_TIME, seconds);
+                Settings.System.putInt(cr,
+                        Settings.System.INCREASING_RING_RAMP_UP_TIME, seconds);
             }
         }
     }

@@ -38,8 +38,6 @@ import com.android.settingslib.search.SearchIndexable;
 
 import com.android.internal.logging.nano.MetricsProto;
 
-import lineageos.providers.LineageSettings;
-
 import static com.android.systemui.shared.recents.utilities.Utilities.isLargeScreen;
 
 import static org.lineageos.internal.util.DeviceKeysConstants.*;
@@ -89,27 +87,27 @@ public class LegacyNavigationSettingsFragment extends DashboardFragment implemen
         }
 
         Action defaultBackLongPressAction = Action.fromIntSafe(res.getInteger(
-                org.lineageos.platform.internal.R.integer.config_longPressOnBackBehavior));
+                com.android.internal.R.integer.config_longPressOnBackBehavior));
         Action defaultHomeLongPressAction = Action.fromIntSafe(res.getInteger(
-                org.lineageos.platform.internal.R.integer.config_longPressOnHomeBehavior));
+                com.android.internal.R.integer.config_longPressOnHomeBehavior));
         Action defaultHomeDoubleTapAction = Action.fromIntSafe(res.getInteger(
-                org.lineageos.platform.internal.R.integer.config_doubleTapOnHomeBehavior));
+                com.android.internal.R.integer.config_doubleTapOnHomeBehavior));
         Action defaultAppSwitchLongPressAction = Action.fromIntSafe(res.getInteger(
-                org.lineageos.platform.internal.R.integer.config_longPressOnAppSwitchBehavior));
+                com.android.internal.R.integer.config_longPressOnAppSwitchBehavior));
         Action backLongPressAction = Action.fromSettings(resolver,
-                LineageSettings.System.KEY_BACK_LONG_PRESS_ACTION,
+                Settings.System.KEY_BACK_LONG_PRESS_ACTION,
                 defaultBackLongPressAction);
         Action homeLongPressAction = Action.fromSettings(resolver,
-                LineageSettings.System.KEY_HOME_LONG_PRESS_ACTION,
+                Settings.System.KEY_HOME_LONG_PRESS_ACTION,
                 defaultHomeLongPressAction);
         Action homeDoubleTapAction = Action.fromSettings(resolver,
-                LineageSettings.System.KEY_HOME_DOUBLE_TAP_ACTION,
+                Settings.System.KEY_HOME_DOUBLE_TAP_ACTION,
                 defaultHomeDoubleTapAction);
         Action appSwitchLongPressAction = Action.fromSettings(resolver,
-                LineageSettings.System.KEY_APP_SWITCH_LONG_PRESS_ACTION,
+                Settings.System.KEY_APP_SWITCH_LONG_PRESS_ACTION,
                 defaultAppSwitchLongPressAction);
         Action appSwitchDoubleTapAction = Action.fromSettings(resolver,
-                LineageSettings.System.KEY_APP_SWITCH_DOUBLE_TAP_ACTION,
+                Settings.System.KEY_APP_SWITCH_DOUBLE_TAP_ACTION,
                 Action.LAST_APP);
 
         // Navigation bar back long press
@@ -159,23 +157,23 @@ public class LegacyNavigationSettingsFragment extends DashboardFragment implemen
 
         if (preference == mNavigationBackLongPressAction) {
             handleListChange((ListPreference) preference, newValue,
-                    LineageSettings.System.KEY_BACK_LONG_PRESS_ACTION);
+                    Settings.System.KEY_BACK_LONG_PRESS_ACTION);
             return true;
         } else if (preference == mNavigationHomeLongPressAction) {
             handleListChange((ListPreference) preference, newValue,
-                    LineageSettings.System.KEY_HOME_LONG_PRESS_ACTION);
+                    Settings.System.KEY_HOME_LONG_PRESS_ACTION);
             return true;
         } else if (preference == mNavigationHomeDoubleTapAction) {
             handleListChange((ListPreference) preference, newValue,
-                    LineageSettings.System.KEY_HOME_DOUBLE_TAP_ACTION);
+                    Settings.System.KEY_HOME_DOUBLE_TAP_ACTION);
             return true;
         } else if (preference == mNavigationAppSwitchLongPressAction) {
             handleListChange((ListPreference) preference, newValue,
-                    LineageSettings.System.KEY_APP_SWITCH_LONG_PRESS_ACTION);
+                    Settings.System.KEY_APP_SWITCH_LONG_PRESS_ACTION);
             return true;
         } else if (preference == mNavigationAppSwitchDoubleTapAction) {
             handleListChange((ListPreference) preference, newValue,
-                    LineageSettings.System.KEY_APP_SWITCH_DOUBLE_TAP_ACTION);
+                    Settings.System.KEY_APP_SWITCH_DOUBLE_TAP_ACTION);
             return true;
         }
         return false;
@@ -203,7 +201,7 @@ public class LegacyNavigationSettingsFragment extends DashboardFragment implemen
         String value = (String) newValue;
         int index = pref.findIndexOfValue(value);
         pref.setSummary(pref.getEntries()[index]);
-        LineageSettings.System.putIntForUser(getContentResolver(), setting, Integer.valueOf(value), UserHandle.USER_CURRENT);
+        Settings.System.putIntForUser(getContentResolver(), setting, Integer.valueOf(value), UserHandle.USER_CURRENT);
     }
 
     public static final BaseSearchIndexProvider SEARCH_INDEX_DATA_PROVIDER =

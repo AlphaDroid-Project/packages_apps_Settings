@@ -40,8 +40,6 @@ import com.android.settingslib.widget.SliderPreference;
 
 import com.crdroid.settings.utils.SystemUtils;
 
-import lineageos.providers.LineageSettings;
-
 import static org.lineageos.internal.util.DeviceKeysConstants.*;
 
 /**
@@ -118,10 +116,10 @@ public class GestureNavigationSettingsFragment extends DashboardFragment impleme
         initGestureNavbarHeightPreference();
 
         Action cornerLongSwipeAction = Action.fromSettings(resolver,
-                LineageSettings.System.KEY_CORNER_LONG_SWIPE_ACTION,
+                Settings.System.KEY_CORNER_LONG_SWIPE_ACTION,
                 Action.SEARCH);
         Action edgeLongSwipeAction = Action.fromSettings(resolver,
-                LineageSettings.System.KEY_EDGE_LONG_SWIPE_ACTION,
+                Settings.System.KEY_EDGE_LONG_SWIPE_ACTION,
                 Action.NOTHING);
 
         // Corner swipe up gesture
@@ -172,11 +170,11 @@ public class GestureNavigationSettingsFragment extends DashboardFragment impleme
 
         if (preference == mCornerLongSwipeAction) {
             handleListChange((ListPreference) preference, newValue,
-                    LineageSettings.System.KEY_CORNER_LONG_SWIPE_ACTION);
+                    Settings.System.KEY_CORNER_LONG_SWIPE_ACTION);
             return true;
         } else if (preference == mEdgeLongSwipeAction) {
             handleListChange((ListPreference) preference, newValue,
-                    LineageSettings.System.KEY_EDGE_LONG_SWIPE_ACTION);
+                    Settings.System.KEY_EDGE_LONG_SWIPE_ACTION);
             return true;
         } else if (preference == mEnableTaskbar) {
             SystemUtils.showSystemUiRestartDialog(getContext());
@@ -207,7 +205,7 @@ public class GestureNavigationSettingsFragment extends DashboardFragment impleme
         String value = (String) newValue;
         int index = pref.findIndexOfValue(value);
         pref.setSummary(pref.getEntries()[index]);
-        LineageSettings.System.putIntForUser(getContentResolver(), setting, Integer.valueOf(value), UserHandle.USER_CURRENT);
+        Settings.System.putIntForUser(getContentResolver(), setting, Integer.valueOf(value), UserHandle.USER_CURRENT);
     }
 
     private void initTutorialButton() {

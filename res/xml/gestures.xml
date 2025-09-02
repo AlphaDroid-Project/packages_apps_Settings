@@ -20,10 +20,6 @@
     xmlns:settings="http://schemas.android.com/apk/res-auto"
     android:title="@string/gesture_preference_title">
 
-    <lineageos.preference.LineagePartsPreference
-        android:key="touchscreen_gesture_settings"
-        settings:requiresFeature="lineagehardware:FEATURE_TOUCHSCREEN_GESTURES" />
-
     <lineageos.preference.RemotePreference
             android:key="device_touchscreen_gesture_settings"
             android:title="@string/touchscreen_gesture_settings_title"

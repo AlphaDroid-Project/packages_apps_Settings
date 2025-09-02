@@ -227,7 +227,7 @@ public class FingerprintSettings extends SubSettings {
                 }
             }
             if (!isUdfps && context.getResources().getBoolean(
-                    org.lineageos.platform.internal.R.bool.config_fingerprintWakeAndUnlock)) {
+                    com.android.internal.R.bool.config_fingerprintWakeAndUnlock)) {
                 controllers.add(
                         new FingerprintUnlockCategoryController(
                                 context,
@@ -569,7 +569,7 @@ public class FingerprintSettings extends SubSettings {
             mFingerprintUpdater = new FingerprintUpdater(activity, mFingerprintManager);
             mSensorProperties = mFingerprintManager.getSensorPropertiesInternal();
             mProximityCheckOnFingerprintUnlock = getContext().getResources().getBoolean(
-                    org.lineageos.platform.internal.R.bool.config_proximityCheckOnFpsUnlock);
+                    com.android.internal.R.bool.config_proximityCheckOnFpsUnlock);
 
             mToken = getIntent().getByteArrayExtra(
                     ChooseLockSettingsHelper.EXTRA_KEY_CHALLENGE_TOKEN);
@@ -736,7 +736,7 @@ public class FingerprintSettings extends SubSettings {
                         com.android.internal.R.bool.config_screen_off_udfps_enabled);
             } else if (isSfps()) {
                 return getContext().getResources().getBoolean(
-                        org.lineageos.platform.internal.R.bool.config_fingerprintWakeAndUnlock);
+                        com.android.internal.R.bool.config_fingerprintWakeAndUnlock);
             }
             return false;
         }

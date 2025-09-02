@@ -129,7 +129,6 @@ android_library {
         "settings_connectivity_flags_lib",
 
         // Lineage dependencies
-        "org.lineageos.platform.internal",
         "LineagePreferenceLib",
         "androidx.fragment_fragment",
         "androidx.fragment_fragment-ktx",
