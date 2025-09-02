@@ -137,7 +137,6 @@ android_library {
         "device-state-schema",
 
         // Lineage dependencies
-        "org.lineageos.platform.internal",
         "LineagePreferenceLib",
         "SystemUISharedLib",
     ],

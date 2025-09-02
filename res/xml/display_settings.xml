@@ -235,7 +235,7 @@
 
         <!--<lineageos.preference.LineagePartsPreference
             android:key="long_screen_settings"
-            settings:requiresConfig="@*lineageos.platform:bool/config_haveHigherAspectRatioScreen" />-->
+            settings:requiresConfig="@*android:bool/config_haveHigherAspectRatioScreen" />-->
 
         <Preference
             android:key="screensaver"
@@ -267,16 +267,16 @@
             android:key="proximity_on_wake"
             android:title="@string/proximity_wake_title"
             android:summary="@string/proximity_wake_summary"
-            android:defaultValue="@*lineageos.platform:bool/config_proximityCheckOnWakeEnabledByDefault"
-            settings:requiresConfig="@*lineageos.platform:bool/config_proximityCheckOnWake" />
+            android:defaultValue="@*android:bool/config_proximityCheckOnWakeEnabledByDefault"
+            settings:requiresConfig="@*android:bool/config_proximityCheckOnWake" />
 
         <!-- Double tap to sleep -->
         <lineageos.preference.LineageSystemSettingSwitchPreference
             android:key="double_tap_sleep_gesture"
             android:title="@string/status_bar_double_tap_to_sleep_title"
             android:summary="@string/status_bar_double_tap_to_sleep_summary"
-            android:defaultValue="@*lineageos.platform:bool/config_dt2sGestureEnabledByDefault"
-            settings:requiresConfig="@*lineageos.platform:bool/config_dt2sGestureAvailable" />
+            android:defaultValue="@*android:bool/config_dt2sGestureEnabledByDefault"
+            settings:requiresConfig="@*android:bool/config_dt2sGestureAvailable" />
 
         <lineageos.preference.LineageGlobalSettingSwitchPreference
             android:key="wake_when_plugged_or_unplugged"

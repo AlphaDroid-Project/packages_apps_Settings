@@ -31,7 +31,7 @@ class LineageBuildDatePreference :
         get() = "os_build_date"
 
     override val title: Int
-        get() = org.lineageos.platform.internal.R.string.build_date
+        get() = com.android.internal.R.string.build_date
 
     override fun bind(preference: Preference, metadata: PreferenceMetadata) {
         super.bind(preference, metadata)

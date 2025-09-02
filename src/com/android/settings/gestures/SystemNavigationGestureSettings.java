@@ -64,9 +64,6 @@ import com.crdroid.settings.utils.SystemUtils;
 import java.util.ArrayList;
 import java.util.List;
 
-import lineageos.providers.LineageSettings;
-
-// LINT.IfChange
 @SearchIndexable
 public class SystemNavigationGestureSettings extends RadioButtonPickerFragment implements
         HelpResourceProvider, Preference.OnPreferenceChangeListener {
@@ -150,8 +147,8 @@ public class SystemNavigationGestureSettings extends RadioButtonPickerFragment i
         }
         mayCheckOnlyRadioButton();
 
-        boolean showing = LineageSettings.System.getIntForUser(getContext().getContentResolver(),
-                LineageSettings.System.FORCE_SHOW_NAVBAR,
+        boolean showing = Settings.System.getIntForUser(getContext().getContentResolver(),
+                Settings.System.FORCE_SHOW_NAVBAR,
                 Utils.hasNavbarByDefault(getContext()) ? 1 : 0, USER_CURRENT) != 0;
 
         mNavbarVisibility = (SwitchPreferenceCompat) screen.findPreference(NAVBAR_VISIBILITY);

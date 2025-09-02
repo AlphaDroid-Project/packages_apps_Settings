@@ -22,14 +22,14 @@ import com.android.settings.R
 import com.android.settingslib.metadata.BooleanValuePreference
 import com.android.settingslib.metadata.PreferenceMetadata
 import com.android.settingslib.preference.PreferenceBinding
-import lineageos.providers.LineageSettings
+import android.provider.Settings
 
 class DarkModeBlackThemePreference(context: Context, private val darkModeStorage: DarkModeStorage) :
     PreferenceMetadata, BooleanValuePreference, PreferenceBinding {
 
     private val blackThemeStorage = DarkModeBlackThemeStorage(context)
 
-    override val key: String = LineageSettings.Secure.BERRY_BLACK_THEME
+    override val key: String = Settings.Secure.BERRY_BLACK_THEME
 
     override val title: Int = R.string.berry_black_theme_title
 

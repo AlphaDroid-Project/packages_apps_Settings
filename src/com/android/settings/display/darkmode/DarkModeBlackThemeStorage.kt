@@ -20,11 +20,11 @@ import android.content.Context
 import android.database.ContentObserver
 import android.os.Handler
 import android.os.Looper
+import android.provider.Settings
 import com.android.settingslib.datastore.AbstractKeyedDataObservable
 import com.android.settingslib.datastore.KeyValueStore
 import com.android.settingslib.datastore.Permissions
 import com.android.settingslib.metadata.PreferenceChangeReason
-import lineageos.providers.LineageSettings
 
 @Suppress("UNCHECKED_CAST")
 class DarkModeBlackThemeStorage(private val context: Context) :
@@ -33,22 +33,22 @@ class DarkModeBlackThemeStorage(private val context: Context) :
     private val settingsObserver =
         object : ContentObserver(Handler(Looper.getMainLooper())) {
             override fun onChange(selfChange: Boolean) {
-                notifyChange(LineageSettings.Secure.BERRY_BLACK_THEME, PreferenceChangeReason.VALUE)
+                notifyChange(Settings.Secure.BERRY_BLACK_THEME, PreferenceChangeReason.VALUE)
             }
         }
 
-    override fun contains(key: String) = key == LineageSettings.Secure.BERRY_BLACK_THEME
+    override fun contains(key: String) = key == Settings.Secure.BERRY_BLACK_THEME
 
     override fun <T : Any> getValue(key: String, valueType: Class<T>): T? {
-        val value = LineageSettings.Secure.getInt(context.contentResolver, key, 0) != 0
+        val value = Settings.Secure.getInt(context.contentResolver, key, 0) != 0
         return value as T
     }
 
     override fun <T : Any> setValue(key: String, valueType: Class<T>, value: T?) {
         val boolValue = value as? Boolean ?: false
-        LineageSettings.Secure.putInt(
+        Settings.Secure.putInt(
             context.contentResolver,
-            LineageSettings.Secure.BERRY_BLACK_THEME,
+            Settings.Secure.BERRY_BLACK_THEME,
             if (boolValue) 1 else 0,
         )
         // Notify immediately for UI responsiveness
@@ -57,7 +57,7 @@ class DarkModeBlackThemeStorage(private val context: Context) :
 
     override fun onFirstObserverAdded() {
         context.contentResolver.registerContentObserver(
-            LineageSettings.Secure.getUriFor(LineageSettings.Secure.BERRY_BLACK_THEME),
+            Settings.Secure.getUriFor(Settings.Secure.BERRY_BLACK_THEME),
             false,
             settingsObserver,
         )

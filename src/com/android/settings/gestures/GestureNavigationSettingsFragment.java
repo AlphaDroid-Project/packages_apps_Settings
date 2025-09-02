@@ -46,8 +46,6 @@ import java.text.NumberFormat;
 import java.util.List;
 import java.util.Locale;
 
-import lineageos.providers.LineageSettings;
-
 import static com.android.systemui.shared.recents.utilities.Utilities.isLargeScreen;
 
 import static org.lineageos.internal.util.DeviceKeysConstants.*;
@@ -127,10 +125,10 @@ public class GestureNavigationSettingsFragment extends DashboardFragment impleme
         initGestureNavbarHeightPreference();
 
         Action cornerLongSwipeAction = Action.fromSettings(resolver,
-                LineageSettings.System.KEY_CORNER_LONG_SWIPE_ACTION,
+                Settings.System.KEY_CORNER_LONG_SWIPE_ACTION,
                 Action.SEARCH);
         Action edgeLongSwipeAction = Action.fromSettings(resolver,
-                LineageSettings.System.KEY_EDGE_LONG_SWIPE_ACTION,
+                Settings.System.KEY_EDGE_LONG_SWIPE_ACTION,
                 Action.NOTHING);
 
         // Corner swipe up gesture
@@ -139,9 +137,9 @@ public class GestureNavigationSettingsFragment extends DashboardFragment impleme
         // Edge long swipe gesture
         mEdgeLongSwipeAction = initList(KEY_EDGE_LONG_SWIPE, edgeLongSwipeAction);
 
-        boolean enableTaskbar = LineageSettings.System.getIntForUser(
+        boolean enableTaskbar = Settings.System.getIntForUser(
                 resolver,
-                LineageSettings.System.ENABLE_TASKBAR,
+                Settings.System.ENABLE_TASKBAR,
                 isLargeScreen(getContext()) ? 1 : 0,
                 UserHandle.USER_CURRENT
         ) != 0;
@@ -196,11 +194,11 @@ public class GestureNavigationSettingsFragment extends DashboardFragment impleme
 
         if (preference == mCornerLongSwipeAction) {
             handleListChange((ListPreference) preference, newValue,
-                    LineageSettings.System.KEY_CORNER_LONG_SWIPE_ACTION);
+                    Settings.System.KEY_CORNER_LONG_SWIPE_ACTION);
             return true;
         } else if (preference == mEdgeLongSwipeAction) {
             handleListChange((ListPreference) preference, newValue,
-                    LineageSettings.System.KEY_EDGE_LONG_SWIPE_ACTION);
+                    Settings.System.KEY_EDGE_LONG_SWIPE_ACTION);
             return true;
         } else if (preference == mEnableTaskbar) {
             SystemUtils.showSystemUiRestartDialog(getContext());
@@ -231,7 +229,7 @@ public class GestureNavigationSettingsFragment extends DashboardFragment impleme
         String value = (String) newValue;
         int index = pref.findIndexOfValue(value);
         pref.setSummary(pref.getEntries()[index]);
-        LineageSettings.System.putIntForUser(getContentResolver(), setting, Integer.valueOf(value), UserHandle.USER_CURRENT);
+        Settings.System.putIntForUser(getContentResolver(), setting, Integer.valueOf(value), UserHandle.USER_CURRENT);
     }
 
     private void initTutorialButton() {

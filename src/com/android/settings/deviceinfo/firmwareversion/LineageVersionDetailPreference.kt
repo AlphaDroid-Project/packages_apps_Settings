@@ -44,7 +44,7 @@ class LineageVersionDetailPreference :
         get() = "lineage_version"
 
     override val title: Int
-        get() = org.lineageos.platform.internal.R.string.lineage_version
+        get() = com.android.internal.R.string.lineage_version
 
     override val indexable
         get() = false

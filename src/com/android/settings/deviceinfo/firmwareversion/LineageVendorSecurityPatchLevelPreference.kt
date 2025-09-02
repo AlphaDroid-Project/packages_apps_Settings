@@ -36,7 +36,7 @@ class LineageVendorSecurityPatchLevelPreference :
         get() = "vendor_security_key"
 
     override val title: Int
-        get() = org.lineageos.platform.internal.R.string.lineage_vendor_security_patch
+        get() = com.android.internal.R.string.lineage_vendor_security_patch
 
     override fun bind(preference: Preference, metadata: PreferenceMetadata) {
         super.bind(preference, metadata)
