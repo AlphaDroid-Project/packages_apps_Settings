@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     SPDX-FileCopyrightText: 2015 The CyanogenMod Project
+     SPDX-FileCopyrightText: 2017-2023 The LineageOS Project
+     SPDX-License-Identifier: Apache-2.0
+-->
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="loading">Загрузка\u2026</string>
+    <string name="cancel">Скасаваць</string>
+    <string name="add">Дадаць</string>
+    <string name="choose_app">Выбраць праграму</string>
+    <string name="reset">Скінуць</string>
+    <string name="settings">Налады</string>
+    <string name="back">Назад</string>
+    <string name="finish">Завяршыць</string>
+    <string name="next">Далей</string>
+    <string name="on">Укл</string>
+    <string name="off">Выключана</string>
+    <string name="yes">Так</string>
+    <string name="no">Не</string>
+    <string name="search">Пошук</string>
+    <string name="disabled">Адключана</string>
+    <string name="enabled">Уключана</string>
+    <string name="live_display_summary">Аптымізацыя экрана ў залежнасці ад часу сутак і ўмоў асвятлення для паляпшэння чытальнасці тэксту і зніжэння стамляльнасці вачэй</string>
+    <string name="live_display_mode">Рэжым паказу</string>
+    <string name="live_display_color_temperature_summary">Дзень: <xliff:g id="day_temperature">%1$d </xliff:g>K Ноч: <xliff:g id="night_temperature">%2$d </xliff:g>K</string>
+    <string name="live_display_color_temperature_label"><xliff:g id="degrees">%1$d</xliff:g>К</string>
+    <string name="live_display_day">Дзень</string>
+    <string name="live_display_night">Ноч</string>
+    <string name="live_display_outdoor_mode_title">Аўтаматычны рэжым для вуліцы</string>
+    <string name="live_display_outdoor_mode_summary">Павялічыць яркасць і насычанасць аўтаматычна пры яркім сонечным святле</string>
+    <string name="live_display_low_power_title">Зменшыць спажыванне энергіі</string>
+    <string name="live_display_enhance_color_summary">Палепшыць сакавітасць адценняў скуры, краявідаў і іншых відарысаў</string>
+    <string name="live_display_color_profile_title">Профіль колеру</string>
+    <string name="live_display_color_profile_standard_title">Стандартны</string>
+    <string name="live_display_color_profile_standard_summary">Дакладная перадача колераў і яркія белыя тоны</string>
+    <string name="live_display_color_profile_natural_title">Прыродны</string>
+    <string name="live_display_color_profile_natural_summary">Рэалістычныя колеры і адценні скуры</string>
+    <string name="live_display_color_profile_dynamic_title">Дынамічны</string>
+    <string name="live_display_color_profile_dynamic_summary">Палепшаныя колеры і яркія белыя тоны</string>
+    <string name="live_display_color_profile_cinema_title">Кіно</string>
+    <string name="live_display_color_profile_cinema_summary">Ідэальная перадача колеру для відэа</string>
+    <string name="live_display_color_profile_astronomy_title">Астраномія</string>
+    <string name="live_display_color_profile_astronomy_summary">Глыбокі чырвоны для захавання бачнасці ноччу</string>
+    <string name="live_display_color_profile_photography_title">Фатаграфія</string>
+    <string name="live_display_color_profile_photography_summary">Ідэальная перадача колеру для фота</string>
+    <string name="live_display_color_profile_basic_title">Базавы</string>
+    <string name="live_display_color_profile_basic_summary">Выкарыстоўваць неадкалібраваны экран</string>
+    <string name="live_display_color_profile_adaptive_title">Адаптыўны</string>
+    <string name="live_display_color_profile_adaptive_summary">Колеры адаптаваныя да ўмоў навакольнага асяроддзя</string>
+    <string name="live_display_color_profile_reading_title">Чытанне</string>
+    <string name="live_display_color_profile_reading_summary">Цёплыя колеры для змяншэння напружання вачэй</string>
+    <string name="live_display_color_profile_srgb_title">sRGB</string>
+    <string name="live_display_color_profile_dci_p3_title">DCI-P3</string>
+    <string name="live_display_color_profile_dci_p3_summary">Колеры набліжаныя да каляровай прасторы DCI-P3 </string>
+    <string name="live_display_reading_mode_title">Рэжым чытання</string>
+    <string name="color_calibration_title">Каліброўка колеру</string>
+    <string name="color_calibration_summary">Каліброўка колераў на экране</string>
+    <string name="color_red_title">Чырвоны</string>
+    <string name="color_green_title">Зялёны</string>
+    <string name="color_blue_title">Сіні</string>
+    <string name="picture_adjustment_summary">Карэкціраваць адценне, насычанасць, глыбіню і кантраст</string>
+    <string name="adj_hue_title">Адценне</string>
+    <string name="adj_saturation_title">Насычанасць</string>
+    <string name="adj_intensity_title">Інтэнсіўнасць</string>
+    <string name="adj_contrast_title">Кантраст</string>
+    <string name="navigation_bar_arrow_keys_title">Паказваць стрэлкі падчас уводу тэксту</string>
+    <string name="accelerometer_title">Аўтапаварот экрана</string>
+    <string name="display_rotation_enabled">Аўтапаварот уключаны</string>
+    <string name="display_rotation_disabled">Аўтапаварот адключаны</string>
+    <string name="display_rotation_unit">градусаў</string>
+    <string name="display_lockscreen_rotation_title">Аўтапаварот экрана блакіроўкі</string>
+    <string name="display_rotation_category_title">Рэжымы павароту</string>
+    <string name="display_rotation_0_title">0 градусаў</string>
+    <string name="display_rotation_90_title">90 градусаў</string>
+    <string name="display_rotation_180_title">180 градусаў</string>
+    <string name="display_rotation_270_title">270 градусаў</string>
+    <string name="charging_sounds_settings_title">Гукі зарадкі</string>
+    <string name="charging_sounds_enable_title">Уключыць гукі зарадкі</string>
+    <string name="charging_sounds_summary">Прайграванне гуку пры падключэнні або адключэнні крыніцы сілкавання</string>
+    <string name="power_notifications_vibrate_title">Вібрацыя</string>
+    <string name="charging_sounds_ringtone_silent">Без гуку</string>
+</resources>

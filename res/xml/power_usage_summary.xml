@@ -69,9 +69,12 @@
     </PreferenceCategory>
 
     <!-- Charging control -->
-    <lineageos.preference.LineagePartsPreference
+    <Preference
         android:key="charging_control"
-        settings:requiresService="lineagehealth" />
+        android:title="@string/charging_control_title"
+        android:summary="@string/summary_empty"
+        android:fragment="com.android.settings.lineage.health.ChargingControlSettings"
+        settings:controller="com.android.settings.fuelgauge.ChargingControlPreferenceController" />
 
     <!-- Charging speed -->
     <ListPreference

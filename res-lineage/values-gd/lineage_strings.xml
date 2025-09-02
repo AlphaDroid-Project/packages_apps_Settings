@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     SPDX-FileCopyrightText: 2015 The CyanogenMod Project
+     SPDX-FileCopyrightText: 2017-2023 The LineageOS Project
+     SPDX-License-Identifier: Apache-2.0
+-->
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="loading">’Ga luchdadh\u2026</string>
+    <string name="dlg_ok">Ceart ma-thà</string>
+    <string name="cancel">Sguir dheth</string>
+    <string name="add">Cuir ris</string>
+    <string name="choose_app">Tagh aplacaid</string>
+    <string name="reset">Ath-shuidhich</string>
+    <string name="advanced">Adhartach</string>
+    <string name="settings">Roghainnean</string>
+    <string name="name">Ainm</string>
+    <string name="back">Air ais</string>
+    <string name="finish">Crìochnaich</string>
+    <string name="next">Air adhart</string>
+    <string name="on">Air</string>
+    <string name="off">Dheth</string>
+    <string name="yes">Tha</string>
+    <string name="no">Chan eil</string>
+    <string name="search">Lorg</string>
+    <string name="disabled">À comas</string>
+    <string name="enabled">An comas</string>
+    <string name="live_display_summary">Pisich an sgrìn agad a-rèir àm dhen latha is na h-àrainneachd ach am bi cùisean nas fhasa leughadh is nas lugha a sgithear sùla ort</string>
+    <string name="live_display_mode">Modh an taisbeanaidh</string>
+    <string name="live_display_color_temperature_title">Teothachd an datha</string>
+    <string name="live_display_color_temperature_summary">Latha: <xliff:g id="day_temperature">%1$d</xliff:g>K  Oidhche: <xliff:g id="night_temperature">%2$d</xliff:g>K</string>
+    <string name="live_display_color_temperature_label"><xliff:g id="degrees">%1$d</xliff:g>K</string>
+    <string name="live_display_day">Latha</string>
+    <string name="live_display_night">Oidhche</string>
+    <string name="live_display_outdoor_mode_title">Modh taobh a-muigh fèin-obrachail</string>
+    <string name="live_display_outdoor_mode_summary">Meudaich an t-soilleireachd ’s an t-sàthachd gu fèin-obrachail fo dheàrrsadh na grèine</string>
+    <string name="live_display_anti_flicker_title">Lùghdaich am priobadh</string>
+    <string name="live_display_anti_flicker_summary">Seachain cus priobaidh agus ìslich sgithear sùla nuair a bhios an solas fann. Dh’fhaoidte nach bi na dathan cho pongail agus buaidh air an dòigh air am faic thu nithean.</string>
+    <string name="live_display_low_power_title">Caomhain cumhachd</string>
+    <string name="live_display_low_power_summary">Cuir gleus air an sgrìn airson caomhnadh cumhachd as motha gun chrìonadh</string>
+    <string name="live_display_enhance_color_title">Leasaich na dathan</string>
+    <string name="live_display_enhance_color_summary">Thoir piseach air beòthad dath craicinn, sheallaidhean is dealbhan eile</string>
+    <string name="live_display_color_profile_title">Pròifil dhathan</string>
+    <string name="live_display_color_profile_standard_title">Stannardach</string>
+    <string name="live_display_color_profile_standard_summary">Dathan pongail is geal soilleir</string>
+    <string name="live_display_color_profile_natural_title">Nàdarra</string>
+    <string name="live_display_color_profile_natural_summary">Dathan is dathan craicinn fìrinneach</string>
+    <string name="live_display_color_profile_dynamic_title">Innsgineach</string>
+    <string name="live_display_color_profile_dynamic_summary">Dathan leasaichte is geal soilleir</string>
+    <string name="live_display_color_profile_cinema_title">Taigh-dhealbh</string>
+    <string name="live_display_color_profile_cinema_summary">Riochdachadh dhathan foirfe airson video</string>
+    <string name="live_display_color_profile_astronomy_title">Reul-eòlas</string>
+    <string name="live_display_color_profile_astronomy_summary">Dorch-dhearg airson lèirsinn a dh’oidhche</string>
+    <string name="live_display_color_profile_photography_title">Togail dhealbhan</string>
+    <string name="live_display_color_profile_photography_summary">Riochdachadh dhathan foirfe airson dealbhan-camara</string>
+    <string name="live_display_color_profile_basic_title">Bunasach</string>
+    <string name="live_display_color_profile_basic_summary">Cleachd an sgrìn gun chailbhreachadh</string>
+    <string name="live_display_color_profile_adaptive_title">Co-fhreagrach</string>
+    <string name="live_display_color_profile_adaptive_summary">Co-fhreagraidh na dathan ris an àrainneachd</string>
+    <string name="live_display_color_profile_reading_title">Leughadh</string>
+    <string name="live_display_color_profile_reading_summary">Dathan nas blàithe an aghaidh sgithear sùla</string>
+    <string name="live_display_color_profile_srgb_title">sRGB</string>
+    <string name="live_display_color_profile_srgb_summary">Dathan pongail a-rèir dhathan sRGB</string>
+    <string name="live_display_color_profile_dci_p3_title">DCI-P3</string>
+    <string name="live_display_color_profile_dci_p3_summary">Dathan pongail a-rèir dhathan DCI-P3</string>
+    <string name="live_display_reading_mode_title">Modh leughaidh</string>
+    <string name="live_display_reading_mode_summary">Modh liath-sgèile a chùm leughaidh fhaide</string>
+    <string name="color_calibration_title">Cailbhreachadh nan dathan</string>
+    <string name="color_calibration_summary">Cailbhrich na dathan air an sgrìn</string>
+    <string name="color_red_title">Dearg</string>
+    <string name="color_green_title">Uaine</string>
+    <string name="color_blue_title">Gorm</string>
+    <string name="picture_adjustment_title">Gleusadh an deilbh</string>
+    <string name="picture_adjustment_summary">Cuir gleus air an tuar, an t-sàthachd, an dèine agus an t-iomsgaradh</string>
+    <string name="adj_hue_title">Tuar</string>
+    <string name="adj_saturation_title">Sàthachd</string>
+    <string name="adj_intensity_title">Dèine</string>
+    <string name="adj_contrast_title">Iomsgaradh</string>
+    <string name="navigation_bar_arrow_keys_title">Seall iuchraichean saighde rè sgrìobhaidh</string>
+    <string name="navigation_bar_arrow_keys_summary">Seall putanan cùrsair clì is deas fhad ’s a tha mi a’ sgrìobhadh. Tar-àithnidh seo suidsear IME.</string>
+    <string name="enable_reporting_title">Cuir na h-aithrisean an comas</string>
+    <string name="accelerometer_title">Cuairtich an sgrìn gu fèin-obrachail</string>
+    <string name="display_rotation_title">Roghainnean a’ chuairteachaidh</string>
+    <string name="display_rotation_enabled">Tha an cuairteachadh fèin-obrachail an comas</string>
+    <string name="display_rotation_disabled">Tha an cuairteachadh fèin-obrachail à comas</string>
+    <string name="display_rotation_unit">ceum</string>
+    <string name="display_lockscreen_rotation_title">Cuairtich an sgrìn-ghlasaidh</string>
+    <string name="display_rotation_category_title">Modhan a’ chuairteachaidh</string>
+    <string name="display_rotation_0_title">0 ceum</string>
+    <string name="display_rotation_90_title">90 ceum</string>
+    <string name="display_rotation_180_title">180 ceum</string>
+    <string name="display_rotation_270_title">270 ceum</string>
+    <string name="charging_sounds_settings_title">Fuaimean an teàirrdsidh</string>
+    <string name="charging_sounds_enable_title">Cuir an comas fuaimean an teàirrdsidh</string>
+    <string name="charging_sounds_summary">Cluich fuaim nuair a thèid tùs cumhachd a cheangal ris no a dhì-cheangal</string>
+    <string name="power_notifications_vibrate_title">Dèan crith</string>
+    <string name="charging_sounds_ringtone_silent">Sàmhach</string>
+    <string name="charging_sounds_notification_category_title">Fuaimean nam brathan</string>
+    <string name="wired_charging_sounds_title">Teàirrdseadh uèirichte</string>
+    <string name="wireless_charging_sounds_title">Teàirrdseadh gun uèir</string>
+</resources>

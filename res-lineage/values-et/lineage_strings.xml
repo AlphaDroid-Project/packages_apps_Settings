@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     SPDX-FileCopyrightText: 2015 The CyanogenMod Project
+     SPDX-FileCopyrightText: 2017-2023 The LineageOS Project
+     SPDX-License-Identifier: Apache-2.0
+-->
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="loading">Laadimine\u2026</string>
+    <string name="dlg_ok">OK</string>
+    <string name="cancel">Tühista</string>
+    <string name="add">Lisa</string>
+    <string name="choose_app">Vali rakendus</string>
+    <string name="reset">Lähtesta</string>
+    <string name="advanced">Täpsemad</string>
+    <string name="settings">Seaded</string>
+    <string name="name">Nimi</string>
+    <string name="back">Tagasi</string>
+    <string name="finish">Lõpeta</string>
+    <string name="next">Järgmine</string>
+    <string name="on">Sees</string>
+    <string name="off">Väljas</string>
+    <string name="yes">Jah</string>
+    <string name="no">Ei</string>
+    <string name="search">Otsi</string>
+    <string name="disabled">Keelatud</string>
+    <string name="enabled">Lubatud</string>
+    <string name="live_display_summary">Optimeeri oma ekraani vastavalt kellaajale ja keskkonnavalgusele, parandamaks loetavust ja vähendamaks silmade pinget</string>
+    <string name="live_display_mode">Ekraani režiim</string>
+    <string name="live_display_color_temperature_title">Värvitemperatuur</string>
+    <string name="live_display_color_temperature_summary">Päev: <xliff:g id="day_temperature">%1$d</xliff:g>K Öö: <xliff:g id="night_temperature">%2$d</xliff:g>K</string>
+    <string name="live_display_color_temperature_label"><xliff:g id="degrees">%1$d</xliff:g>K</string>
+    <string name="live_display_day">Päev</string>
+    <string name="live_display_night">Öö</string>
+    <string name="live_display_outdoor_mode_title">Automaatne õuerežiim</string>
+    <string name="live_display_outdoor_mode_summary">Suurenda ereda päikesevalgusega automaatselt heledust ja küllastust</string>
+    <string name="live_display_anti_flicker_title">Virvendusfilter</string>
+    <string name="live_display_anti_flicker_summary">Vältige liigset värelust ja vähendage silmade koormust vähese valguse tingimustes. See võib vähendada värvitruudust ja mõjutada mõnede üksuste kuvamist. </string>
+    <string name="live_display_low_power_title">Vähenda energiatarbimist</string>
+    <string name="live_display_low_power_summary">Kohanda ekraani madalaimale energiatarbimisele ilma, et see ekraani kahjustaks</string>
+    <string name="live_display_enhance_color_title">Parenda värve</string>
+    <string name="live_display_enhance_color_summary">Parandage värvide erksust keha toonidel, maastikuvaadetel ja muudel piltidel</string>
+    <string name="live_display_color_profile_title">Värviprofiil</string>
+    <string name="live_display_color_profile_standard_title">Klassikaline</string>
+    <string name="live_display_color_profile_standard_summary">Täpsed värvid ja eredad valged</string>
+    <string name="live_display_color_profile_natural_title">Naturaalne</string>
+    <string name="live_display_color_profile_natural_summary">Realistlikud värvid ja nahatoonid</string>
+    <string name="live_display_color_profile_dynamic_title">Dünaamiline</string>
+    <string name="live_display_color_profile_dynamic_summary">Parendatud värvid ja eredad valged</string>
+    <string name="live_display_color_profile_cinema_title">Kino</string>
+    <string name="live_display_color_profile_cinema_summary">Video värvide ideaalne taasloomine</string>
+    <string name="live_display_color_profile_astronomy_title">Astronoomia</string>
+    <string name="live_display_color_profile_astronomy_summary">Sügav punane öise nägemise säilitamiseks</string>
+    <string name="live_display_color_profile_photography_title">Fotograafia</string>
+    <string name="live_display_color_profile_photography_summary">Perfektne värvide taasloomine fotode jaoks</string>
+    <string name="live_display_color_profile_basic_title">Põhiline</string>
+    <string name="live_display_color_profile_basic_summary">Kasuta ekraani kalibreerimata</string>
+    <string name="live_display_color_profile_adaptive_title">Kohanduv</string>
+    <string name="live_display_color_profile_adaptive_summary">Värvid kohanevad keskkonnatingimustega</string>
+    <string name="live_display_color_profile_reading_title">Lugemine</string>
+    <string name="live_display_color_profile_reading_summary">Soojemad värvid silmade koormuse vähendamiseks</string>
+    <string name="live_display_color_profile_srgb_title">sRGB</string>
+    <string name="live_display_color_profile_srgb_summary">Täpsed värvid sRGB värviruumi järgi</string>
+    <string name="live_display_color_profile_dci_p3_title">DCI-P3</string>
+    <string name="live_display_color_profile_dci_p3_summary">Täpsed värvid DCI-P3 värviruumi järgi</string>
+    <string name="live_display_reading_mode_title">Lugemisrežiim</string>
+    <string name="live_display_reading_mode_summary">Hallskaala režiim pikaajaliseks lugemiseks</string>
+    <string name="color_calibration_title">Värvide kalibreerimine</string>
+    <string name="color_calibration_summary">Kalibreeri ekraani värvid</string>
+    <string name="color_red_title">Punane</string>
+    <string name="color_green_title">Roheline</string>
+    <string name="color_blue_title">Sinine</string>
+    <string name="picture_adjustment_title">Pildi reguleerimine</string>
+    <string name="picture_adjustment_summary">Tooni, küllastuse, intensiivsuse ja kontrasti reguleerimine</string>
+    <string name="adj_hue_title">Toon</string>
+    <string name="adj_saturation_title">Küllastus</string>
+    <string name="adj_intensity_title">Intensiivsus</string>
+    <string name="adj_contrast_title">Kontrastsus</string>
+    <string name="navigation_bar_arrow_keys_title">Näita tippimise ajal nooleklahve</string>
+    <string name="navigation_bar_arrow_keys_summary">Kuva tippimise ajal vasakule ja paremale kursorit. Eira IME vahetajat.</string>
+    <string name="enable_reporting_title">Luba raporteerimine</string>
+    <string name="accelerometer_title">Pööra ekraani automaatselt</string>
+    <string name="display_rotation_title">Pööramise seaded</string>
+    <string name="display_rotation_enabled">Automaatne pööramine lubatud</string>
+    <string name="display_rotation_disabled">Automaatne pööramine keelatud</string>
+    <string name="display_rotation_unit">kraadi</string>
+    <string name="display_lockscreen_rotation_title">Pööra lukustuskuva</string>
+    <string name="display_rotation_category_title">Pööramisrežiimid</string>
+    <string name="display_rotation_0_title">0 kraadi</string>
+    <string name="display_rotation_90_title">90 kraadi</string>
+    <string name="display_rotation_180_title">180 kraadi</string>
+    <string name="display_rotation_270_title">270 kraadi</string>
+    <string name="charging_sounds_settings_title">Laadimise helid</string>
+    <string name="charging_sounds_summary">Mängi heli vooluallika ühendamisel või lahtiühendamisel</string>
+    <string name="power_notifications_vibrate_title">Vibreeri</string>
+    <string name="charging_sounds_ringtone_silent">Vaikne</string>
+</resources>

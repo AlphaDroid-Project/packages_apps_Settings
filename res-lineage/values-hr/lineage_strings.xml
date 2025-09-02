@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     SPDX-FileCopyrightText: 2015 The CyanogenMod Project
+     SPDX-FileCopyrightText: 2017-2023 The LineageOS Project
+     SPDX-License-Identifier: Apache-2.0
+-->
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="loading">Učitavanje\u2026</string>
+    <string name="dlg_ok">OK</string>
+    <string name="cancel">Odustani</string>
+    <string name="add">Dodaj</string>
+    <string name="choose_app">Odaberite aplikaciju</string>
+    <string name="reset">Poništi</string>
+    <string name="advanced">Napredno</string>
+    <string name="settings">Postavke</string>
+    <string name="name">Naziv</string>
+    <string name="back">Natrag</string>
+    <string name="finish">Završeno</string>
+    <string name="next">Dalje</string>
+    <string name="on">Uključen</string>
+    <string name="off">Isključen</string>
+    <string name="yes">Da</string>
+    <string name="no">Ne</string>
+    <string name="search">Pretraži</string>
+    <string name="disabled">Onemogućeno</string>
+    <string name="enabled">Omogućeno</string>
+    <string name="live_display_summary">Prilagođuje zaslon prema vremenu dana i okolini za poboljšanje čitljivosti i smanjenje naprezanja očiju</string>
+    <string name="live_display_mode">Način prikaza</string>
+    <string name="live_display_color_temperature_title">Temperatura boje</string>
+    <string name="live_display_color_temperature_summary">Dan: <xliff:g id="day_temperature">%1$d</xliff:g>K Noć: <xliff:g id="night_temperature">%2$d</xliff:g>K</string>
+    <string name="live_display_color_temperature_label"><xliff:g id="degrees">%1$d</xliff:g>K</string>
+    <string name="live_display_day">Dan</string>
+    <string name="live_display_night">Noć</string>
+    <string name="live_display_outdoor_mode_title">Automatski vanjski način</string>
+    <string name="live_display_outdoor_mode_summary">Automatski povećaj svjetlinu i zasićenost pod jakim svjetlom</string>
+    <string name="live_display_anti_flicker_title">Bez treperenja</string>
+    <string name="live_display_anti_flicker_summary">Spriječite opsežno treperenje i smanjite naprezanje očiju u uvjetima slabog osvjetljenja. To može umanjiti točnost boja i utjecati na način prikaza nekih stavki.</string>
+    <string name="live_display_low_power_title">Smanji potrošnju energije</string>
+    <string name="live_display_low_power_summary">Prilagodite prikaz za najnižu potrošnju energije bez degradacije</string>
+    <string name="live_display_enhance_color_title">Poboljšanje boje</string>
+    <string name="live_display_enhance_color_summary">Poboljšaj treperenje boja svijetlih tonova, scena ili ostalih slika</string>
+    <string name="live_display_color_profile_title">Boja profila</string>
+    <string name="live_display_color_profile_standard_title">Standardno</string>
+    <string name="live_display_color_profile_standard_summary">Točne boje i svjetla bijela</string>
+    <string name="live_display_color_profile_natural_title">Prirodno</string>
+    <string name="live_display_color_profile_natural_summary">Realne boje i tonovi kože</string>
+    <string name="live_display_color_profile_dynamic_title">Dinamično</string>
+    <string name="live_display_color_profile_dynamic_summary">Poboljšane boje i svjetlo bijela</string>
+    <string name="live_display_color_profile_cinema_title">Kino</string>
+    <string name="live_display_color_profile_cinema_summary">Savršena boja reprodukcije za videozapise</string>
+    <string name="live_display_color_profile_astronomy_title">Astronomija</string>
+    <string name="live_display_color_profile_astronomy_summary">Duboko crvena za očuvanje noćnog pogleda</string>
+    <string name="live_display_color_profile_photography_title">Fotografije</string>
+    <string name="live_display_color_profile_photography_summary">Savršena boja reprodukcije za fotografije</string>
+    <string name="live_display_color_profile_basic_title">Osnovno</string>
+    <string name="live_display_color_profile_basic_summary">Koristite ne kalibriran zaslon</string>
+    <string name="live_display_color_profile_adaptive_title">Prilagodljiv</string>
+    <string name="live_display_color_profile_adaptive_summary">Boje se prilagođavaju ambijentnim uslovima</string>
+    <string name="live_display_color_profile_reading_title">Čitanje</string>
+    <string name="live_display_color_profile_reading_summary">Toplije boje za manje naprezanje očiju</string>
+    <string name="live_display_color_profile_srgb_title">sRGB</string>
+    <string name="live_display_color_profile_srgb_summary">Boje su točne prema sRGB prostoru boja</string>
+    <string name="live_display_color_profile_dci_p3_title">DCI-P3</string>
+    <string name="live_display_color_profile_dci_p3_summary">Boje su točne prema DCI-P3 prostoru boja</string>
+    <string name="color_calibration_title">Kalibracija boje</string>
+    <string name="color_calibration_summary">Kalibriraj boje zaslona</string>
+    <string name="color_red_title">Crveno</string>
+    <string name="color_green_title">Zeleno</string>
+    <string name="color_blue_title">Plavo</string>
+    <string name="picture_adjustment_title">Podešavanje slike</string>
+    <string name="picture_adjustment_summary">PrilagodI nijansu, zasićenost, intenzitet i kontrast</string>
+    <string name="adj_hue_title">Nijansa</string>
+    <string name="adj_saturation_title">Zasićenje</string>
+    <string name="adj_intensity_title">Intenzitet</string>
+    <string name="adj_contrast_title">Kontrast</string>
+    <string name="navigation_bar_arrow_keys_title">Prikaži strelice tijekom upisivanja</string>
+    <string name="navigation_bar_arrow_keys_summary">Prikazuje lijeve i desne kursorske tipke tijekom unosa teksta. Zamjenjuje tipku za promjenu tipkovnice.</string>
+    <string name="enable_reporting_title">Omogući izvješća</string>
+    <string name="accelerometer_title">Autom. rotacija zaslona</string>
+    <string name="display_rotation_title">Postavke rotacije</string>
+    <string name="display_rotation_enabled">Autom. rotacija je omogućena</string>
+    <string name="display_rotation_disabled">Autom. rotacija je onemogućena</string>
+    <string name="display_rotation_unit">stupnjeva</string>
+    <string name="display_lockscreen_rotation_title">Rotiraj zaključani zaslon</string>
+    <string name="display_rotation_category_title">Način rotacije</string>
+    <string name="display_rotation_0_title">0 stupnjeva</string>
+    <string name="display_rotation_90_title">90 stupnjeva</string>
+    <string name="display_rotation_180_title">180 stupnjeva</string>
+    <string name="display_rotation_270_title">270 stupnjeva</string>
+    <string name="charging_sounds_settings_title">Zvukovi punjenja</string>
+    <string name="charging_sounds_summary">Reproducirat će zvuk pri spajanju ili odspajanju s izvora napajanja</string>
+    <string name="power_notifications_vibrate_title">Vibracija</string>
+    <string name="charging_sounds_ringtone_silent">Bešumno</string>
+</resources>

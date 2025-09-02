@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     SPDX-FileCopyrightText: 2015 The CyanogenMod Project
+     SPDX-FileCopyrightText: 2017-2023 The LineageOS Project
+     SPDX-License-Identifier: Apache-2.0
+-->
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="loading">تحميل\u2026</string>
+    <string name="dlg_ok">موافق</string>
+    <string name="cancel">إلغاء</string>
+    <string name="add">إضافة</string>
+    <string name="choose_app">اختر تطبيق</string>
+    <string name="reset">إعادة تعيين</string>
+    <string name="advanced">متقدم</string>
+    <string name="settings">الإعدادات</string>
+    <string name="name">الاسم</string>
+    <string name="back">الرجوع</string>
+    <string name="finish">إنهاء</string>
+    <string name="next">التالي</string>
+    <string name="on">تشغيل</string>
+    <string name="off">إيقاف</string>
+    <string name="yes">نعم</string>
+    <string name="no">لا</string>
+    <string name="search">بحث</string>
+    <string name="disabled">معطّل</string>
+    <string name="enabled">مفعل</string>
+    <string name="live_display_summary">تحسين الشاشة استناداً إلى الوقت من اليوم والظروف المحيطة لتحسين قابلية القراءة وتقليل إجهاد العين</string>
+    <string name="live_display_mode">نمط العرض</string>
+    <string name="live_display_color_temperature_title">درجة حرارة اللون</string>
+    <string name="live_display_color_temperature_summary">النهار: <xliff:g id="day_temperature">%1$d</xliff:g>K  الليل: <xliff:g id="night_temperature">%2$d</xliff:g>K</string>
+    <string name="live_display_color_temperature_label"><xliff:g id="degrees">%1$d</xliff:g>K</string>
+    <string name="live_display_day"/>
+    <string name="live_display_night"/>
+    <string name="live_display_outdoor_mode_title">وضع في الخارج التلقائي</string>
+    <string name="live_display_outdoor_mode_summary">زيادة الإضاءة والإشباع تلقائياً تحت أشعة الشمس</string>
+    <string name="live_display_anti_flicker_title">مضاد الوميض</string>
+    <string name="live_display_anti_flicker_summary">منع الوميض الشديد وتقليل إجهاد العين في ظروف الضوء المنخفضة. قد يؤدي إلى تدهور دقة الألوان والتأثير على طريقة عرض بعض العناصر.</string>
+    <string name="live_display_low_power_title">تقليل استهلاك الطاقة</string>
+    <string name="live_display_low_power_summary">ضبط العرض لاستهلاك أقل للطاقة دون تشويش ما يُعرض</string>
+    <string name="live_display_enhance_color_title">تحسين الألوان</string>
+    <string name="live_display_enhance_color_summary">تحسين حيوية درجات ألوان البشرة والمشاهد الطبيعية وغيرها من الصور</string>
+    <string name="live_display_color_profile_title">الملف التعريفي للون</string>
+    <string name="live_display_color_profile_standard_title">قياسي</string>
+    <string name="live_display_color_profile_standard_summary">ألوان دقيقة وبياض ناصع</string>
+    <string name="live_display_color_profile_natural_title">طبيعي</string>
+    <string name="live_display_color_profile_natural_summary">ألوان ودرجات لون بشرة واقعية</string>
+    <string name="live_display_color_profile_dynamic_title">ديناميكي</string>
+    <string name="live_display_color_profile_dynamic_summary">ألوان محسنة وبياض ناصع</string>
+    <string name="live_display_color_profile_cinema_title">سينما</string>
+    <string name="live_display_color_profile_cinema_summary">إعادة إنتاج لون مطابق للفيديو</string>
+    <string name="live_display_color_profile_astronomy_title">فلكِي</string>
+    <string name="live_display_color_profile_astronomy_summary">أحمر عميق للحفاظ على الرؤية الليلية</string>
+    <string name="live_display_color_profile_photography_title">التصوير</string>
+    <string name="live_display_color_profile_photography_summary">إعادة إنتاج لون مطابق للصور</string>
+    <string name="live_display_color_profile_basic_title">أساسي</string>
+    <string name="live_display_color_profile_basic_summary">استخدم الشاشة بدون معايرة</string>
+    <string name="live_display_color_profile_adaptive_title">التكيّف</string>
+    <string name="live_display_color_profile_adaptive_summary">تتكيف الألوان مع الظروف المحيطة</string>
+    <string name="live_display_color_profile_reading_title">القراءة</string>
+    <string name="live_display_color_profile_reading_summary">ألوان دافئة لإجهاد أقل للعين</string>
+    <string name="live_display_color_profile_srgb_title">sRGB</string>
+    <string name="live_display_color_profile_srgb_summary">الألوان مضبوطة لألوان فضاء sRGB</string>
+    <string name="live_display_color_profile_dci_p3_title">DCI-P3</string>
+    <string name="live_display_color_profile_dci_p3_summary">الألوان مضبوطة لألوان فضاء DCI-P3</string>
+    <string name="live_display_reading_mode_title">وضع القراءة</string>
+    <string name="live_display_reading_mode_summary">وضع التدرج الرمادي للقراءة على المدى الطويل</string>
+    <string name="color_calibration_title">معايرة الألوان</string>
+    <string name="color_calibration_summary">معايرة الألوان الظاهرة على الشاشة</string>
+    <string name="color_red_title">أحمر</string>
+    <string name="color_green_title">أخضر</string>
+    <string name="color_blue_title">أزرق</string>
+    <string name="picture_adjustment_title">ضبط الصورة</string>
+    <string name="picture_adjustment_summary">ضبط تدرج اللون والتشبع والكثافة والتباين</string>
+    <string name="adj_hue_title">تدرج اللون</string>
+    <string name="adj_saturation_title">التشبع</string>
+    <string name="adj_intensity_title">الكثافة</string>
+    <string name="adj_contrast_title">التباين</string>
+    <string name="navigation_bar_arrow_keys_title">إظهار مفاتيح الأسهم أثناء الكتابة</string>
+    <string name="navigation_bar_arrow_keys_summary">عرض أزرار المؤشر يساراً او يميناً أثناء الكتابة. يمنع ظهور زر مبدل وسيلة الإدخال.</string>
+    <string name="enable_reporting_title">تفعيل إرسال التقارير</string>
+    <string name="accelerometer_title">التدوير التلقائي للشاشة</string>
+    <string name="display_rotation_title">إعدادات التدوير</string>
+    <string name="display_rotation_enabled">التدوير التلقائي مُفعل</string>
+    <string name="display_rotation_disabled">التدوير التلقائي مُعطل</string>
+    <string name="display_rotation_unit">الدرجات</string>
+    <string name="display_lockscreen_rotation_title">تدوير شاشة القفل</string>
+    <string name="display_rotation_category_title">أوضاع التدوير</string>
+    <string name="display_rotation_0_title">0 درجة</string>
+    <string name="display_rotation_90_title">90 درجة</string>
+    <string name="display_rotation_180_title">180 درجة</string>
+    <string name="display_rotation_270_title">270 درجة</string>
+    <string name="charging_sounds_settings_title">أصوات الشحن</string>
+    <string name="charging_sounds_summary">تشغيل الصوت عند توصيل أو فصل مصدر الطاقة</string>
+    <string name="power_notifications_vibrate_title">إهتزاز</string>
+    <string name="charging_sounds_ringtone_silent">صامت</string>
+    <string name="charging_sounds_notification_category_title">أصوات الإشعارات</string>
+    <string name="wired_charging_sounds_title">شحن سلكي</string>
+    <string name="wireless_charging_sounds_title">الشحن اللاسلكي</string>
+</resources>
