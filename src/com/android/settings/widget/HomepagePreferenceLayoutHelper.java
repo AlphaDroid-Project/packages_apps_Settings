@@ -28,6 +28,8 @@ import com.android.settingslib.widget.SettingsThemeHelper;
 /** Helper for homepage preference to manage layout. */
 public class HomepagePreferenceLayoutHelper {
 
+    private static final String TOP_LEVEL_ALPHA = "top_level_alpha";
+
     private View mIcon;
     private View mText;
     private boolean mIconVisible = true;
@@ -41,6 +43,10 @@ public class HomepagePreferenceLayoutHelper {
     }
 
     public HomepagePreferenceLayoutHelper(Preference preference) {
+        if (TOP_LEVEL_ALPHA.equals(preference.getKey())) {
+            preference.setLayoutResource(R.layout.alpha_homepage_preference_expressive);
+            return;
+        }
         preference.setLayoutResource(
                 Flags.homepageRevamp()
                         ? SettingsThemeHelper.isExpressiveTheme(preference.getContext())

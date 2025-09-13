@@ -58,7 +58,7 @@
 
         <com.android.settings.widget.HomepagePreference
             android:fragment="com.alpha.settings.AlphaSettings"
-            android:icon="@drawable/ic_settings_alpha"
+            android:icon="@drawable/alpha_logo"
             android:key="top_level_alpha"
             android:order="-60"
             android:title="@string/alpha_settings_title"
