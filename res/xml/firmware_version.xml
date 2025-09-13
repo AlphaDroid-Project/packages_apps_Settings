@@ -22,10 +22,10 @@
     settings:keywords="@string/keywords_android_version">
 
     <!-- Alpha logo -->
-    <com.android.settingslib.widget.LayoutPreference
+    <!--<com.android.settingslib.widget.LayoutPreference
         android:layout="@layout/alpha_logo"
         android:key="alpha_logo"
-        android:selectable="false" />
+        android:selectable="false" />-->
 
     <PreferenceCategory
         android:key="category_android"

@@ -5833,7 +5833,8 @@
 
         <activity
             android:name="Settings$FirmwareVersionActivity"
-            android:exported="false">
+            android:exported="false"
+            android:theme="@style/Theme.SubSettingsBase.Expressive">
             <intent-filter>
                 <action android:name="android.settings.FIRMWARE_VERSION_SETTINGS" />
                 <category android:name="android.intent.category.DEFAULT" />
