@@ -52,6 +52,7 @@
                 android:id="@+id/main_content"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
                 android:animateLayoutChanges="true"/>
 
         </LinearLayout>
