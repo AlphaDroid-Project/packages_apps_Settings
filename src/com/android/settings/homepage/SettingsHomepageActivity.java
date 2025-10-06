@@ -268,7 +268,7 @@ public class SettingsHomepageActivity extends FragmentActivity implements
         if (!getSystemService(ActivityManager.class).isLowRamDevice()) {
             final boolean scrollNeeded = mIsEmbeddingActivityEnabled
                     && !TextUtils.equals(getString(DEFAULT_HIGHLIGHT_MENU_KEY), highlightMenuKey);
-            showSuggestionFragment(scrollNeeded);
+            // showSuggestionFragment(scrollNeeded);
             if (!Flags.updatedSuggestionCardAosp()
                     && FeatureFlagUtils.isEnabled(this, FeatureFlags.CONTEXTUAL_HOME)) {
                 showFragment(() -> new ContextualCardsFragment(), R.id.contextual_cards_content);
