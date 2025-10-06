@@ -22,7 +22,18 @@
 
     <com.android.settingslib.widget.UntitledPreferenceCategory
         android:order="-140"
-        android:key="top_level_account_category"/>
+        android:key="top_level_account_category">
+
+        <com.android.settings.widget.HomepagePreference
+            android:fragment="com.alpha.settings.AlphaSettings"
+            android:icon="@drawable/alpha_logo"
+            android:key="top_level_alpha"
+            android:order="10"
+            android:title="@string/alpha_settings_title"
+            android:summary="@string/alpha_settings_summary"
+            settings:controller="com.alpha.settings.TopLevelSettingsPreferenceController"/>
+
+    </com.android.settingslib.widget.UntitledPreferenceCategory>
 
     <com.android.settingslib.widget.UntitledPreferenceCategory
         android:order="-130"
@@ -51,15 +62,6 @@
     <com.android.settingslib.widget.UntitledPreferenceCategory
         android:order="-120"
         android:key="top_level_personalize_category">
-
-        <com.android.settings.widget.HomepagePreference
-            android:fragment="com.alpha.settings.AlphaSettings"
-            android:icon="@drawable/ic_settings_alpha"
-            android:key="top_level_alpha"
-            android:order="-60"
-            android:title="@string/alpha_settings_title"
-            android:summary="@string/alpha_settings_summary"
-            settings:controller="com.alpha.settings.TopLevelSettingsPreferenceController"/>
 
         <com.android.settings.widget.HomepagePreference
             android:fragment="com.android.settings.notification.ConfigureNotificationSettings"
@@ -147,7 +149,7 @@
             android:fragment="com.android.settings.fuelgauge.batteryusage.PowerUsageSummary"
             android:icon="@drawable/ic_homepage_battery"
             android:key="top_level_battery"
-            android:order="-30"
+            android:order="-45"
             android:title="@string/power_usage_summary_title"
             android:summary="@string/summary_placeholder"
             settings:highlightableMenuKey="@string/menu_key_battery"
@@ -271,4 +273,3 @@
             settings:controller="com.android.settings.support.SupportPreferenceController"/>
     </com.android.settingslib.widget.UntitledPreferenceCategory>
 </PreferenceScreen>
-
