@@ -27,7 +27,7 @@ import androidx.annotation.VisibleForTesting;
 
 import com.android.settings.R;
 import com.android.settings.core.SubSettingLauncher;
-import com.android.settings.display.WallpaperPreferenceController;
+import com.android.settings.display.TopLevelWallpaperPreferenceController;
 
 import com.google.android.setupcompat.util.WizardManagerHelper;
 
@@ -38,7 +38,7 @@ public abstract class StyleSuggestionActivityBase extends Activity {
         super.onCreate(savedInstanceState);
         final PackageManager pm = getPackageManager();
         final Intent intent = new Intent()
-                .setComponent(new WallpaperPreferenceController(this, "unused key")
+                .setComponent(new TopLevelWallpaperPreferenceController(this, "unused key")
                         .getComponentName())
                 .addFlags(Intent.FLAG_ACTIVITY_FORWARD_RESULT);
 
