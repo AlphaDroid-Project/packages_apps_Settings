@@ -23,7 +23,7 @@ import android.content.Intent;
 import androidx.annotation.VisibleForTesting;
 
 import com.android.settings.R;
-import com.android.settings.display.WallpaperPreferenceController;
+import com.android.settings.display.TopLevelWallpaperPreferenceController;
 import com.android.settings.search.BaseSearchIndexProvider;
 import com.android.settingslib.search.Indexable;
 import com.android.settingslib.search.SearchIndexable;
@@ -76,8 +76,8 @@ public class WallpaperSuggestionActivity extends StyleSuggestionActivityBase imp
                 public List<SearchIndexableRaw> getRawDataToIndex(Context context,
                         boolean enabled) {
                     final List<SearchIndexableRaw> result = new ArrayList<>();
-                    WallpaperPreferenceController controller =
-                            new WallpaperPreferenceController(context, "unused key");
+                    TopLevelWallpaperPreferenceController controller =
+                            new TopLevelWallpaperPreferenceController(context, "unused key");
                     SearchIndexableRaw data = new SearchIndexableRaw(context);
                     data.title = controller.getTitle();
                     data.screenTitle = data.title;

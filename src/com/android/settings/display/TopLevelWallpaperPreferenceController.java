@@ -21,13 +21,14 @@ import static android.os.UserManager.DISALLOW_SET_WALLPAPER;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.content.pm.ResolveInfo;
+import android.os.SystemProperties;
 import android.text.TextUtils;
 import android.util.Log;
 
 import androidx.preference.Preference;
 import androidx.preference.PreferenceScreen;
+
+import com.android.internal.util.alpha.Utils;
 
 import com.android.settings.R;
 import com.android.settings.activityembedding.ActivityEmbeddingRulesController;
@@ -35,25 +36,31 @@ import com.android.settings.activityembedding.ActivityEmbeddingUtils;
 import com.android.settings.core.BasePreferenceController;
 import com.android.settingslib.RestrictedTopLevelPreference;
 
-import java.util.List;
-
 /** This controller manages the wallpaper preference of the top level page. */
 public class TopLevelWallpaperPreferenceController extends BasePreferenceController {
     private static final String TAG = "TopLevelWallpaperPreferenceController";
-    private static final String LAUNCHED_SETTINGS = "app_launched_settings";
+
+    private static final int NEXUS_LAUNCHER = 1;
+    private static final String DEFAULT_LAUNCHER_PROP = "persist.sys.default_launcher";
 
     private final String mWallpaperPackage;
     private final String mWallpaperClass;
-    private final String mStylesAndWallpaperClass;
-    private final String mWallpaperLaunchExtra;
 
     public TopLevelWallpaperPreferenceController(Context context, String key) {
         super(context, key);
-        mWallpaperPackage = mContext.getString(R.string.config_wallpaper_picker_package);
-        mWallpaperClass = mContext.getString(R.string.config_wallpaper_picker_class);
-        mStylesAndWallpaperClass =
-                mContext.getString(R.string.config_styles_and_wallpaper_picker_class);
-        mWallpaperLaunchExtra = mContext.getString(R.string.config_wallpaper_picker_launch_extra);
+
+        mWallpaperClass = context.getString(R.string.config_wallpaper_picker_class);
+
+        int defaultLauncher = SystemProperties.getInt(DEFAULT_LAUNCHER_PROP, 0);
+        String googlePkg = context.getString(R.string.config_google_wallpaper_picker_package);
+
+        if (defaultLauncher == NEXUS_LAUNCHER
+                && !TextUtils.isEmpty(googlePkg)
+                && Utils.isPackageInstalled(context, googlePkg)) {
+            mWallpaperPackage = googlePkg;
+        } else {
+            mWallpaperPackage = context.getString(R.string.config_wallpaper_picker_package);
+        }
     }
 
     @Override
@@ -69,27 +76,28 @@ public class TopLevelWallpaperPreferenceController extends BasePreferenceControl
     }
 
     public String getTitle() {
-        return mContext.getString(areStylesAvailable()
-                ? R.string.style_and_wallpaper_settings_title : R.string.wallpaper_settings_title);
+        return mContext.getString(R.string.style_and_wallpaper_settings_title);
     }
 
     public ComponentName getComponentName() {
-        return new ComponentName(mWallpaperPackage, getComponentClassString());
+        return new ComponentName(mWallpaperPackage, mWallpaperClass);
     }
 
-    public String getComponentClassString() {
-        return areStylesAvailable() ? mStylesAndWallpaperClass : mWallpaperClass;
+    public String getKeywords() {
+        StringBuilder sb = new StringBuilder(mContext.getString(R.string.keywords_wallpaper));
+        if (areStylesAvailable()) {
+            sb.append(", ").append(mContext.getString(R.string.keywords_styles));
+        }
+        return sb.toString();
     }
 
     @Override
     public int getAvailabilityStatus() {
-        if ((TextUtils.isEmpty(mWallpaperClass) && TextUtils.isEmpty(mStylesAndWallpaperClass))
-                || TextUtils.isEmpty(mWallpaperPackage)) {
+        if (TextUtils.isEmpty(mWallpaperClass) || TextUtils.isEmpty(mWallpaperPackage)) {
             Log.e(TAG, "No Wallpaper picker specified!");
             return UNSUPPORTED_ON_DEVICE;
         }
-        return canResolveWallpaperComponent(getComponentClassString())
-                ? AVAILABLE_UNSEARCHABLE : CONDITIONALLY_UNAVAILABLE;
+        return AVAILABLE_UNSEARCHABLE;
     }
 
     @Override
@@ -100,10 +108,9 @@ public class TopLevelWallpaperPreferenceController extends BasePreferenceControl
     @Override
     public boolean handlePreferenceTreeClick(Preference preference) {
         if (getPreferenceKey().equals(preference.getKey())) {
-            final Intent intent = new Intent().setComponent(
-                    getComponentName()).putExtra(mWallpaperLaunchExtra, LAUNCHED_SETTINGS);
-            if (areStylesAvailable() && !ActivityEmbeddingUtils.isEmbeddingActivityEnabled(
-                    mContext)) {
+            final Intent intent = new Intent()
+                    .setComponent(getComponentName());
+            if (!ActivityEmbeddingUtils.isEmbeddingActivityEnabled(mContext)) {
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             }
             preference.getContext().startActivity(intent);
@@ -112,18 +119,8 @@ public class TopLevelWallpaperPreferenceController extends BasePreferenceControl
         return super.handlePreferenceTreeClick(preference);
     }
 
-    /** Returns whether Styles & Wallpaper is enabled and available. */
     public boolean areStylesAvailable() {
-        return !TextUtils.isEmpty(mStylesAndWallpaperClass)
-                && canResolveWallpaperComponent(mStylesAndWallpaperClass);
-    }
-
-    private boolean canResolveWallpaperComponent(String className) {
-        final ComponentName componentName = new ComponentName(mWallpaperPackage, className);
-        final PackageManager pm = mContext.getPackageManager();
-        final Intent intent = new Intent().setComponent(componentName);
-        final List<ResolveInfo> resolveInfos = pm.queryIntentActivities(intent, 0 /* flags */);
-        return resolveInfos != null && !resolveInfos.isEmpty();
+        return true;
     }
 
     private void disablePreferenceIfManaged(RestrictedTopLevelPreference pref) {
