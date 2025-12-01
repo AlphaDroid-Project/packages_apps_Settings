@@ -1,110 +1,119 @@
 package com.android.settings.deviceinfo.aboutphone
 
+import android.animation.ValueAnimator
 import android.app.usage.StorageStatsManager
 import android.content.Context
 import android.content.Intent
 import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.Path
-import android.os.Parcel
-import android.os.Parcelable
+import android.graphics.RectF
 import android.os.storage.StorageManager
 import android.os.storage.VolumeInfo
 import android.provider.Settings
 import android.text.format.Formatter
 import android.util.AttributeSet
-import android.util.Log
 import android.view.Gravity
 import android.view.View
-import android.view.ViewGroup
-import android.view.animation.Animation
-import android.view.animation.Transformation
+import android.view.animation.AnticipateOvershootInterpolator
+import android.view.animation.DecelerateInterpolator
+import android.view.animation.OvershootInterpolator
+import android.view.animation.PathInterpolator
 import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import android.widget.TextView
 import com.android.settings.Utils
+import com.android.settings.R
+import com.android.settingslib.widget.theme.R as SettingsLibRes
 import java.io.IOException
 import kotlin.math.sin
-
-import com.android.settings.R;
-
-object Size {
-    const val HUGE = 0
-    const val LARGE = 1
-    const val MIDDLE = 2
-    const val LITTLE = 3
-}
+import kotlin.random.Random
 
 class StorageCardView(context: Context, attrs: AttributeSet?) : AboutBaseCard(context, attrs) {
     private var freeBytes: Long = 0
     private var usedBytes: Long = 0
     private var totalBytes: Long = 0
-    private var mUsedPercent = -1
-    private var waveView: WaveView
-    private var anim: ProgressBarAnimation? = null
+    private var mUsedPercent = 0
+    private lateinit var waveView: WaveView
+    private var progressAnimator: ValueAnimator? = null
 
     init {
-        layoutParams = LayoutParams(resources.getDimensionPixelSize(R.dimen.storage_card_min_width), resources.getDimensionPixelSize(R.dimen.storage_card_min_height))
+        clipChildren = true
+        clipToPadding = true
+
+        setBackgroundResource(R.drawable.bg_about_card_bottom_right)
+
         layout = RelativeLayout(context)
-        layout.layoutParams = RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, resources.getDimensionPixelSize(R.dimen.storage_card_min_height))
+        layout.layoutParams = RelativeLayout.LayoutParams(
+            RelativeLayout.LayoutParams.MATCH_PARENT,
+            RelativeLayout.LayoutParams.MATCH_PARENT
+        )
+        layout.clipChildren = true
+        layout.clipToPadding = true
+
+        val cardTitle = TextView(context)
+        cardTitle.text = context.getString(R.string.storage_card_title)
+        cardTitle.setTextAppearance(R.style.TextAppearance_HomepageCardTitle)
+        val titleParams = RelativeLayout.LayoutParams(
+            RelativeLayout.LayoutParams.MATCH_PARENT,
+            RelativeLayout.LayoutParams.WRAP_CONTENT
+        )
+        cardTitle.layoutParams = titleParams
+        val topPadding = (resources.displayMetrics.density * 8).toInt()
+        cardTitle.setPadding(0, topPadding, 0, 0)
+        cardTitle.setTextAlignment(TextView.TEXT_ALIGNMENT_CENTER)
+        layout.addView(cardTitle)
+
+        // 1. Wave View (Fills card edge-to-edge)
         waveView = WaveView(context)
-        waveView.layoutParams = RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT)
+        val waveParams = RelativeLayout.LayoutParams(
+            RelativeLayout.LayoutParams.MATCH_PARENT,
+            RelativeLayout.LayoutParams.MATCH_PARENT
+        )
+        waveView.layoutParams = waveParams
         waveView.alpha = 0.5f
-        layout.isClickable = true
-        val storageTitle = TextView(context)
-        storageTitle.textSize = 18f
-        storageTitle.setTextColor(Utils.getColorAttrDefaultColor(context, android.R.attr.textColorPrimary))
-        storageTitle.layoutParams = RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT)
-        storageTitle.alpha = 0.9f
-        storageTitle.setPadding(defaultPadding, defaultPadding, 0, 0)
-        storageTitle.text = resources.getString(R.string.storage_card_title)
+
+        val textContainer = LinearLayout(context)
+        textContainer.orientation = LinearLayout.VERTICAL
+        textContainer.gravity = Gravity.CENTER
+        val containerParams = RelativeLayout.LayoutParams(
+            RelativeLayout.LayoutParams.MATCH_PARENT,
+            RelativeLayout.LayoutParams.MATCH_PARENT
+        )
+        textContainer.layoutParams = containerParams
+
+        val sidePadding = (resources.displayMetrics.density * 8).toInt()
+        textContainer.setPadding(sidePadding, 0, sidePadding, 0)
+
+        val storageInfoTotal = TextView(context)
+        storageInfoTotal.textSize = 12f
+        storageInfoTotal.setTextColor(Utils.getColorAttrDefaultColor(context, android.R.attr.textColorSecondary))
+        storageInfoTotal.gravity = Gravity.CENTER
+        storageInfoTotal.text = resources.getString(R.string.storage_card_info)
+
+        val storageInfoUsed = TextView(context)
+        storageInfoUsed.textSize = 18f
+        storageInfoUsed.setTextColor(Utils.getColorAttrDefaultColor(context, android.R.attr.textColorPrimary))
+        storageInfoUsed.gravity = Gravity.CENTER
+
+        textContainer.addView(storageInfoTotal)
+        textContainer.addView(storageInfoUsed)
+
         layout.addView(waveView)
-        layout.addView(storageTitle)
-        setupStorageInfo(context)
+        layout.addView(textContainer)
+
+        manageStorageInfo(storageInfoUsed)
+
         addView(layout)
-        setTouchListener(layout)
         radius = defaultRadius.toFloat()
+
         layout.setOnClickListener {
             context.startActivity(Intent(Settings.ACTION_INTERNAL_STORAGE_SETTINGS))
         }
     }
 
-    private fun setupStorageInfo(context: Context?) {
-        val storageInfoUsed = TextView(context)
-        storageInfoUsed.textSize = 26f
-        storageInfoUsed.id = R.id.storage_info_used_id
-        storageInfoUsed.setTextColor(Utils.getColorAttrDefaultColor(context, android.R.attr.textColorPrimary))
-        val params = RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT)
-        params.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM)
-        storageInfoUsed.layoutParams = params
-        storageInfoUsed.gravity = Gravity.START or Gravity.BOTTOM
-        storageInfoUsed.alpha = 0.9f
-        storageInfoUsed.setPadding(defaultPadding, 0, 0, defaultPadding)
-        val storageInfoTotal = TextView(context)
-        storageInfoTotal.textSize = 16f
-        storageInfoTotal.setTextColor(Utils.getColorAttrDefaultColor(context, android.R.attr.textColorPrimary))
-        val params2 = RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT)
-        params2.addRule(RelativeLayout.END_OF, R.id.storage_info_used_id)
-        params2.addRule(RelativeLayout.ALIGN_BASELINE, R.id.storage_info_used_id)
-        storageInfoTotal.layoutParams = params2
-        storageInfoTotal.alpha = 0.9f
-        val storageInfo = TextView(context)
-        storageInfo.textSize = 14f
-        storageInfo.setTextColor(Utils.getColorAttrDefaultColor(context, android.R.attr.textColorSecondary))
-        val params3 = RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT)
-        params3.addRule(RelativeLayout.ABOVE, R.id.storage_info_used_id)
-        storageInfo.layoutParams = params3
-        storageInfo.alpha = 0.7f
-        storageInfo.setPadding(defaultPadding, 0, 0, 0)
-        storageInfo.text = resources.getString(R.string.storage_card_info)
-        manageStorageInfo(storageInfoUsed, storageInfoTotal)
-        layout.addView(storageInfoUsed)
-        layout.addView(storageInfoTotal)
-        layout.addView(storageInfo)
-    }
-
-    private fun manageStorageInfo(storageInfoUsed: TextView, storageInfoTotal: TextView) {
-        val storageManager: StorageManager? = context.getSystemService(StorageManager::class.java)
+    private fun manageStorageInfo(storageInfoUsed: TextView) {
+        val storageManager: StorageManager?  = context.getSystemService(StorageManager::class.java)
         if (storageManager != null) {
             val volumes = storageManager.volumes
             for (vol in volumes) {
@@ -113,339 +122,144 @@ class StorageCardView(context: Context, attrs: AttributeSet?) : AboutBaseCard(co
                     if (vol.getType() == VolumeInfo.TYPE_PRIVATE) {
                         val stats = context.getSystemService(StorageStatsManager::class.java)
                         try {
-                            totalBytes = stats!!.getTotalBytes(vol.getFsUuid())
-                            freeBytes = stats!!.getFreeBytes(vol.getFsUuid())
+                            totalBytes = stats!! .getTotalBytes(vol.getFsUuid())
+                            freeBytes = stats.getFreeBytes(vol.getFsUuid())
                             usedBytes = totalBytes - freeBytes
-                        } catch (e: IOException) {
-                            Log.w("StorageManager", e)
-                        }
+                        } catch (e: IOException) {}
                     }
                     val used = Formatter.formatFileSize(context, usedBytes, Formatter.FLAG_SHORTER)
-                    val total =
-                        Formatter.formatFileSize(context, totalBytes, Formatter.FLAG_SHORTER)
-                    storageInfoUsed.text = used
-                    storageInfoTotal.text = String.format("/%s", total)
+                    val total = Formatter.formatFileSize(context, totalBytes, Formatter.FLAG_SHORTER)
+                    storageInfoUsed.text = "$used / $total"
+
                     if (totalBytes > 0) {
                         mUsedPercent = (usedBytes * 100 / totalBytes).toInt()
-                        waveView.progress = mUsedPercent
                     }
                     waveView.setLowStorage(freeBytes < storageManager.getStorageLowBytes(path))
                 }
             }
-            anim = ProgressBarAnimation(waveView, 100f, mUsedPercent.toFloat())
-            anim!!.duration = 1250
-            waveView.startAnimation(anim!!)
         } else {
-            // Just for the sake of layout preview
-            storageInfoUsed.text = "127 GB"
-            storageInfoTotal.text = String.format("/%s", "128 GB")
+            storageInfoUsed.text = "33 GB / 256 GB"
+            mUsedPercent = 15
         }
     }
 
-    private inner class ProgressBarAnimation(private val waveView: WaveView?, private val from: Float, private val to: Float) : Animation() {
-        override fun applyTransformation(interpolatedTime: Float, t: Transformation) {
-            super.applyTransformation(interpolatedTime, t)
-            val value = from + (to - from) * interpolatedTime
-            waveView!!.progress = value.toInt()
+    override fun onAttachedToWindow() {
+        super.onAttachedToWindow()
+        postDelayed({ startFillAnimation(mUsedPercent) }, 300)
+    }
+
+    private fun startFillAnimation(targetProgress: Int) {
+        if (targetProgress <= 0) return
+        progressAnimator?.cancel()
+
+        progressAnimator = ValueAnimator.ofFloat(0f, targetProgress.toFloat()).apply {
+            duration = 1400
+            interpolator = PathInterpolator(0.4f, 0.0f, 0.2f, 1f)
+
+            addUpdateListener {
+                // Clamp value to 0-100 to prevent visual glitches during overshoot
+                val value = (it.animatedValue as Float).coerceIn(0f, 100f)
+                waveView.setProgress(value.toInt())
+            }
+            start()
         }
     }
 
-    private inner class WaveView(context: Context?) : LinearLayout(context) {
+    override fun onDetachedFromWindow() {
+        super.onDetachedFromWindow()
+        progressAnimator?.cancel()
+    }
+
+    private inner class WaveView(context: Context?) : View(context) {
         private var mAboveWaveColor = Utils.getColorAttrDefaultColor(context, android.R.attr.colorAccent)
         private var mProgress = 0
-        private val mWaveHeight = 2
-        private val mWaveMultiple = 2
-        private val mWaveHz = 2
-        private var mWaveToTop = 0
-        private val mWave: Wave
-        private val mSolid: Solid
-        fun setLowStorage(lowStorage: Boolean) {
-            mAboveWaveColor = if (lowStorage) Utils.getColorAttrDefaultColor(context, android.R.attr.colorError) else Utils.getColorAttrDefaultColor(context, android.R.attr.colorAccent)
-            mWave.setAboveWaveColor(mAboveWaveColor)
-            mWave.setBlowWaveColor(mAboveWaveColor)
-        }
-
-        var progress: Int
-            get() = mProgress
-            set(progress) {
-                mProgress = if (progress > 100) 100 else progress
-                computeWaveToTop()
-            }
-
-        override fun onWindowFocusChanged(hasWindowFocus: Boolean) {
-            super.onWindowFocusChanged(hasWindowFocus)
-            if (hasWindowFocus) {
-                computeWaveToTop()
-            }
-        }
-
-        private fun computeWaveToTop() {
-            mWaveToTop = (height * (1f - mProgress / 100f)).toInt()
-            val params = mWave.layoutParams
-            if (params != null) {
-                (params as LayoutParams).topMargin = mWaveToTop
-            }
-            mWave.layoutParams = params
-        }
-
-        public override fun onSaveInstanceState(): Parcelable {
-            val superState = super.onSaveInstanceState()
-            val ss: SavedState = SavedState(superState)
-            ss.progress = mProgress
-            return ss
-        }
-
-        public override fun onRestoreInstanceState(state: Parcelable) {
-            val ss = state as SavedState
-            super.onRestoreInstanceState(ss.superState)
-            progress = ss.progress
-        }
-
-        private inner class SavedState : BaseSavedState {
-            var progress = 0
-
-            constructor(superState: Parcelable?) : super(superState)
-            private constructor(`in`: Parcel) : super(`in`) {
-                progress = `in`.readInt()
-            }
-
-            override fun writeToParcel(out: Parcel, flags: Int) {
-                super.writeToParcel(out, flags)
-                out.writeInt(progress)
-            }
-
-            val CREATOR: Parcelable.Creator<SavedState?> = object : Parcelable.Creator<SavedState?> {
-                override fun createFromParcel(`in`: Parcel): SavedState {
-                    return SavedState(`in`)
-                }
-
-                override fun newArray(size: Int): Array<SavedState?> {
-                    return arrayOfNulls(size)
-                }
-            }
-        }
-
-        init {
-            orientation = VERTICAL
-            mWave = Wave(context, null)
-            mWave.initializeWaveSize(mWaveMultiple, mWaveHeight, mWaveHz)
-            mWave.setAboveWaveColor(mAboveWaveColor)
-            mWave.setBlowWaveColor(mAboveWaveColor)
-            mWave.initializePainters()
-            mSolid = Solid(context, null)
-            mSolid.setAboveWavePaint(mWave.aboveWavePaint)
-            mSolid.setBlowWavePaint(mWave.blowWavePaint)
-            addView(mWave)
-            addView(mSolid)
-            progress = mProgress
-        }
-    }
-
-    private inner class Wave @JvmOverloads constructor(context: Context?, attrs: AttributeSet?, defStyle: Int = R.attr.waveViewStyle) : View(context, attrs, defStyle) {
-        private val WAVE_HEIGHT_HUGE = 36
-        private val WAVE_HEIGHT_LARGE = 16
-        private val WAVE_HEIGHT_MIDDLE = 8
-        private val WAVE_HEIGHT_LITTLE = 5
-        private val WAVE_LENGTH_MULTIPLE_LARGE = 1.5f
-        private val WAVE_LENGTH_MULTIPLE_MIDDLE = 1f
-        private val WAVE_LENGTH_MULTIPLE_LITTLE = 0.5f
-        private val WAVE_HZ_FAST = 0.13f
-        private val WAVE_HZ_NORMAL = 0.09f
-        private val WAVE_HZ_SLOW = 0.05f
-        val DEFAULT_ABOVE_WAVE_ALPHA = 255
-        val DEFAULT_BLOW_WAVE_ALPHA = 100
-        private val X_SPACE = 20f
-        private val PI2 = 2 * Math.PI
+        private val mWaveHeight = 10
+        private val mWaveHz = 0.02f
         private val mAboveWavePath = Path()
         private val mBlowWavePath = Path()
-        val aboveWavePaint = Paint()
-        val blowWavePaint = Paint()
-        private var mAboveWaveColor = 0
-        private var mBlowWaveColor = 0
-        private var mWaveMultiple = 0f
-        private var mWaveLength = 0f
-        private var mWaveHeight = 0
-        private var mMaxRight = 0f
-        private var mWaveHz = 0f
+        private val clipPath = Path()
+        val aboveWavePaint = Paint().apply { style = Paint.Style.FILL; isAntiAlias = true }
+        val blowWavePaint = Paint().apply { style = Paint.Style.FILL; isAntiAlias = true; alpha = 100 }
         private var mAboveOffset = 0.0f
         private var mBlowOffset = 0f
-        private var mRefreshProgressRunnable: RefreshProgressRunnable? = null
-        private var omega = 0.0
-        override fun onDraw(canvas: Canvas) {
-            super.onDraw(canvas)
-            canvas.drawPath(mBlowWavePath, blowWavePaint)
-            canvas.drawPath(mAboveWavePath, aboveWavePaint)
+        private var mRefreshRunnable: Runnable?  = null
+
+        private var largeRadius = 0f
+        private var smallRadius = 0f
+
+        init {
+            initializePainters()
+            largeRadius = resources.getDimensionPixelSize(SettingsLibRes.dimen.settingslib_preference_corner_radius).toFloat()
+            smallRadius = (resources.displayMetrics.density * 4)
         }
 
-        fun setAboveWaveColor(aboveWaveColor: Int) {
-            mAboveWaveColor = aboveWaveColor
-        }
-
-        fun setBlowWaveColor(blowWaveColor: Int) {
-            mBlowWaveColor = blowWaveColor
-        }
-
-        fun initializeWaveSize(waveMultiple: Int, waveHeight: Int, waveHz: Int) {
-            mWaveMultiple = getWaveMultiple(waveMultiple)
-            mWaveHeight = getWaveHeight(waveHeight)
-            mWaveHz = getWaveHz(waveHz)
-            mBlowOffset = mWaveHeight * 0.4f
-            val params = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
-                mWaveHeight * 2)
-            layoutParams = params
+        fun setLowStorage(low: Boolean) {
+            mAboveWaveColor = if (low) Utils.getColorAttrDefaultColor(context, android.R.attr.colorError)
+                              else Utils.getColorAttrDefaultColor(context, android.R.attr.colorAccent)
+            initializePainters()
         }
 
         fun initializePainters() {
             aboveWavePaint.color = mAboveWaveColor
-            aboveWavePaint.alpha = DEFAULT_ABOVE_WAVE_ALPHA
-            aboveWavePaint.style = Paint.Style.FILL
-            aboveWavePaint.isAntiAlias = true
-            blowWavePaint.color = mBlowWaveColor
-            blowWavePaint.alpha = DEFAULT_BLOW_WAVE_ALPHA
-            blowWavePaint.style = Paint.Style.FILL
-            blowWavePaint.isAntiAlias = true
+            blowWavePaint.color = mAboveWaveColor
+            blowWavePaint.alpha = 100
         }
 
-        private fun getWaveMultiple(size: Int): Float {
-            when (size) {
-                Size.LARGE -> return WAVE_LENGTH_MULTIPLE_LARGE
-                Size.MIDDLE -> return WAVE_LENGTH_MULTIPLE_MIDDLE
-                Size.LITTLE -> return WAVE_LENGTH_MULTIPLE_LITTLE
-            }
-            return 0f
-        }
-
-        private fun getWaveHeight(size: Int): Int {
-            when (size) {
-                Size.HUGE -> return WAVE_HEIGHT_HUGE
-                Size.LARGE -> return WAVE_HEIGHT_LARGE
-                Size.MIDDLE -> return WAVE_HEIGHT_MIDDLE
-                Size.LITTLE -> return WAVE_HEIGHT_LITTLE
-            }
-            return 0
-        }
-
-        private fun getWaveHz(size: Int): Float {
-            when (size) {
-                Size.LARGE -> return WAVE_HZ_FAST
-                Size.MIDDLE -> return WAVE_HZ_NORMAL
-                Size.LITTLE -> return WAVE_HZ_SLOW
-            }
-            return 0f
-        }
-
-        private fun calculatePath() {
-            mAboveWavePath.reset()
-            mBlowWavePath.reset()
-            waveOffset
-            var y: Float
-            mAboveWavePath.moveTo(mLeft.toFloat(), mBottom.toFloat())
-            run {
-                var x = 0f
-                while (x <= mMaxRight) {
-                    y = (mWaveHeight * sin(omega * x + mAboveOffset) + mWaveHeight).toFloat()
-                    mAboveWavePath.lineTo(x, y)
-                    x += X_SPACE
-                }
-            }
-            mAboveWavePath.lineTo(mRight.toFloat(), mBottom.toFloat())
-            mBlowWavePath.moveTo(mLeft.toFloat(), mBottom.toFloat())
-            var x = 0f
-            while (x <= mMaxRight) {
-                y = (mWaveHeight * Math.sin(omega * x + mBlowOffset) + mWaveHeight).toFloat()
-                mBlowWavePath.lineTo(x, y)
-                x += X_SPACE
-            }
-            mBlowWavePath.lineTo(mRight.toFloat(), mBottom.toFloat())
-        }
-
-        override fun onWindowVisibilityChanged(visibility: Int) {
-            super.onWindowVisibilityChanged(visibility)
-            if (GONE == visibility) {
-                removeCallbacks(mRefreshProgressRunnable)
-            } else {
-                removeCallbacks(mRefreshProgressRunnable)
-                mRefreshProgressRunnable = RefreshProgressRunnable()
-                post(mRefreshProgressRunnable)
-            }
-        }
-
-        override fun onWindowFocusChanged(hasWindowFocus: Boolean) {
-            super.onWindowFocusChanged(hasWindowFocus)
-            if (hasWindowFocus) {
-                if (mWaveLength == 0f) {
-                    startWave()
-                }
-            }
-        }
-
-        override fun onLayout(changed: Boolean, left: Int, top: Int, right: Int, bottom: Int) {
-            super.onLayout(changed, left, top, right, bottom)
-            if (mWaveLength == 0f) {
-                startWave()
-            }
-        }
-
-        private fun startWave() {
-            if (width != 0) {
-                val width = width
-                mWaveLength = width * mWaveMultiple
-                mLeft = left
-                mRight = right
-                mBottom = bottom + 2
-                mMaxRight = right + X_SPACE
-                omega = PI2 / mWaveLength
-            }
-        }
-
-        private val waveOffset: Unit
-            get() {
-                if (mBlowOffset > Float.MAX_VALUE - 100) {
-                    mBlowOffset = 0f
-                } else {
-                    mBlowOffset += mWaveHz
-                }
-                if (mAboveOffset > Float.MAX_VALUE - 100) {
-                    mAboveOffset = 0f
-                } else {
-                    mAboveOffset += mWaveHz
-                }
-            }
-
-        private inner class RefreshProgressRunnable : Runnable {
-            override fun run() {
-                synchronized(this) {
-                    val start = System.currentTimeMillis()
-                    calculatePath()
-                    invalidate()
-                    val gap = 16 - (System.currentTimeMillis() - start)
-                    postDelayed(this, if (gap < 0) 0 else gap)
-                }
-            }
-        }
-    }
-
-    private inner class Solid @JvmOverloads constructor(context: Context?, attrs: AttributeSet?, defStyleAttr: Int = 0) : View(context, attrs, defStyleAttr) {
-        private var aboveWavePaint: Paint? = null
-        private var blowWavePaint: Paint? = null
-        fun setAboveWavePaint(aboveWavePaint: Paint?) {
-            this.aboveWavePaint = aboveWavePaint
-        }
-
-        fun setBlowWavePaint(blowWavePaint: Paint?) {
-            this.blowWavePaint = blowWavePaint
+        fun setProgress(p: Int) {
+            mProgress = p.coerceIn(0, 100)
+            invalidate()
         }
 
         override fun onDraw(canvas: Canvas) {
-            super.onDraw(canvas)
-            canvas.drawRect(left.toFloat(), 0f, right.toFloat(), bottom.toFloat(), blowWavePaint as Paint)
-            canvas.drawRect(left.toFloat(), 0f, right.toFloat(), bottom.toFloat(), aboveWavePaint as Paint)
+            val w = width.toFloat()
+            val h = height.toFloat()
+            if (w <= 0 || h <= 0) return
+
+            clipPath.reset()
+            // Top-Left (small), Top-Right (large), Bottom-Right (small), Bottom-Left (small)
+            val radii = floatArrayOf(
+                smallRadius, smallRadius, // TL
+                largeRadius, largeRadius, // TR
+                smallRadius, smallRadius, // BR
+                smallRadius, smallRadius  // BL
+            )
+            clipPath.addRoundRect(RectF(0f, 0f, w, h), radii, Path.Direction.CW)
+            canvas.clipPath(clipPath)
+
+            val waveTop = h * (1f - mProgress / 100f)
+            mAboveWavePath.reset(); mAboveWavePath.moveTo(0f, h)
+            mBlowWavePath.reset(); mBlowWavePath.moveTo(0f, h)
+
+            var x = 0f
+            while (x <= w) {
+                val y1 = waveTop + mWaveHeight * sin((x / w * 2 * Math.PI + mAboveOffset).toDouble()).toFloat()
+                val y2 = waveTop + mWaveHeight * sin((x / w * 2 * Math.PI + mBlowOffset).toDouble()).toFloat()
+                mAboveWavePath.lineTo(x, y1)
+                mBlowWavePath.lineTo(x, y2)
+                x += 10f
+            }
+            mAboveWavePath.lineTo(w, h); mAboveWavePath.close()
+            mBlowWavePath.lineTo(w, h); mBlowWavePath.close()
+
+            canvas.drawPath(mBlowWavePath, blowWavePaint)
+            canvas.drawPath(mAboveWavePath, aboveWavePaint)
         }
 
-        init {
-            val params = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT)
-            params.weight = 1f
-            layoutParams = params
+        override fun onAttachedToWindow() {
+            super.onAttachedToWindow()
+            mRefreshRunnable = object : Runnable {
+                override fun run() {
+                    mAboveOffset += mWaveHz
+                    mBlowOffset += mWaveHz + 0.01f
+                    invalidate()
+                    postDelayed(this, 16)
+                }
+            }
+            post(mRefreshRunnable)
+        }
+        override fun onDetachedFromWindow() {
+            super.onDetachedFromWindow()
+            removeCallbacks(mRefreshRunnable)
         }
     }
 }

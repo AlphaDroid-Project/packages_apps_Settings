@@ -11,12 +11,11 @@ import android.widget.RelativeLayout
 
 import com.google.android.material.card.MaterialCardView
 
-import com.android.settings.R;
+import com.android.settings.R
 
-import com.android.settingslib.Utils
 @SuppressLint("ClickableViewAccessibility")
 open class AboutBaseCard : MaterialCardView {
-    protected var layout: RelativeLayout
+    protected lateinit var layout: RelativeLayout
     protected var defaultPadding = 38
     var defaultRadius = 0
 
@@ -28,17 +27,23 @@ open class AboutBaseCard : MaterialCardView {
 
     init {
         defaultRadius = resources.getDimensionPixelSize(R.dimen.contextual_card_corner_radius)
-        layoutParams = LayoutParams(resources.getDimensionPixelSize(R.dimen.storage_card_min_width), resources.getDimensionPixelSize(R.dimen.storage_card_min_height))
+        layoutParams = LayoutParams(
+            resources.getDimensionPixelSize(R.dimen.storage_card_min_width),
+            resources.getDimensionPixelSize(R.dimen.storage_card_min_height)
+        )
         layout = RelativeLayout(context)
-        layout.layoutParams = RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT)
-        layout.setPadding(defaultPadding, (defaultPadding * 1.5).toInt(), defaultPadding, (defaultPadding * 1.5).toInt())
-        layout.setBackgroundColor(resources.getColor(R.color.contextual_card_background, context.theme))
+        layout.layoutParams = RelativeLayout.LayoutParams(
+            RelativeLayout.LayoutParams.MATCH_PARENT,
+            RelativeLayout.LayoutParams.MATCH_PARENT
+        )
+        // No background color - transparent
         addView(layout)
         radius = defaultRadius.toFloat()
-        setCardBackgroundColor(resources.getColor(R.color.contextual_card_background, context.theme))
+        // Transparent card background
+        setCardBackgroundColor(android.graphics.Color.TRANSPARENT)
         cardElevation = 0f
-        strokeColor = resources.getColor(R.color.contextual_card_stroke_color, context.theme)
-        strokeWidth = resources.getDimensionPixelSize(R.dimen.contextual_card_stroke_width)
+        // No stroke
+        strokeWidth = 0
         setTouchListener(layout)
     }
 
@@ -47,40 +52,17 @@ open class AboutBaseCard : MaterialCardView {
         view.setOnTouchListener { _, event ->
             when (event.action) {
                 MotionEvent.ACTION_DOWN -> {
-                    val scaleDownX = ObjectAnimator.ofFloat(
-                            this,
-                            "scaleX", 0.9f
-                    )
-                    val scaleDownY = ObjectAnimator.ofFloat(
-                            this,
-                            "scaleY", 0.9f
-                    )
+                    val scaleDownX = ObjectAnimator.ofFloat(this, "scaleX", 0.9f)
+                    val scaleDownY = ObjectAnimator.ofFloat(this, "scaleY", 0.9f)
                     scaleDownX.duration = 200
                     scaleDownY.duration = 200
                     val scaleDown = AnimatorSet()
                     scaleDown.play(scaleDownX).with(scaleDownY)
                     scaleDown.start()
                 }
-                MotionEvent.ACTION_UP -> {
-                    val scaleDownX2 = ObjectAnimator.ofFloat(
-                            this, "scaleX", 1f
-                    )
-                    val scaleDownY2 = ObjectAnimator.ofFloat(
-                            this, "scaleY", 1f
-                    )
-                    scaleDownX2.duration = 200
-                    scaleDownY2.duration = 200
-                    val scaleDown2 = AnimatorSet()
-                    scaleDown2.play(scaleDownX2).with(scaleDownY2)
-                    scaleDown2.start()
-                }
-                MotionEvent.ACTION_CANCEL -> {
-                    val scaleDownX2 = ObjectAnimator.ofFloat(
-                            this, "scaleX", 1f
-                    )
-                    val scaleDownY2 = ObjectAnimator.ofFloat(
-                            this, "scaleY", 1f
-                    )
+                MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> {
+                    val scaleDownX2 = ObjectAnimator.ofFloat(this, "scaleX", 1f)
+                    val scaleDownY2 = ObjectAnimator.ofFloat(this, "scaleY", 1f)
                     scaleDownX2.duration = 200
                     scaleDownY2.duration = 200
                     val scaleDown2 = AnimatorSet()

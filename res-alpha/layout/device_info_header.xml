@@ -1,50 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-	android:id="@+id/entity_header"
+    android:id="@+id/entity_header"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:gravity="center">
 
+    <!-- Row: Visual Cards -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:baselineAligned="false">
 
-        <LinearLayout
-            android:layout_width="wrap_content"
+        <!-- Left: ROM Logo Card -->
+        <com.android.settings.deviceinfo.aboutphone.RomCardView
+            android:id="@+id/rom_card"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:orientation="vertical">
+            android:layout_weight="1" />
 
-            <com.android.settings.deviceinfo.aboutphone.RomCardView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-
-        </LinearLayout>
-
+        <!-- Spacer (Reduced to 4dp) -->
         <View
-            android:layout_width="16dp"
+            android:layout_width="4dp"
             android:layout_height="1dp" />
 
+        <!-- Right: Storage + Device -->
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:gravity="center_horizontal">
 
             <com.android.settings.deviceinfo.aboutphone.DeviceCardView
                 android:id="@+id/deviceNameCard"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:extra_title="@string/bluetooth_device_name" />
+                android:layout_height="wrap_content" />
+
+            <!-- Spacer between vertically stacked cards -->
+            <View
+                android:layout_width="1dp"
+                android:layout_height="4dp" />
 
             <com.android.settings.deviceinfo.aboutphone.StorageCardView
+                android:id="@+id/storage_card"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp" />
+                android:layout_height="130dp"/>
+
         </LinearLayout>
     </LinearLayout>
-
 </LinearLayout>
