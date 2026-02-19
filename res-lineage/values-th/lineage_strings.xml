@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     SPDX-FileCopyrightText: 2015 The CyanogenMod Project
+     SPDX-FileCopyrightText: 2017-2023 The LineageOS Project
+     SPDX-License-Identifier: Apache-2.0
+-->
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="loading">กำลังโหลด\u2026</string>
+    <string name="dlg_ok">ตกลง</string>
+    <string name="cancel">ยกเลิก</string>
+    <string name="add">เพิ่ม</string>
+    <string name="choose_app">เลือกแอป</string>
+    <string name="reset">รีเซ็ต</string>
+    <string name="advanced">ขั้นสูง</string>
+    <string name="settings">การตั้งค่า</string>
+    <string name="name">ชื่อ</string>
+    <string name="back">กลับ</string>
+    <string name="finish">เสร็จสิ้น</string>
+    <string name="next">ถัดไป</string>
+    <string name="on">เปิด</string>
+    <string name="off">ปิด</string>
+    <string name="yes">ใช่</string>
+    <string name="no">ไม่</string>
+    <string name="search">ค้นหา</string>
+    <string name="disabled">ปิดการใช้งาน</string>
+    <string name="enabled">เปิดใช้งาน</string>
+    <string name="live_display_summary">ปรับหน้าความสว่างหน้าจอตามเวลาและแสงโดยรอบเพื่อทำให้อ่านได้ง่ายขึ้นและลดอาการปวดตา</string>
+    <string name="live_display_mode">โหมดการแสดงผล</string>
+    <string name="live_display_color_temperature_title">อุณหภูมิสี</string>
+    <string name="live_display_color_temperature_summary">กลางวัน: <xliff:g id="day_temperature">%1$d</xliff:g>K  กลางคืน: <xliff:g id="night_temperature">%2$d</xliff:g>K</string>
+    <string name="live_display_color_temperature_label"><xliff:g id="degrees">%1$d</xliff:g>K</string>
+    <string name="live_display_day">กลางวัน</string>
+    <string name="live_display_night">กลางคืน</string>
+    <string name="live_display_outdoor_mode_title">โหมดกลางแจ้งอัตโนมัติ</string>
+    <string name="live_display_outdoor_mode_summary">เพิ่มความสว่างและความอิ่มตัวของสีโดยอัตโนมัติภายใต้แสงแดด</string>
+    <string name="live_display_anti_flicker_title">ป้องกันการกระพริบ</string>
+    <string name="live_display_low_power_title">ลดการใช้พลังงาน</string>
+    <string name="live_display_low_power_summary">ปรับการแสดงผลให้ใช้พลังงานน้อยที่สุดโดยที่ไม่ลดประสิทธิภาพ</string>
+    <string name="live_display_enhance_color_title">เพิ่มประสิทธิภาพสี</string>
+    <string name="live_display_enhance_color_summary">ปรับปรุงความมีชีวิตชีวาของสีโดยเน้นโทนสี ภาพทิวทัศน์ และภาพอื่น ๆ</string>
+    <string name="live_display_color_profile_title">โปรไฟล์สี</string>
+    <string name="live_display_color_profile_standard_title">มาตรฐาน</string>
+    <string name="live_display_color_profile_standard_summary">สีที่ถูกต้องและขาวสว่าง</string>
+    <string name="live_display_color_profile_natural_title">ธรรมชาติ</string>
+    <string name="live_display_color_profile_natural_summary">สีที่สมจริงและโทนสีธรรมชาติ</string>
+    <string name="live_display_color_profile_dynamic_title">ไดนามิก</string>
+    <string name="live_display_color_profile_dynamic_summary">สีที่เพิ่มขึ้นและขาวสว่าง</string>
+    <string name="live_display_color_profile_cinema_title">ภาพยนตร์</string>
+    <string name="live_display_color_profile_cinema_summary">คุณภาพสีที่สมบูรณ์แบบสำหรับวิดีโอ</string>
+    <string name="live_display_color_profile_astronomy_title">ดาราศาสตร์</string>
+    <string name="live_display_color_profile_astronomy_summary">สีแดงเข้มสำหรับรักษาสายตาตอนกลางคืน</string>
+    <string name="live_display_color_profile_photography_title">การถ่ายภาพ</string>
+    <string name="live_display_color_profile_photography_summary">คุณภาพสีที่สมบูรณ์แบบสำหรับภาพถ่าย</string>
+    <string name="live_display_color_profile_basic_title">พื้นฐาน</string>
+    <string name="live_display_color_profile_basic_summary">ใช้จอแสดงผลที่ไม่ได้ปรับเทียบ</string>
+    <string name="live_display_color_profile_adaptive_title">ปรับแต่ง</string>
+    <string name="live_display_color_profile_adaptive_summary">สีปรับให้เข้ากับสภาพแวดล้อม</string>
+    <string name="live_display_color_profile_reading_title">อ่านหนังสือ</string>
+    <string name="live_display_color_profile_reading_summary">สีอุ่นขึ้นเพื่อลดอาการปวดตา</string>
+    <string name="live_display_color_profile_srgb_title">sRGB</string>
+    <string name="live_display_color_profile_srgb_summary">ปรับสีให้ถูกต้องกับพื้นที่สี sRGB</string>
+    <string name="live_display_color_profile_dci_p3_title">DCI-P3</string>
+    <string name="live_display_color_profile_dci_p3_summary">สีที่ถูกต้องกับระบบพื้นที่สีของ DCI-P3</string>
+    <string name="live_display_reading_mode_title">โหมดการอ่าน</string>
+    <string name="live_display_reading_mode_summary">โหมดสีเทาสำหรับการอ่านระยะยาว</string>
+    <string name="color_calibration_title">การปรับเทียบสี</string>
+    <string name="color_calibration_summary">ปรับเทียบสีบนจอ</string>
+    <string name="color_red_title">แดง</string>
+    <string name="color_green_title">เขียว</string>
+    <string name="color_blue_title">น้ำเงิน</string>
+    <string name="picture_adjustment_title">การปรับรูปภาพ</string>
+    <string name="picture_adjustment_summary">ปรับโทนสี ความอิ่มตัว ความเข้ม และคอนทราสต์</string>
+    <string name="adj_hue_title">โทนสี</string>
+    <string name="adj_saturation_title">ความอิ่มตัว</string>
+    <string name="adj_intensity_title">ความเข้ม</string>
+    <string name="adj_contrast_title">คอนทราสต์</string>
+    <string name="navigation_bar_arrow_keys_title">แสดงปุ่มลูกศรขณะพิมพ์</string>
+    <string name="navigation_bar_arrow_keys_summary">แสดงปุ่มเลื่อนเคอร์เซอร์ซ้ายขวาขณะพิมพ์ แทนที่ปุ่มสลับแป้นพิมพ์</string>
+    <string name="enable_reporting_title">เปิดใช้งานการรายงาน</string>
+    <string name="accelerometer_title">หมุน​หน้า​จอ​อัตโนมัติ</string>
+    <string name="display_rotation_title">การตั้งค่าการหมุน</string>
+    <string name="display_rotation_enabled">การหมุนอัตโนมัติ เปิดอยู่</string>
+    <string name="display_rotation_disabled">การหมุนอัตโนมัติ ปิดอยู่</string>
+    <string name="display_rotation_unit">องศา</string>
+    <string name="display_lockscreen_rotation_title">หมุนหน้าจอล็อค</string>
+    <string name="display_rotation_category_title">รูปแบบการหมุน</string>
+    <string name="display_rotation_0_title">0 องศา</string>
+    <string name="display_rotation_90_title">90 องศา</string>
+    <string name="display_rotation_180_title">180 องศา</string>
+    <string name="display_rotation_270_title">270 องศา</string>
+    <string name="charging_sounds_settings_title">เสียงขณะชาร์จไฟ</string>
+    <string name="charging_sounds_summary">เล่นเสียงเมื่อมีการชาร์จหรือถอดสายชาร์จ</string>
+    <string name="power_notifications_vibrate_title">สั่น</string>
+    <string name="charging_sounds_ringtone_silent">ไม่มีเสียง</string>
+</resources>

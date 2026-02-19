@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     SPDX-FileCopyrightText: 2015 The CyanogenMod Project
+     SPDX-FileCopyrightText: 2017-2023 The LineageOS Project
+     SPDX-License-Identifier: Apache-2.0
+-->
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="loading">ஏற்றுகின்றது\u2026</string>
+    <string name="dlg_ok">சரி</string>
+    <string name="cancel">விலக்குக</string>
+    <string name="add">சேர்க்க</string>
+    <string name="choose_app">செயலியைத் தேர்க</string>
+    <string name="reset">மீளமைக்க</string>
+    <string name="advanced">மேம்பட்டது</string>
+    <string name="settings">அமைப்புகள்</string>
+    <string name="name">பெயர்</string>
+    <string name="back">பின்செல்க</string>
+    <string name="finish">முடிக்கவும்</string>
+    <string name="next">அடுத்தது</string>
+    <string name="on">இயக்குக</string>
+    <string name="off">அணைக்க</string>
+    <string name="yes">ஆம்</string>
+    <string name="no">இல்லை</string>
+    <string name="search">தேடுக</string>
+    <string name="disabled">முடக்கப்பட்டது</string>
+    <string name="enabled">இயல்விக்கப்பட்டது</string>
+    <string name="color_red_title">சிவப்பு</string>
+    <string name="color_green_title">பச்சை</string>
+    <string name="color_blue_title">நீலம்</string>
+</resources>

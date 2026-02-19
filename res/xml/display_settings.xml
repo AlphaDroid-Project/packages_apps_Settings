@@ -141,6 +141,13 @@
             settings:controller="com.android.settings.display.NightDisplayPreferenceController"
             settings:keywords="@string/keywords_display_night_display"/>
 
+        <lineageos.preference.SelfRemovingPreference
+            android:key="livedisplay"
+            android:title="@*android:string/live_display_title"
+            android:summary="@string/live_display_summary"
+            android:fragment="com.android.settings.lineage.livedisplay.LiveDisplaySettings"
+            settings:requiresConfig="@*android:bool/config_supportsLiveDisplay" />
+
         <Preference
             android:key="color_mode"
             android:title="@string/color_mode_title"
@@ -183,11 +190,12 @@
             settings:keywords="@string/keywords_auto_rotate"
             settings:controller="com.android.settings.display.DeviceStateAutoRotateOverviewController"/>
 
-        <lineageos.preference.LineagePartsPreference
+        <Preference
             android:key="rotation"
-            settings:replacesKey="auto_rotate"
-            settings:requiresConfig="@*lineageos.platform:bool/config_enableAdvancedRotationSettings"
-            settings:requiresFeature="android.hardware.sensor.accelerometer" />
+            android:title="@string/display_rotation_title"
+            android:summary="@string/summary_empty"
+            android:fragment="com.android.settings.lineage.hardware.DisplayRotation"
+            settings:controller="com.android.settings.display.AdvancedRotationPreferenceController" />
 
         <Preference
             android:key="screen_resolution"

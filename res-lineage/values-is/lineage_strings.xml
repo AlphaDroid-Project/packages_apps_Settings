@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     SPDX-FileCopyrightText: 2015 The CyanogenMod Project
+     SPDX-FileCopyrightText: 2017-2023 The LineageOS Project
+     SPDX-License-Identifier: Apache-2.0
+-->
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="loading">Hleð inn\u2026</string>
+    <string name="dlg_ok">Í lagi</string>
+    <string name="cancel">Hætta við</string>
+    <string name="add">Bæta við</string>
+    <string name="choose_app">Veldu forrit</string>
+    <string name="reset">Endurstilla</string>
+    <string name="advanced">Ítarlegt</string>
+    <string name="settings">Stillingar</string>
+    <string name="name">Nafn</string>
+    <string name="back">Til baka</string>
+    <string name="finish">Ljúka</string>
+    <string name="next">Næsta</string>
+    <string name="on">Kveikt</string>
+    <string name="off">Slökkt</string>
+    <string name="yes">Já</string>
+    <string name="no">Nei</string>
+    <string name="search">Leita</string>
+    <string name="disabled">Óvirkt</string>
+    <string name="enabled">Virkt</string>
+    <string name="charging_control_mode_auto_summary">Greina sjálfvirkt hvenær eigi að byrja hleðslu út frá stilltum áminningum</string>
+    <string name="charging_control_mode_custom_summary">Stilltu áætlaðan tíma að fullri hleðslu</string>
+    <string name="charging_control_start_time_summary">Hleðslustýring virkjast þegar þú byrjar að hlaða eftir %s</string>
+    <string name="charging_control_target_time_title">Áætlaður tími að fullri hleðslu</string>
+    <string name="charging_control_target_time_summary">Rafhlaða verður fullhlaðin kl. %s</string>
+    <string name="live_display_summary">Bestaðu skjáinn þinn eftir tíma dags og umhverfisskilyrðum til að bæta læsileik og minnka álag á augun</string>
+    <string name="live_display_mode">Birtingarhamur</string>
+    <string name="live_display_color_temperature_title">Hitastig litar</string>
+    <string name="live_display_color_temperature_summary">Dagur: <xliff:g id="day_temperature">%1$d</xliff:g>K  Nótt: <xliff:g id="night_temperature">%2$d</xliff:g>K</string>
+    <string name="live_display_color_temperature_label"><xliff:g id="degrees">%1$d</xliff:g>K</string>
+    <string name="live_display_day">Dagur</string>
+    <string name="live_display_night">Næturhamur</string>
+    <string name="live_display_outdoor_mode_title">Sjálfvirkur utanhússhamur</string>
+    <string name="live_display_outdoor_mode_summary">Auka birtustig og litmettun sjálfvirkt í miklu sólskini</string>
+    <string name="live_display_anti_flicker_title">Flöktsíun</string>
+    <string name="live_display_anti_flicker_summary">Komdu í veg fyrir truflandi flökt og minnkaðu álag á sjónina við léleg birtuskilyrði. Þetta gæti minnkað nákvæmni lita og haft áhrif á hvernig sum atriði birtast.</string>
+    <string name="live_display_low_power_title">Minnka orkunotkun</string>
+    <string name="live_display_low_power_summary">Aðlaga skjá fyrir minnstu orkunotkun án skerðingar afkasta</string>
+    <string name="live_display_enhance_color_title">Bæta liti</string>
+    <string name="live_display_enhance_color_summary">Bæta skærleika lita í húðtónum, landslagi og öðrum myndum</string>
+    <string name="live_display_color_profile_title">Litasnið</string>
+    <string name="live_display_color_profile_standard_title">Staðlað</string>
+    <string name="live_display_color_profile_standard_summary">Nákvæmir litir og bjartir hvítir</string>
+    <string name="live_display_color_profile_natural_title">Náttúra</string>
+    <string name="live_display_color_profile_natural_summary">Raunsæir litir og húðtónar</string>
+    <string name="live_display_color_profile_dynamic_title">Breytilegt</string>
+    <string name="live_display_color_profile_dynamic_summary">Bættir litir og bjartir hvítir</string>
+    <string name="live_display_color_profile_cinema_title">Kvikmyndahús</string>
+    <string name="live_display_color_profile_cinema_summary">Fullkomin birting lita í myndskeiðum</string>
+    <string name="live_display_color_profile_astronomy_title">Stjörnufræði</string>
+    <string name="live_display_color_profile_astronomy_summary">Djúprautt til að vernda nætursjónina</string>
+    <string name="live_display_color_profile_photography_title">Ljósmyndun</string>
+    <string name="live_display_color_profile_photography_summary">Fullkomin birting lita í ljósmyndum</string>
+    <string name="live_display_color_profile_basic_title">Einfalt</string>
+    <string name="live_display_color_profile_basic_summary">Nota skjáinn ókvarðaðann</string>
+    <string name="live_display_color_profile_adaptive_title">Aðlaganlegt</string>
+    <string name="live_display_color_profile_adaptive_summary">Litir aðlagast umhverfisskilyrðum</string>
+    <string name="live_display_color_profile_reading_title">Lestur</string>
+    <string name="live_display_color_profile_reading_summary">Hlýlegri litir til að minnka álag á augun</string>
+    <string name="live_display_color_profile_srgb_title">sRGB</string>
+    <string name="live_display_color_profile_srgb_summary">Litir eru nákvæmir miðað við sRGB litarýmd</string>
+    <string name="live_display_color_profile_dci_p3_title">DCI-P3</string>
+    <string name="live_display_color_profile_dci_p3_summary">Litir eru nákvæmir miðað við DCI-P3 litarýmd</string>
+    <string name="live_display_reading_mode_title">Leshamur</string>
+    <string name="live_display_reading_mode_summary">Grátónahamur fyrir lestur í lengri tíma</string>
+    <string name="color_calibration_title">Litkvörðun</string>
+    <string name="color_calibration_summary">Kvarða liti á skjá</string>
+    <string name="color_red_title">Rautt</string>
+    <string name="color_green_title">Grænt</string>
+    <string name="color_blue_title">Blátt</string>
+    <string name="picture_adjustment_title">Aðlögun myndar</string>
+    <string name="picture_adjustment_summary">Breyta litblæ, litmettun, litstyrk og birtuskilum</string>
+    <string name="adj_hue_title">Litblær</string>
+    <string name="adj_saturation_title">Litmettun</string>
+    <string name="adj_intensity_title">Styrkur</string>
+    <string name="adj_contrast_title">Birtuskil</string>
+    <string name="navigation_bar_arrow_keys_title">Sýna örvalykla á meðan skrifað er</string>
+    <string name="navigation_bar_arrow_keys_summary">Birta vinstri og hægri bendilhnappa á meðan skrifað er. Rétthærra en IME-skiptirinn.</string>
+    <string name="enable_reporting_title">Virkja sendingu skýrslna</string>
+    <string name="accelerometer_title">Snúa skjánum sjálfvirkt</string>
+    <string name="display_rotation_title">Stillingar á snúningi</string>
+    <string name="display_rotation_enabled">Sjálfvirkur snúningur er virkur</string>
+    <string name="display_rotation_disabled">Sjálfvirkur snúningur er óvirkur</string>
+    <string name="display_rotation_unit">gráður</string>
+    <string name="display_lockscreen_rotation_title">Snúa læsiskjá</string>
+    <string name="display_rotation_category_title">Snúningshamir</string>
+    <string name="display_rotation_0_title">gráður</string>
+    <string name="display_rotation_90_title">gráður</string>
+    <string name="display_rotation_180_title">gráður</string>
+    <string name="display_rotation_270_title">gráður</string>
+    <string name="charging_sounds_settings_title">Hljóð við hleðslu</string>
+    <string name="charging_sounds_enable_title">Virkja hljóð við hleðslu</string>
+    <string name="charging_sounds_summary">Spila hljóð þegar afltenging er sett í samband eða aftengd</string>
+    <string name="power_notifications_vibrate_title">Titra</string>
+    <string name="charging_sounds_ringtone_silent">Þögult</string>
+    <string name="charging_sounds_notification_category_title">Hljóð með tilkynningu</string>
+    <string name="wired_charging_sounds_title">Hleðsla með kapli</string>
+    <string name="wireless_charging_sounds_title">Þráðlaus hleðsla</string>
+</resources>

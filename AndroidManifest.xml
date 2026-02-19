@@ -159,6 +159,9 @@
 
     <protected-broadcast android:name="com.android.systemui.doze.pulse" />
 
+    <!-- Lineage gestures -->
+    <protected-broadcast android:name="lineage.gestures.UPDATE_SETTINGS" />
+
     <application
             android:name=".SettingsApplication"
             android:label="@string/settings_label"
@@ -6322,6 +6325,9 @@
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
         </activity>
+
+        <!-- Lineage gestures -->
+        <activity android:name="com.android.settings.lineage.gestures.KeyHandler" />
 
     </application>
 </manifest>

@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     SPDX-FileCopyrightText: 2015 The CyanogenMod Project
+     SPDX-FileCopyrightText: 2017-2023 The LineageOS Project
+     SPDX-License-Identifier: Apache-2.0
+-->
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="loading">Laai tans\u2026</string>
+    <string name="dlg_ok">OK</string>
+    <string name="cancel">Kanselleer</string>
+    <string name="add">Voeg by</string>
+    <string name="choose_app">Kies toepassing</string>
+    <string name="reset">Stel terug</string>
+    <string name="advanced">Gevorderd</string>
+    <string name="settings">Instellings</string>
+    <string name="name">Naam</string>
+    <string name="back">Terug</string>
+    <string name="finish">Klaar</string>
+    <string name="next">Volgende</string>
+    <string name="on">Aan</string>
+    <string name="off">Af</string>
+    <string name="yes">Ja</string>
+    <string name="no">Nee</string>
+    <string name="search">Soek</string>
+    <string name="disabled">Gedeaktiveer</string>
+    <string name="enabled">Geaktiveer</string>
+    <string name="live_display_summary">Optimaliseer jou skerm gebaseer op die tyd van die dag en die omringende omstandighede om leesbaarheid te verbeter en oogspanning te verminder</string>
+    <string name="live_display_mode">Skerm modus</string>
+    <string name="live_display_color_temperature_title">Kleurtemperatuur</string>
+    <string name="live_display_color_temperature_summary">Dag: <xliff:g id="day_temperature">%1$d</xliff:g>K  Nag: <xliff:g id="night_temperature">%2$d</xliff:g>K</string>
+    <string name="live_display_color_temperature_label"><xliff:g id="degrees">%1$d</xliff:g>K</string>
+    <string name="live_display_day">Dag</string>
+    <string name="live_display_night">Nag</string>
+    <string name="live_display_outdoor_mode_title">Outomatiese buitelugmodus</string>
+    <string name="live_display_outdoor_mode_summary">Verhoog helderheid en diepte outomaties onder helder sonlig</string>
+    <string name="live_display_low_power_title">Verminder kragverbruik</string>
+    <string name="live_display_low_power_summary">Verstel skerm vir laagste kragverbruik sonder verswakking</string>
+    <string name="live_display_enhance_color_title">Verbeter kleure</string>
+    <string name="live_display_enhance_color_summary">Verbeter kleur impak van vlees toon, natuurskoon en ander beelde</string>
+    <string name="live_display_color_profile_title">Kleur profiel</string>
+    <string name="live_display_color_profile_standard_title">Standaard</string>
+    <string name="live_display_color_profile_standard_summary">Akkurate kleure en helder wit</string>
+    <string name="live_display_color_profile_natural_title">Natuurlik</string>
+    <string name="live_display_color_profile_natural_summary">Realistiese kleure en vleesskakerings</string>
+    <string name="live_display_color_profile_dynamic_title">Dinamies</string>
+    <string name="live_display_color_profile_dynamic_summary">Verbeterde kleure en helder wit</string>
+    <string name="live_display_color_profile_cinema_title">Fliek</string>
+    <string name="live_display_color_profile_cinema_summary">Perfekte kleur voortplanting vir video</string>
+    <string name="live_display_color_profile_astronomy_title">Sterrekunde</string>
+    <string name="live_display_color_profile_astronomy_summary">Diep rooi vir die behoud van die nag visie</string>
+    <string name="live_display_color_profile_photography_title">Fotografie</string>
+    <string name="live_display_color_profile_photography_summary">Perfekte kleur voortplanting vir foto\'s</string>
+    <string name="live_display_color_profile_basic_title">Basies</string>
+    <string name="live_display_color_profile_basic_summary">Gebruik die skerm ongekalibreer</string>
+    <string name="live_display_color_profile_adaptive_title">Aanpasbaar</string>
+    <string name="live_display_color_profile_adaptive_summary">Kleure pas by omringende omstandighede aan</string>
+    <string name="live_display_color_profile_reading_title">Lees</string>
+    <string name="live_display_color_profile_reading_summary">Warmer kleure vir minder oogvermoeidheid</string>
+    <string name="live_display_color_profile_srgb_title">sRGB</string>
+    <string name="live_display_color_profile_srgb_summary">Kleure akkuraat tot die sRGB kleurruimte</string>
+    <string name="live_display_color_profile_dci_p3_title">DCI-P3</string>
+    <string name="live_display_color_profile_dci_p3_summary">Kleure akkuraat tot die DCI-P3 kleur spektrum</string>
+    <string name="color_calibration_title">Kleur kalibrasie</string>
+    <string name="color_calibration_summary">Kalibreer skermkleure</string>
+    <string name="color_red_title">Rooi</string>
+    <string name="color_green_title">Groen</string>
+    <string name="color_blue_title">Blou</string>
+    <string name="picture_adjustment_title">Prent aanpassing</string>
+    <string name="picture_adjustment_summary">Verstel kleur, versadiging, intensiteit en kontras</string>
+    <string name="adj_hue_title">Kleur</string>
+    <string name="adj_saturation_title">Versadiging</string>
+    <string name="adj_intensity_title">Intensiteit</string>
+    <string name="adj_contrast_title">Kontras</string>
+    <string name="navigation_bar_arrow_keys_title">Wys pyltjiesleutels terwyl jy tik</string>
+    <string name="navigation_bar_arrow_keys_summary">Wys links en regs wyser knoppies terwyl tik. Oorskryf IME wisselaar.</string>
+    <string name="enable_reporting_title">Aktiveer verslaggewing</string>
+    <string name="accelerometer_title">Outo-roteer skerm</string>
+    <string name="display_rotation_title">Rotasie instellings</string>
+    <string name="display_rotation_enabled">Outo-rotasie is geaktiveer</string>
+    <string name="display_rotation_disabled">Outo-rotasie is gedeaktiveer</string>
+    <string name="display_rotation_unit">grade</string>
+    <string name="display_lockscreen_rotation_title">Roteer slotskerm</string>
+    <string name="display_rotation_category_title">Rotasie modusse</string>
+    <string name="display_rotation_0_title">0 grade</string>
+    <string name="display_rotation_90_title">90 grade</string>
+    <string name="display_rotation_180_title">180 grade</string>
+    <string name="display_rotation_270_title">270 grade</string>
+    <string name="charging_sounds_settings_title">Laai klanke</string>
+    <string name="charging_sounds_summary">Speel \'n klank met die koppeling of ontkoppeling van \'n kragbron</string>
+    <string name="power_notifications_vibrate_title">Vibreer</string>
+    <string name="charging_sounds_ringtone_silent">Stil</string>
+</resources>

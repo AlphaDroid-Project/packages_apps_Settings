@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     SPDX-FileCopyrightText: 2015 The CyanogenMod Project
+     SPDX-FileCopyrightText: 2017-2023 The LineageOS Project
+     SPDX-License-Identifier: Apache-2.0
+-->
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="loading">Lade\u2026</string>
+    <string name="dlg_ok">OK</string>
+    <string name="cancel">Annulearje</string>
+    <string name="add">Tafoegje</string>
+    <string name="choose_app">App selektearje</string>
+    <string name="reset">Opnij ynstelle</string>
+    <string name="advanced">Avansearre</string>
+    <string name="settings">Ynstellingen</string>
+    <string name="name">Namme</string>
+    <string name="back">Tebek</string>
+    <string name="finish">Foltôgje</string>
+    <string name="next">Folgjende</string>
+    <string name="on">Oan</string>
+    <string name="off">Ut</string>
+    <string name="yes">Ja</string>
+    <string name="no">Nee</string>
+    <string name="search">Sykje</string>
+    <string name="disabled">Utskeakele</string>
+    <string name="enabled">Ynskeakele</string>
+    <string name="live_display_summary">Jo skerm optimalisearje oan de hân fan aktuele tiid en ljochtomstannichheden om de lêsberheid te ferbetterjen en eachwurgens te ferminderjen</string>
+    <string name="live_display_mode">Werjeftemodus</string>
+    <string name="live_display_color_temperature_title">Kleurtemperatuer</string>
+    <string name="live_display_color_temperature_summary">Oerdei: <xliff:g id="day_temperature">%1$d</xliff:g> K, nachts: <xliff:g id="night_temperature">%2$d</xliff:g> K</string>
+    <string name="live_display_color_temperature_label"><xliff:g id="degrees">%1$d</xliff:g>K</string>
+    <string name="live_display_day">Oerdei</string>
+    <string name="live_display_night">Nachts</string>
+    <string name="live_display_outdoor_mode_title">Automatyske bûtenshûsmodus</string>
+    <string name="live_display_outdoor_mode_summary">Helderheid en sêding automatysk ferheegje by helder sinneljocht</string>
+    <string name="live_display_low_power_title">Enerzjyferbrûk ferminderje</string>
+    <string name="live_display_low_power_summary">Skerm oanpasse foar leechst mooglike enerzjyferbrûk sûnder kwaliteitsferlies</string>
+    <string name="live_display_enhance_color_title">Kleuren ferbetterje</string>
+    <string name="live_display_enhance_color_summary">Kleurlibbenens fan hûdtinten, lânskippen en oare ôfbyldingen ferbetterje</string>
+    <string name="live_display_color_profile_title">Kleurprofyl</string>
+    <string name="live_display_color_profile_standard_title">Standert</string>
+    <string name="live_display_color_profile_standard_summary">Sekuere kleuren en heldere wytwearden</string>
+    <string name="live_display_color_profile_natural_title">Natuerlik</string>
+    <string name="live_display_color_profile_natural_summary">Realistyske kleuren en hûdtinten</string>
+    <string name="live_display_color_profile_dynamic_title">Dynamysk</string>
+    <string name="live_display_color_profile_dynamic_summary">Ferbettere kleuren en heldere wytwearden</string>
+    <string name="live_display_color_profile_cinema_title">Bioskoop</string>
+    <string name="live_display_color_profile_cinema_summary">Perfekte kleurwerjefte foar fideo</string>
+    <string name="live_display_color_profile_astronomy_title">Astronomy</string>
+    <string name="live_display_color_profile_astronomy_summary">Djippe reade kleuren foar nachtwerjefte</string>
+    <string name="live_display_color_profile_photography_title">Fotografy</string>
+    <string name="live_display_color_profile_photography_summary">Perfekte kleurwerjefte foar foto\'s</string>
+    <string name="live_display_color_profile_basic_title">Basis</string>
+    <string name="live_display_color_profile_basic_summary">Skerm net kalibrearre brûke</string>
+    <string name="live_display_color_profile_adaptive_title">Oanpasber</string>
+    <string name="live_display_color_profile_adaptive_summary">Kleuren passe harren oan oan de omjouwing</string>
+    <string name="live_display_color_profile_reading_title">Lêze</string>
+    <string name="live_display_color_profile_reading_summary">Waarmere kleuren foar minder wurgens fan de eagen</string>
+    <string name="live_display_color_profile_srgb_title">sRGB</string>
+    <string name="live_display_color_profile_srgb_summary">Kleuren binnen it sRGB-kleurepalet</string>
+    <string name="live_display_color_profile_dci_p3_title">DCI-P3</string>
+    <string name="live_display_color_profile_dci_p3_summary">Kleuren binnen it DCI-P3-kleurepalet</string>
+    <string name="live_display_reading_mode_title">Lêsmodus</string>
+    <string name="live_display_reading_mode_summary">Griisskealmodus foar langduorjend lêze</string>
+    <string name="color_calibration_title">Kleuren kalibrearje</string>
+    <string name="color_calibration_summary">Skermkleur kalibrearje</string>
+    <string name="color_red_title">Read</string>
+    <string name="color_green_title">Grien</string>
+    <string name="color_blue_title">Blau</string>
+    <string name="picture_adjustment_title">Byldoanpassingen</string>
+    <string name="picture_adjustment_summary">Skakearring, sêding, yntinsiteit en kontrast oanpasse</string>
+    <string name="adj_hue_title">Skakearring</string>
+    <string name="adj_saturation_title">Sêding</string>
+    <string name="adj_intensity_title">Yntinsivens</string>
+    <string name="adj_contrast_title">Kontrast</string>
+    <string name="navigation_bar_arrow_keys_title">Pylkstoetsen wylst typen toane</string>
+    <string name="navigation_bar_arrow_keys_summary">Kursor links en rjochts toane wylst typen. Ferstopje ynfiermetoadepiktogram.</string>
+    <string name="enable_reporting_title">Statistiken ferstjoere</string>
+    <string name="accelerometer_title">Skerm automatysk draaie</string>
+    <string name="display_rotation_title">Rotaasje-ynstellingen</string>
+    <string name="display_rotation_enabled">Auto-rotaasje is ynskeakele</string>
+    <string name="display_rotation_disabled">Auto-rotaasje is útskeakele</string>
+    <string name="display_rotation_unit">graden</string>
+    <string name="display_lockscreen_rotation_title">Beskoattelingsskerm automatysk draaie</string>
+    <string name="display_rotation_category_title">Draaistannen</string>
+    <string name="display_rotation_0_title">0 graden</string>
+    <string name="display_rotation_90_title">90 graden</string>
+    <string name="display_rotation_180_title">180 graden</string>
+    <string name="display_rotation_270_title">270 graden</string>
+    <string name="charging_sounds_settings_title">Opladerlûd</string>
+    <string name="charging_sounds_summary">Lûd ôfspylje by it oansluten of loskeppeljen fan in lader</string>
+    <string name="power_notifications_vibrate_title">Trille</string>
+    <string name="charging_sounds_ringtone_silent">Stil</string>
+</resources>

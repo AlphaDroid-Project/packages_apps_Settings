@@ -27,6 +27,7 @@ import android.widget.LinearLayout;
 import androidx.preference.Preference;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.internal.logging.nano.MetricsProto.MetricsEvent;
 import com.android.internal.widget.LockPatternUtils;
 import com.android.internal.widget.LockscreenCredential;
 import com.android.settings.R;
@@ -37,8 +38,6 @@ import com.android.settings.utils.SettingsDividerItemDecoration;
 
 import com.google.android.setupdesign.GlifPreferenceLayout;
 import com.google.android.setupdesign.util.ThemeHelper;
-
-import org.lineageos.internal.logging.LineageMetricsLogger;
 
 public class ChooseLockPatternSize extends SettingsActivity {
 
@@ -150,7 +149,7 @@ public class ChooseLockPatternSize extends SettingsActivity {
 
         @Override
         public int getMetricsCategory() {
-            return LineageMetricsLogger.CHOOSE_LOCK_PATTERN_SIZE;
+            return MetricsEvent.LINEAGE;
         }
     }
 }

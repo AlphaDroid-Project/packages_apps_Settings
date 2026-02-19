@@ -262,8 +262,10 @@
             android:order="-40"/>
 
         <!-- Custom charging sounds -->
-        <lineageos.preference.LineagePartsPreference
+        <lineageos.preference.SelfRemovingPreference
             android:key="charging_sounds_settings"
+            android:title="@string/charging_sounds_settings_title"
+            android:fragment="com.android.settings.lineage.sounds.ChargingSoundsSettings"
             settings:replacesKey="charging_sounds"
             settings:requiresConfig="@bool/config_show_charging_sounds" />
 

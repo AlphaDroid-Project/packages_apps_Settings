@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     SPDX-FileCopyrightText: 2015 The CyanogenMod Project
+     SPDX-FileCopyrightText: 2017-2023 The LineageOS Project
+     SPDX-License-Identifier: Apache-2.0
+-->
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="loading">Вчитување\u2026</string>
+    <string name="dlg_ok">ОК</string>
+    <string name="cancel">Откажи</string>
+    <string name="add">Додај</string>
+    <string name="choose_app">Избери апликација</string>
+    <string name="reset">Ресетирај</string>
+    <string name="advanced">Напредно</string>
+    <string name="settings">Поставки</string>
+    <string name="name">Име</string>
+    <string name="back">Назад</string>
+    <string name="finish">Завршо</string>
+    <string name="next">Следно</string>
+    <string name="on">Уклучено</string>
+    <string name="off">Исклучено</string>
+    <string name="yes">Да</string>
+    <string name="no">Не</string>
+    <string name="search">Пребарај</string>
+    <string name="disabled">Оневозможено</string>
+    <string name="enabled">Овозможено</string>
+    <string name="live_display_summary">Оптимизирајте го вашиот екран врз основа на време од денот и амбиентални услови за да се подобри читливоста и да се намали обемот на очите</string>
+    <string name="live_display_mode">Режим на екранот</string>
+    <string name="live_display_color_temperature_title">Температура на бојата</string>
+    <string name="live_display_color_temperature_summary">Ден <xliff:g id="day_temperature">%1$d</xliff:g>K  Ноќ: <xliff:g id="night_temperature">%2$d</xliff:g>K</string>
+    <string name="live_display_color_temperature_label"><xliff:g id="degrees">%1$d</xliff:g>K</string>
+    <string name="live_display_day">Ден</string>
+    <string name="live_display_night">Ноќ</string>
+    <string name="live_display_outdoor_mode_title">Автоматски режим на отворено</string>
+    <string name="live_display_outdoor_mode_summary">Зголемете ја осветленоста и сатурацијата автоматски под силна сончева светлина</string>
+    <string name="live_display_low_power_title">Намали ја потрошувачката енергија</string>
+    <string name="live_display_low_power_summary">Прилагодете го екранот за најниска потрошувачка на енергија без деградација</string>
+    <string name="live_display_enhance_color_title">Подобрете ги боите</string>
+    <string name="live_display_enhance_color_summary">Подобрете ја динамиката на боите од тонови на месо, сцени и други слики</string>
+    <string name="live_display_color_profile_title">Профил на боја</string>
+    <string name="live_display_color_profile_standard_title">Стандардно</string>
+    <string name="live_display_color_profile_standard_summary">Точни бои и светли бели</string>
+    <string name="live_display_color_profile_natural_title">Природно</string>
+    <string name="live_display_color_profile_natural_summary">Реални бои и тонови на месо</string>
+    <string name="live_display_color_profile_dynamic_title">Динамично</string>
+    <string name="live_display_color_profile_dynamic_summary">Подобрени бои и светли бели</string>
+    <string name="live_display_color_profile_cinema_title">Кино</string>
+    <string name="live_display_color_profile_cinema_summary">Совршена репродукција на боите за видео</string>
+    <string name="live_display_color_profile_astronomy_title">Астрономија</string>
+    <string name="live_display_color_profile_astronomy_summary">Длабоко црвена за зачувување на ноќниот вид</string>
+    <string name="live_display_color_profile_photography_title">Фотографија</string>
+    <string name="live_display_color_profile_photography_summary">Совршена репродукција на боите за фотографии</string>
+    <string name="live_display_color_profile_basic_title">Основно</string>
+    <string name="live_display_color_profile_basic_summary">Користете го екранот некалибриран</string>
+    <string name="live_display_color_profile_adaptive_title">Адаптивно</string>
+    <string name="live_display_color_profile_adaptive_summary">Боите се прилагодуваат на амбиентални услови</string>
+    <string name="live_display_color_profile_reading_title">Читање</string>
+    <string name="live_display_color_profile_reading_summary">Потемни бои за помалку замор на очите</string>
+    <string name="live_display_color_profile_srgb_title">sRGB</string>
+    <string name="live_display_color_profile_srgb_summary">Бои прецизни во просторот за боја на sRGB</string>
+    <string name="live_display_color_profile_dci_p3_title">DCI-P3</string>
+    <string name="live_display_color_profile_dci_p3_summary">Боиите се точни за просторот за боја DCI-P3</string>
+    <string name="color_calibration_title">Калибрација на боја</string>
+    <string name="color_calibration_summary">Калибрирај ги боите на екранот</string>
+    <string name="color_red_title">Црвено</string>
+    <string name="color_green_title">Зелено</string>
+    <string name="color_blue_title">Сино</string>
+    <string name="picture_adjustment_title">Прилагодување на сликата</string>
+    <string name="picture_adjustment_summary">Прилагодете боја, сатурација, интензитет и контраст</string>
+    <string name="adj_hue_title">Нијанса</string>
+    <string name="adj_saturation_title">Сатурација</string>
+    <string name="adj_intensity_title">Интензитет</string>
+    <string name="adj_contrast_title">Контраст</string>
+    <string name="navigation_bar_arrow_keys_title">Прикажи ги копчињата со стрелки додека пишувате</string>
+    <string name="navigation_bar_arrow_keys_summary">Приказ на лево и десно курсорски копчиња додека пишувате. Преклопува преклопник за IME.</string>
+    <string name="enable_reporting_title">Овозможи извештај</string>
+    <string name="accelerometer_title">Автоматско ротирање на екранот</string>
+    <string name="display_rotation_title">Поставувања за ротација</string>
+    <string name="display_rotation_enabled">Автоматската ротација е овозможена</string>
+    <string name="display_rotation_disabled">Автоматската ротација е оневозможена</string>
+    <string name="display_rotation_unit">степени</string>
+    <string name="display_lockscreen_rotation_title">Ротирај го екранот за заклучување</string>
+    <string name="display_rotation_category_title">Режими на ротација</string>
+    <string name="display_rotation_0_title">0 степени</string>
+    <string name="display_rotation_90_title">90 степени</string>
+    <string name="display_rotation_180_title">180 степени</string>
+    <string name="display_rotation_270_title">270 степени</string>
+    <string name="charging_sounds_settings_title">Звуци за полнење</string>
+    <string name="charging_sounds_summary">Репродуцирај звук при поврзување или исклучување на извор на енергија</string>
+    <string name="power_notifications_vibrate_title">Вибрација</string>
+    <string name="charging_sounds_ringtone_silent">Тивко</string>
+</resources>

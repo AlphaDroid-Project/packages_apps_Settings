@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     SPDX-FileCopyrightText: 2015 The CyanogenMod Project
+     SPDX-FileCopyrightText: 2017-2023 The LineageOS Project
+     SPDX-License-Identifier: Apache-2.0
+-->
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="loading">ಭರಿಸುತ್ತಿದೆ\u2026</string>
+    <string name="dlg_ok">ಸರಿ</string>
+    <string name="cancel">ರದ್ದು</string>
+    <string name="add">ಸೇರಿಸು</string>
+    <string name="choose_app">ಆಪ್ ಆರಿಸು</string>
+    <string name="reset">ಮರುಹೊಂದಿಸು</string>
+    <string name="advanced">ಪ್ರೌಢ</string>
+    <string name="settings">ಅಳವಡಿಕೆಗಳು</string>
+    <string name="name">ಹೆಸರು</string>
+    <string name="back">ಹಿಂದೆ</string>
+    <string name="finish">ಮುಗಿತು</string>
+    <string name="next">ಮುಂದಿನ</string>
+    <string name="on">ಆನ್</string>
+    <string name="off">ಆಫ್</string>
+    <string name="yes">ಹೌದು</string>
+    <string name="no">ಅಲ್ಲ</string>
+    <string name="search">ಹುಡುಕು</string>
+    <string name="disabled">ಅಶಕ್ತ</string>
+    <string name="enabled">ಸಶಕ್ತ</string>
+    <string name="live_display_summary">ದಿನದ ಸಮಯ ಮತ್ತು ಪರಿಸರದ ಪರಿಸ್ಥಿತಿ ಆಧಾರಿಸಿ ನಿಮ್ಮ ಪರದೆಯನ್ನು ಉತ್ತಮವಾಗಿಸಿ ವಾಚನೀಯತೆ ಉತ್ತಮಗೊಳಿಸಿ ಕಣ್ಣಿನ ಆಯಾಸ ಕಡಿಮೆ ಮಾಡು</string>
+    <string name="live_display_mode">ಪ್ರದರ್ಶನ ರೀತಿ</string>
+    <string name="live_display_color_temperature_title">ಬಣ್ಣದ ತಾಪಮಾನ</string>
+    <string name="live_display_color_temperature_summary">ಹಗಲು: <xliff:g id="day_temperature">%1$d</xliff:g>K  ರಾತ್ರಿ: <xliff:g id="night_temperature">%2$d</xliff:g>K</string>
+    <string name="live_display_color_temperature_label"><xliff:g id="degrees">%1$d</xliff:g>K</string>
+    <string name="live_display_day">ಹಗಲು</string>
+    <string name="live_display_night">ರಾತ್ರಿ</string>
+    <string name="live_display_outdoor_mode_title">ಸ್ವಯಂ ಹೊರಾಂಗಣ ರೀತಿ</string>
+    <string name="live_display_outdoor_mode_summary">ಪ್ರಖರ ಸೂರ್ಯನಡಿ ಪರದೆಯ ಪ್ರಖರತೆ ಮತ್ತು ಆರ್ದ್ರೀಯತೆ ಸ್ವಯಂ ಹೆಚ್ಚಿಸು</string>
+    <string name="live_display_low_power_title">ಶಕ್ತಿ ಬಳಕೆ ಕುಗ್ಗಿಸು</string>
+    <string name="live_display_enhance_color_title">ಬಣ್ಣಗಳನ್ನು ವರ್ಧಿಸು</string>
+    <string name="live_display_enhance_color_summary">ಚರ್ಮ ಛಾಯೆ, ದೃಶ್ಯಾವಳಿ, ಮತ್ತು ಇತರೆ ಚಿತ್ರಗಳ ಬಣ್ಣದ ಹೊಳಪನ್ನು ಉತ್ತಮಗೊಳಿಸು</string>
+    <string name="live_display_color_profile_title">ಬಣ್ಣದ ರೇಖಾಕೃತಿ</string>
+    <string name="live_display_color_profile_standard_title">ಪ್ರಮಾಣಿತ</string>
+    <string name="live_display_color_profile_standard_summary">ನಿಖರ ಬಣ್ಣಗಳು ಮತ್ತು ಪ್ರಖರ ಬಿಳಿಗಳು</string>
+    <string name="live_display_color_profile_natural_title">ನೈಸರ್ಗಿಕ</string>
+    <string name="live_display_color_profile_natural_summary">ನೈಜ ಬಣ್ಣಗಳು ಮತ್ತು ಚರ್ಮ ಛಾಯೆಗಳು</string>
+    <string name="live_display_color_profile_dynamic_title">ಕ್ರಿಯಾತ್ಮಕ</string>
+    <string name="live_display_color_profile_dynamic_summary">ವರ್ಧಿತ ಬಣ್ಣಗಳು ಮತ್ತು ಪ್ರಖರ ಬಿಳಿಗಳು</string>
+    <string name="live_display_color_profile_cinema_title">ಸಿನೆಮಾ</string>
+    <string name="live_display_color_profile_cinema_summary">ದೃಶ್ಯಕ್ಕೆ ಪರಿಪೂರ್ಣ ಬಣ್ಣದ ಪುನರುತ್ಪಾದನೆ</string>
+    <string name="live_display_color_profile_astronomy_title">ಖಗೋಳಶಾಸ್ತ್ರ</string>
+    <string name="live_display_color_profile_astronomy_summary">ರಾತ್ರಿ ವೀಕ್ಷಣೆ ಕಾಪಾಡಲು ಕಡುಗೆಂಪು</string>
+    <string name="live_display_color_profile_photography_title">ಛಾಯಾಗ್ರಹಣ</string>
+    <string name="live_display_color_profile_photography_summary">ಚಿತ್ರಗಳಿಗೆ ಪರಿಪೂರ್ಣ ಬಣ್ಣದ ಪುನರುತ್ಪಾದನೆ</string>
+    <string name="live_display_color_profile_basic_title">ಸಾಮಾನ್ಯ</string>
+    <string name="live_display_color_profile_basic_summary">ಸರಿಹೊಂದಿಸದ ಪ್ರದರ್ಶನ ಬಳಸಿ</string>
+    <string name="live_display_color_profile_adaptive_title">ಹೊಂದಿಕೊಳ್ಳುವ</string>
+    <string name="live_display_color_profile_adaptive_summary">ಪರಿಸರದ ಸ್ಥಿತಿಗಳಿಗೆ ಬಣ್ಣಗಳು ಹೊಂದಿಕೊಳ್ಳುತ್ತವೆ</string>
+    <string name="live_display_color_profile_reading_title">ಓದುವ</string>
+    <string name="live_display_color_profile_reading_summary">ಕಣ್ಣು ತಣಿವಿಗೆ ಕೆಂಪಾದ ಬಣ್ಣಗಳು</string>
+    <string name="live_display_color_profile_srgb_title">sRGB</string>
+    <string name="live_display_color_profile_srgb_summary">ಬಣ್ಣಗಳು sRGB ಬಣ್ಣ ಜಗತ್ತಿಗೆ ಅನುಗುಣವಾಗಿವೆ</string>
+    <string name="live_display_color_profile_dci_p3_title">DCI-P3</string>
+    <string name="live_display_color_profile_dci_p3_summary">ಬಣ್ಣಗಳು DCI-P3 ಬಣ್ಣ ಜಗತ್ತಿಗೆ ಅನುಗುಣವಾಗಿವೆ</string>
+    <string name="live_display_reading_mode_title">ಓದುವ ರೀತಿ</string>
+    <string name="live_display_reading_mode_summary">ದೀರ್ಘಾವಧಿಯ ವಾಚನಕ್ಕೆ ಬೂದುಪೊರೆ ರೀತಿ</string>
+    <string name="color_calibration_title">ಬಣ್ಣ ಸರಿಹೊಂದಿಕೆ</string>
+    <string name="color_calibration_summary">ಪರದೆಯ ಬಣ್ಣಗಳನ್ನು ಸರಿಹೊಂದಿಸು</string>
+    <string name="color_red_title">ಕೆಂಪು</string>
+    <string name="color_green_title">ಹಸಿರು</string>
+    <string name="color_blue_title">ನೀಲಿ</string>
+    <string name="picture_adjustment_title">ಚಿತ್ರದ ಹೊಂದಾಣಿಕೆ</string>
+    <string name="adj_hue_title">ರಂಗು</string>
+    <string name="adj_saturation_title">ಆರ್ದ್ರೀಯತೆ</string>
+    <string name="adj_intensity_title">ತೀವ್ರತೆ</string>
+    <string name="adj_contrast_title">ವೈದೃಶ್ಯ</string>
+    <string name="navigation_bar_arrow_keys_title">ಬೆರಳಚ್ಚುವಾಗ ಬಾಣಕೀಲಿಗಳನ್ನು ಪ್ರದರ್ಶಿಸು</string>
+    <string name="navigation_bar_arrow_keys_summary">IME ಪತ್ತುಕ ನಿರ್ಲಕ್ಷಿಸಿ, ಬೆರಳಚ್ಚುವಾಗ ಎಡ-ಬಲ ಕೀಲಿಗಳನ್ನು ಪ್ರದರ್ಶಿಸು.</string>
+    <string name="enable_reporting_title">ವರದಿಸುವಿಕೆ ಸಶಕ್ತಿಸು</string>
+    <string name="accelerometer_title">ಪರದೆ ಸ್ವಯಂ ಆವರ್ತಿಸು</string>
+    <string name="display_rotation_title">ಆವರ್ತನೆಯ ಅಳವಡಿಕೆಗಳು</string>
+    <string name="display_rotation_enabled">ಸ್ವಯಂ-ಆವರ್ತನೆ ಸಶಕ್ತ</string>
+    <string name="display_rotation_disabled">ಸ್ವಯಂ-ಆವರ್ತನೆ ಅಶಕ್ತ</string>
+    <string name="display_rotation_unit">ಡಿಗ್ರಿಗಳು</string>
+    <string name="display_lockscreen_rotation_title">ಬಿಗಿದ ಪರದೆ ಆವರ್ತಿಸು</string>
+    <string name="display_rotation_category_title">ಆವರ್ತನೆ ರೀತಿಗಳು</string>
+    <string name="display_rotation_90_title">೯೦ ಡಿಗ್ರಿಗಳು</string>
+    <string name="display_rotation_180_title">೧೮೦ ಡಿಗ್ರಿಗಳು</string>
+    <string name="display_rotation_270_title">೨೭೦ ಡಿಗ್ರಿಗಳು</string>
+    <string name="charging_sounds_settings_title">ತುಂಬುಕ ಶಬ್ಧಗಳು</string>
+    <string name="charging_sounds_summary">ಶಕ್ತಿ ಮೂಲವನ್ನು ಸಂಪರ್ಕಿಸಿದಾಗ ಅಥವಾ ಸಂಪರ್ಕ ಕಡಿತದಾಗ ಧ್ವನಿ ಮೊಳಗಿಸು</string>
+    <string name="power_notifications_vibrate_title">ಕಂಪಿಸು</string>
+    <string name="charging_sounds_ringtone_silent">ಮೌನ</string>
+</resources>
