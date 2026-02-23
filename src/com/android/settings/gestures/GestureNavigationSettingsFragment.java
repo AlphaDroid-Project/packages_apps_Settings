@@ -39,8 +39,8 @@ import com.android.settingslib.search.SearchIndexable;
 import com.android.settingslib.widget.ButtonPreference;
 import com.android.settingslib.widget.SliderPreference;
 
-import com.crdroid.settings.utils.DeviceUtils;
-import com.crdroid.settings.utils.SystemUtils;
+import com.alpha.settings.utils.DeviceUtils;
+import com.alpha.settings.utils.SystemUtils;
 
 import java.text.NumberFormat;
 import java.util.List;

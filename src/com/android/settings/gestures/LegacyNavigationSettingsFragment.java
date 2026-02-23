@@ -39,7 +39,7 @@ import com.android.settingslib.search.SearchIndexable;
 
 import com.android.internal.logging.nano.MetricsProto;
 
-import com.crdroid.settings.utils.SystemUtils;
+import com.alpha.settings.utils.SystemUtils;
 
 import java.util.List;
 
@@ -202,7 +202,7 @@ public class LegacyNavigationSettingsFragment extends DashboardFragment implemen
 
     @Override
     public int getMetricsCategory() {
-        return MetricsProto.MetricsEvent.CRDROID_SETTINGS;
+        return MetricsProto.MetricsEvent.ALPHA;
     }
 
     private ListPreference initList(String key, Action value) {

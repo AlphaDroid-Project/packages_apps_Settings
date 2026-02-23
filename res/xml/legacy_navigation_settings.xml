@@ -34,15 +34,15 @@
             android:key="android.theme.customization.navbar"
             android:title="@string/theme_customization_navbar_title"
             android:summary="@string/theme_customization_navbar_summary"
-            android:fragment="com.crdroid.settings.fragments.ui.NavbarStyles"/>
+            android:fragment="com.alpha.settings.fragments.ui.NavbarStyles"/>
 
-        <com.crdroid.settings.preferences.SecureSettingSwitchPreference
+        <com.alpha.settings.preferences.SecureSettingSwitchPreference
             android:key="navigationbar_key_order"
             android:title="@string/navbar_invert_layout_title"
             android:summary="@string/navbar_invert_layout_summary"
             android:defaultValue="false" />
 
-        <com.crdroid.settings.preferences.SecureSettingListPreference
+        <com.alpha.settings.preferences.SecureSettingListPreference
             android:key="navbar_layout_mode"
             android:title="@string/navbar_layout_title"
             android:summary="%s"

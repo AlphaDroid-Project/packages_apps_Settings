@@ -58,8 +58,8 @@ android_library {
     srcs: [
         "src/**/*.java",
         "src/**/*.kt",
-        "crDroidSettings/src/**/*.java",
-        "crDroidSettings/src/**/*.kt",
+        "AlphaSettings/src/**/*.java",
+        "AlphaSettings/src/**/*.kt",
     ],
     exclude_srcs: [
         "src/com/android/settings/biometrics/fingerprint2/lib/**/*.kt",
@@ -67,13 +67,15 @@ android_library {
     javac_shard_size: 50,
     use_resource_processor: true,
 
-    aaptflags: ["--extra-packages com.crdroid.settings"],
+    aaptflags: ["--extra-packages com.alpha.settings"],
 
     resource_dirs: [
         "res",
         "res-export", // for external usage
         "res-product",
-        "crDroidSettings/res",
+        "res-lineage",
+        "res-alpha",
+        "AlphaSettings/res",
     ],
 
     optional_uses_libs: ["com.android.extensions.appfunctions"],
