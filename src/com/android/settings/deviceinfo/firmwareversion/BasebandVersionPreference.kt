@@ -22,6 +22,7 @@ import androidx.preference.Preference
 import com.android.settings.R
 import com.android.settings.Utils
 import com.android.settingslib.metadata.PreferenceAvailabilityProvider
+import com.android.settingslib.metadata.PreferenceIconProvider
 import com.android.settingslib.metadata.PreferenceMetadata
 import com.android.settingslib.metadata.PreferenceSummaryProvider
 import com.android.settingslib.preference.PreferenceBinding
@@ -31,6 +32,7 @@ class BasebandVersionPreference :
     PreferenceMetadata,
     PreferenceSummaryProvider,
     PreferenceAvailabilityProvider,
+    PreferenceIconProvider,
     PreferenceBinding {
 
     override val key: String
@@ -38,6 +40,8 @@ class BasebandVersionPreference :
 
     override val title: Int
         get() = R.string.baseband_version
+
+    override fun getIcon(context: Context) = R.drawable.ic_android
 
     override fun getSummary(context: Context): CharSequence {
         val baseband = SystemProperties.get(BASEBAND_PROPERTY,

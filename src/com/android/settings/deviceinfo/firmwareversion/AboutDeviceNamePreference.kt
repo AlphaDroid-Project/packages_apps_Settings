@@ -22,6 +22,7 @@ import android.os.SystemProperties
 import androidx.preference.Preference
 import com.android.settings.R
 import com.android.settingslib.metadata.PreferenceAvailabilityProvider
+import com.android.settingslib.metadata.PreferenceIconProvider
 import com.android.settingslib.metadata.PreferenceMetadata
 import com.android.settingslib.metadata.PreferenceSummaryProvider
 import com.android.settingslib.preference.PreferenceBinding
@@ -30,6 +31,7 @@ class AboutDeviceNamePreference :
     PreferenceMetadata,
     PreferenceSummaryProvider,
     PreferenceAvailabilityProvider,
+    PreferenceIconProvider,
     PreferenceBinding {
 
     override val key: String
@@ -37,6 +39,8 @@ class AboutDeviceNamePreference :
 
     override val title: Int
         get() = R.string.about_device_name
+
+    override fun getIcon(context: Context) = R.drawable.ic_device
 
     override fun getSummary(context: Context): CharSequence {
         val deviceBrand = SystemProperties.get(
@@ -59,7 +63,6 @@ class AboutDeviceNamePreference :
 
     override fun bind(preference: Preference, metadata: PreferenceMetadata) {
         super.bind(preference, metadata)
-        // Match old XML: enableCopying="true" and default selectable
         preference.isCopyingEnabled = true
     }
 

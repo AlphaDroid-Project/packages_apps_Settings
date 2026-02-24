@@ -18,9 +18,14 @@ package com.android.settings.deviceinfo.firmwareversion;
 
 import android.app.settings.SettingsEnums;
 import android.content.Context;
+import android.os.Bundle;
+import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+
+import com.android.settingslib.core.AbstractPreferenceController;
+import com.android.settingslib.core.lifecycle.Lifecycle;
 
 import com.android.settings.R;
 import com.android.settings.dashboard.DashboardFragment;
@@ -28,8 +33,25 @@ import com.android.settings.flags.Flags;
 import com.android.settings.search.BaseSearchIndexProvider;
 import com.android.settingslib.search.SearchIndexable;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @SearchIndexable
 public class FirmwareVersionSettings extends DashboardFragment {
+
+
+    @Override
+    protected List<AbstractPreferenceController> createPreferenceControllers(Context context) {
+        return buildPreferenceControllers(context, this /* fragment */, getSettingsLifecycle());
+    }
+
+    private static List<AbstractPreferenceController> buildPreferenceControllers(
+            Context context, FirmwareVersionSettings fragment, Lifecycle lifecycle) {
+        final List<AbstractPreferenceController> controllers = new ArrayList<>();
+        controllers.add(new BuildStatusPreferenceController(context));
+        controllers.add(new MaintainerPreferenceController(context));
+        return controllers;
+    }
 
     @Override
     public @Nullable String getPreferenceScreenBindingKey(@NonNull Context context) {

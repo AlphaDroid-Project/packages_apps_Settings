@@ -23,13 +23,17 @@ import android.view.View.LAYOUT_DIRECTION_RTL
 import androidx.preference.Preference
 import com.android.settings.R
 import com.android.settings.contract.TAG_DEVICE_STATE_PREFERENCE
+import com.android.settingslib.metadata.PreferenceIconProvider
 import com.android.settingslib.metadata.PreferenceMetadata
 import com.android.settingslib.metadata.PreferenceSummaryProvider
 import com.android.settingslib.preference.PreferenceBinding
 
 // LINT.IfChange
 class SimpleBuildNumberPreference :
-    PreferenceMetadata, PreferenceSummaryProvider, PreferenceBinding {
+    PreferenceMetadata,
+    PreferenceSummaryProvider,
+    PreferenceIconProvider,
+    PreferenceBinding {
 
     override val key: String
         get() = "os_build_number"
@@ -39,6 +43,8 @@ class SimpleBuildNumberPreference :
 
     override val indexable
         get() = false
+
+    override fun getIcon(context: Context) = R.drawable.ic_shell
 
     override fun tags(context: Context) = arrayOf(TAG_DEVICE_STATE_PREFERENCE)
 

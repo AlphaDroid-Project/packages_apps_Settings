@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2019 The Android Open Source Project
+ * Copyright (C) 2019 The LineageOS Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,35 +17,29 @@
 package com.android.settings.deviceinfo.firmwareversion;
 
 import android.content.Context;
-import android.os.Build;
-import android.text.BidiFormatter;
+import android.os.SystemProperties;
 
+import com.android.settings.R;
 import com.android.settings.core.BasePreferenceController;
-import com.android.settings.deviceinfo.VersionUtils;
 
-// LINT.IfChange
-public class SimpleBuildNumberPreferenceController extends BasePreferenceController {
+public class BuildDatePreferenceController extends BasePreferenceController {
 
-    public SimpleBuildNumberPreferenceController(Context context,
-            String preferenceKey) {
-        super(context, preferenceKey);
+    private static final String TAG = "BuildDateCtrl";
+
+    private static final String KEY_BUILD_DATE_PROP = "ro.build.date";
+
+    public BuildDatePreferenceController(Context context, String key) {
+        super(context, key);
     }
 
     @Override
     public int getAvailabilityStatus() {
-        return AVAILABLE_UNSEARCHABLE;
+        return AVAILABLE;
     }
 
     @Override
     public CharSequence getSummary() {
-        StringBuilder sb = new StringBuilder();
-        sb.append(BidiFormatter.getInstance().unicodeWrap(Build.DISPLAY));
-        String alphaVersion = VersionUtils.getAlphaVersion();
-        if (!alphaVersion.equals("")){
-            sb.append("\n");
-            sb.append(alphaVersion);
-        }
-        return sb.toString();
+        return SystemProperties.get(KEY_BUILD_DATE_PROP,
+                mContext.getString(R.string.unknown));
     }
 }
-// LINT.ThenChange(SimpleBuildNumberPreference.kt)

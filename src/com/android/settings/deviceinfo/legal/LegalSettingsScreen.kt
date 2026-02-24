@@ -47,7 +47,6 @@ open class LegalSettingsScreen : PreferenceScreenMixin {
         preferenceHierarchy(context) {
             +LegalPreference("copyright", R.string.copyright_title, "android.settings.COPYRIGHT")
             +LegalPreference("license", R.string.license_title, "android.settings.LICENSE")
-            +LineageLegalPreference("crdroid_license", R.string.crdroid_license_title)
             +LegalPreference("terms", R.string.terms_title, "android.settings.TERMS")
             +ModuleLicensesScreen.KEY // Use screen key in case it is overlaid.
             +LegalPreference(

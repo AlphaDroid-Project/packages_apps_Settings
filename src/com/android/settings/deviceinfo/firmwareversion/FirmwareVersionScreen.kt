@@ -26,11 +26,13 @@ import com.android.settings.contract.TAG_DEVICE_STATE_SCREEN
 import com.android.settings.core.PreferenceScreenMixin
 import com.android.settings.flags.Flags
 import com.android.settings.utils.makeLaunchIntent
+import com.android.settingslib.metadata.PreferenceCategory
 import com.android.settingslib.metadata.PreferenceMetadata
 import com.android.settingslib.metadata.PreferenceSummaryProvider
 import com.android.settingslib.metadata.ProvidePreferenceScreen
 import com.android.settingslib.metadata.preferenceHierarchy
 import kotlinx.coroutines.CoroutineScope
+
 
 @ProvidePreferenceScreen(FirmwareVersionScreen.KEY)
 open class FirmwareVersionScreen : PreferenceScreenMixin, PreferenceSummaryProvider {
@@ -69,18 +71,22 @@ open class FirmwareVersionScreen : PreferenceScreenMixin, PreferenceSummaryProvi
 
     override fun getPreferenceHierarchy(context: Context, coroutineScope: CoroutineScope) =
         preferenceHierarchy(context) {
-            +LogoPreference()
-            +AboutDeviceNamePreference()
-            +FirmwareVersionDetailPreference()
-            +LineageVersionDetailPreference()
-            +BuildMaintainerPreference()
-            +SecurityPatchLevelPreference()
-            +LineageVendorSecurityPatchLevelPreference()
-            +MainlineModuleVersionPreference()
-            +BasebandVersionPreference()
-            +KernelVersionPreference()
-            +LineageBuildDatePreference()
-            +SimpleBuildNumberPreference()
+            +PreferenceCategory("category_android", R.string.category_android_info) += {
+                +FirmwareVersionDetailPreference() order 1
+                +SecurityPatchLevelPreference() order 2
+            }
+            +PreferenceCategory("category_alpha", R.string.category_alpha_info) += {
+                +BuildStatusPreference() order 1
+                +MaintainerPreference() order 2
+                +AlphaVersionPreference() order 3
+                +BuildDatePreference() order 4
+                +SimpleBuildNumberPreference() order 5
+            }
+            +PreferenceCategory("category_device", R.string.category_device_info) += {
+                +AboutDeviceNamePreference() order 1
+                +BasebandVersionPreference() order 2
+                +KernelVersionPreference() order 3
+            }
         }
 
     companion object {

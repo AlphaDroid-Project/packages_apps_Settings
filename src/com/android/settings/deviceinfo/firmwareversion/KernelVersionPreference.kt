@@ -20,18 +20,25 @@ import android.content.Context
 import androidx.preference.Preference
 import com.android.settings.R
 import com.android.settingslib.DeviceInfoUtils
+import com.android.settingslib.metadata.PreferenceIconProvider
 import com.android.settingslib.metadata.PreferenceMetadata
 import com.android.settingslib.metadata.PreferenceSummaryProvider
 import com.android.settingslib.preference.PreferenceBinding
 
 // LINT.IfChange
-class KernelVersionPreference : PreferenceMetadata, PreferenceSummaryProvider, PreferenceBinding {
+class KernelVersionPreference :
+    PreferenceMetadata,
+    PreferenceSummaryProvider,
+    PreferenceIconProvider,
+    PreferenceBinding {
 
     override val key: String
         get() = "kernel_version"
 
     override val title: Int
         get() = R.string.kernel_version
+
+    override fun getIcon(context: Context) = R.drawable.ic_kernel
 
     override fun getSummary(context: Context): CharSequence? =
         DeviceInfoUtils.getFormattedKernelVersion(context)

@@ -24,6 +24,7 @@ import com.android.settings.R
 import com.android.settings.utils.getLocale
 import com.android.settingslib.DeviceInfoUtils
 import com.android.settingslib.metadata.PreferenceAvailabilityProvider
+import com.android.settingslib.metadata.PreferenceIconProvider
 import com.android.settingslib.metadata.PreferenceMetadata
 import com.android.settingslib.metadata.PreferenceSummaryProvider
 import com.android.settingslib.preference.PreferenceBinding
@@ -33,6 +34,7 @@ class SecurityPatchLevelPreference :
     PreferenceMetadata,
     PreferenceAvailabilityProvider,
     PreferenceSummaryProvider,
+    PreferenceIconProvider,
     PreferenceBinding {
 
     private var currentPatch: String? = null
@@ -42,6 +44,8 @@ class SecurityPatchLevelPreference :
 
     override val title: Int
         get() = R.string.security_patch
+
+    override fun getIcon(context: Context) = R.drawable.ic_security_patch
 
     override fun intent(context: Context): Intent? =
         Intent(Intent.ACTION_VIEW)

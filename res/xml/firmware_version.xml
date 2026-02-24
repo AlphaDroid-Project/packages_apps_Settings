@@ -21,24 +21,15 @@
     android:title="@string/firmware_version"
     settings:keywords="@string/keywords_android_version">
 
-    <!-- crDroid logo -->
-    <com.android.settingslib.widget.LayoutPreference
-        android:layout="@layout/crdroid_logo"
-        android:key="crdroid_logo"
-        android:selectable="false" />
-
-    <!-- Device name -->
-    <Preference
-        android:key="about_device_name"
-        android:title="@string/about_device_name"
-        android:summary="@string/summary_placeholder"
-        settings:enableCopying="true"
-        settings:controller="com.android.settings.deviceinfo.firmwareversion.AboutDeviceNamePreferenceController"/>
+    <PreferenceCategory
+        android:key="category_android"
+        android:title="@string/category_android_info">
 
     <!-- Android version -->
     <Preference
         android:key="os_firmware_version"
         android:title="@string/firmware_version"
+        android:icon="@drawable/ic_android_head"
         android:summary="@string/summary_placeholder"
         settings:enableCopying="true"
         settings:searchable="false"
@@ -48,23 +39,81 @@
     <Preference
         android:key="security_key"
         android:title="@string/security_patch"
+        android:icon="@drawable/ic_security_patch"
         settings:enableCopying="true"
         settings:controller="com.android.settings.deviceinfo.firmwareversion.SecurityPatchLevelPreferenceController"/>
 
-    <!-- Mainline module version -->
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:key="category_alpha"
+        android:title="@string/category_alpha_info">
+
     <Preference
-        android:key="module_version"
-        android:title="@string/module_version"
-        android:summary="@string/summary_placeholder"
+        android:key="rom_build_status"
+        android:icon="@drawable/ic_build_status"
+        android:title="@string/build_status_title"
+        android:summary="@string/build_status_summary"
         settings:enableCopying="true"
-        settings:controller="com.android.settings.deviceinfo.firmwareversion.MainlineModuleVersionPreferenceController"/>
+        settings:controller="com.android.settings.deviceinfo.firmwareversion.BuildStatusPreferenceController"/>
+
+    <Preference
+        android:key="rom_maintainer"
+        android:icon="@drawable/ic_maintainer"
+        android:title="@string/maintainer_title"
+        android:summary="@string/maintainer_summary"
+        settings:enableCopying="true"
+        settings:controller="com.android.settings.deviceinfo.firmwareversion.MaintainerPreferenceController"/>
+
+
+    <!-- AlphaDroid version -->
+    <Preference
+        android:key="alpha_version"
+        android:title="@string/alpha_build_version"
+        android:summary="@string/summary_placeholder"
+        android:icon="@drawable/ic_settings_alpha"
+        settings:enableCopying="true"
+        settings:controller="com.android.settings.deviceinfo.firmwareversion.AlphaVersionPreferenceController"/>
+
+    <!-- Build date -->
+    <Preference
+        android:key="os_build_date"
+        android:title="@string/alpha_build_date"
+        android:summary="@string/summary_placeholder"
+        android:icon="@drawable/ic_date"
+        settings:enableCopying="true"
+        settings:controller="com.android.settings.deviceinfo.firmwareversion.BuildDatePreferenceController"/>
+
+    <!-- Build number-->
+    <Preference
+        android:key="os_build_number"
+        android:title="@string/build_number"
+        android:summary="@string/summary_placeholder"
+        android:icon="@drawable/ic_shell"
+        settings:enableCopying="true"
+        settings:controller="com.android.settings.deviceinfo.firmwareversion.SimpleBuildNumberPreferenceController"/>
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:key="category_device"
+        android:title="@string/category_device_info">
+
+    <!-- Device name -->
+    <Preference
+        android:key="about_device_name"
+        android:title="@string/about_device_name"
+        android:summary="@string/summary_placeholder"
+        android:icon="@drawable/ic_device"
+        settings:enableCopying="true"
+        settings:controller="com.android.settings.deviceinfo.firmwareversion.AboutDeviceNamePreferenceController"/>
 
     <!-- Baseband -->
     <Preference
         android:key="base_band"
         android:title="@string/baseband_version"
         android:summary="@string/summary_placeholder"
-        android:selectable="false"
+        android:icon="@drawable/ic_android"
         settings:enableCopying="true"
         settings:controller="com.android.settings.deviceinfo.firmwareversion.BasebandVersionPreferenceController"/>
 
@@ -73,16 +122,10 @@
         android:key="kernel_version"
         android:title="@string/kernel_version"
         android:summary="@string/summary_placeholder"
+        android:icon="@drawable/ic_kernel"
         settings:enableCopying="true"
         settings:controller="com.android.settings.deviceinfo.firmwareversion.KernelVersionPreferenceController"/>
 
-    <!-- Build -->
-    <Preference
-        android:key="os_build_number"
-        android:title="@string/build_number"
-        android:summary="@string/summary_placeholder"
-        android:selectable="false"
-        settings:enableCopying="true"
-        settings:controller="com.android.settings.deviceinfo.firmwareversion.SimpleBuildNumberPreferenceController"/>
+    </PreferenceCategory>
 
 </PreferenceScreen>

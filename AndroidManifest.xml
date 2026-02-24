@@ -1832,6 +1832,10 @@
         <activity android:name=".Settings$FirmwareVersionActivity"
             android:label="@string/firmware_version"
             android:exported="true">
+            <intent-filter android:priority="1000">
+                <action android:name="android.settings.FIRMWARE_VERSION_SETTINGS" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
             <meta-data android:name="com.android.settings.HIGHLIGHT_MENU_KEY"
                 android:value="@string/menu_key_about_device"/>
             <meta-data android:name="com.android.settings.PRIMARY_PROFILE_CONTROLLED"

@@ -29,6 +29,7 @@ import com.android.settings.Utils
 import com.android.settings.contract.TAG_DEVICE_STATE_PREFERENCE
 import com.android.settingslib.RestrictedLockUtils
 import com.android.settingslib.RestrictedLockUtilsInternal
+import com.android.settingslib.metadata.PreferenceIconProvider
 import com.android.settingslib.metadata.PreferenceMetadata
 import com.android.settingslib.metadata.PreferenceSummaryProvider
 import com.android.settingslib.preference.PreferenceBinding
@@ -37,6 +38,7 @@ import com.android.settingslib.preference.PreferenceBinding
 class FirmwareVersionDetailPreference :
     PreferenceMetadata,
     PreferenceSummaryProvider,
+    PreferenceIconProvider,
     PreferenceBinding,
     Preference.OnPreferenceClickListener {
 
@@ -50,6 +52,8 @@ class FirmwareVersionDetailPreference :
 
     override val indexable
         get() = false
+
+    override fun getIcon(context: Context) = R.drawable.ic_android_head
 
     override fun tags(context: Context) = arrayOf(TAG_DEVICE_STATE_PREFERENCE)
 
@@ -67,11 +71,9 @@ class FirmwareVersionDetailPreference :
         preference.onPreferenceClickListener = this
     }
 
-    // return true swallows the click event, while return false will start the intent
     override fun onPreferenceClick(preference: Preference): Boolean {
         if (Utils.isMonkeyRunning()) return true
 
-        // remove oldest hit and check whether there are 3 clicks within 500ms
         for (index in 1..<ACTIVITY_TRIGGER_COUNT) hits[index - 1] = hits[index]
         hits[ACTIVITY_TRIGGER_COUNT - 1] = SystemClock.uptimeMillis()
         if (hits[ACTIVITY_TRIGGER_COUNT - 1] - hits[0] > DELAY_TIMER_MILLIS) return true
@@ -80,7 +82,6 @@ class FirmwareVersionDetailPreference :
         val userManager = context.getSystemService(Context.USER_SERVICE) as? UserManager
         if (userManager?.hasUserRestriction(UserManager.DISALLOW_FUN) != true) return false
 
-        // Sorry, no fun for you!
         val myUserId = UserHandle.myUserId()
         val enforcedAdmin =
             RestrictedLockUtilsInternal.checkIfRestrictionEnforced(
