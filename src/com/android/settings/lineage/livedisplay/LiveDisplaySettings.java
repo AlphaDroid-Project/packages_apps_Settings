@@ -27,9 +27,6 @@ import android.os.Bundle;
 import android.provider.Settings;
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageView;
 
 import androidx.fragment.app.DialogFragment;
 import androidx.preference.ListPreference;
@@ -45,12 +42,10 @@ import lineageos.hardware.LineageHardwareManager;
 import lineageos.hardware.LiveDisplayConfig;
 import lineageos.hardware.LiveDisplayManager;
 import lineageos.preference.SettingsHelper;
-import androidx.viewpager.widget.PagerAdapter;
-import androidx.viewpager.widget.ViewPager;
 
 import com.android.internal.logging.nano.MetricsProto.MetricsEvent;
 import com.android.settings.R;
-import com.android.settings.SettingsPreferenceFragment;
+import com.android.settings.alpha.AlphaPreferenceFragment;
 import com.android.settings.lineage.utils.ResourceUtils;
 import com.android.settings.lineage.widget.CustomDialogPreference;
 import com.android.settings.search.BaseSearchIndexProvider;
@@ -59,25 +54,23 @@ import com.android.settingslib.search.SearchIndexableRaw;
 import com.android.settingslib.widget.LayoutPreference;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
 @SearchIndexable
-public class LiveDisplaySettings extends SettingsPreferenceFragment implements
+public class LiveDisplaySettings extends AlphaPreferenceFragment implements
         Preference.OnPreferenceChangeListener, SettingsHelper.OnSettingsChangeListener {
 
     private static final String TAG = "LiveDisplay";
 
     private static final String KEY_SCREEN_LIVE_DISPLAY = "livedisplay";
-
     private static final String KEY_CATEGORY_ADVANCED = "advanced";
 
+    private static final String KEY_COLOR_MODE_PREVIEW = "color_mode_preview";
     private static final String KEY_LIVE_DISPLAY = "live_display";
     private static final String KEY_LIVE_DISPLAY_ANTI_FLICKER = "display_anti_flicker";
-    private static final String KEY_LIVE_DISPLAY_AUTO_OUTDOOR_MODE =
-            "display_auto_outdoor_mode";
+    private static final String KEY_LIVE_DISPLAY_AUTO_OUTDOOR_MODE = "display_auto_outdoor_mode";
     private static final String KEY_LIVE_DISPLAY_READING_ENHANCEMENT = "display_reading_mode";
     private static final String KEY_LIVE_DISPLAY_LOW_POWER = "display_low_power";
     private static final String KEY_LIVE_DISPLAY_COLOR_ENHANCE = "display_color_enhance";
@@ -88,13 +81,8 @@ public class LiveDisplaySettings extends SettingsPreferenceFragment implements
 
     private static final String KEY_LIVE_DISPLAY_COLOR_PROFILE = "live_display_color_profile";
 
-    private static final String KEY_COLOR_MODE_PREVIEW = "color_mode_preview";
-
-    private static final String COLOR_PROFILE_TITLE =
-            KEY_LIVE_DISPLAY_COLOR_PROFILE + "_%s_title";
-
-    private static final String COLOR_PROFILE_SUMMARY =
-            KEY_LIVE_DISPLAY_COLOR_PROFILE + "_%s_summary";
+    private static final String COLOR_PROFILE_TITLE = KEY_LIVE_DISPLAY_COLOR_PROFILE + "_%s_title";
+    private static final String COLOR_PROFILE_SUMMARY = KEY_LIVE_DISPLAY_COLOR_PROFILE + "_%s_summary";
 
     private final Uri DISPLAY_TEMPERATURE_DAY_URI =
             Settings.System.getUriFor(Settings.System.DISPLAY_TEMPERATURE_DAY);
@@ -104,42 +92,23 @@ public class LiveDisplaySettings extends SettingsPreferenceFragment implements
             Settings.System.getUriFor(Settings.System.DISPLAY_TEMPERATURE_MODE);
 
     private ListPreference mLiveDisplay;
-
     private SwitchPreferenceCompat mOutdoorMode;
     private SwitchPreferenceCompat mReadingMode;
-
     private DisplayTemperature mDisplayTemperature;
-
     private ListPreference mColorProfile;
-    private String[] mColorProfileSummaries;
 
+    private String[] mColorProfileSummaries;
     private String[] mModeValues;
     private String[] mModeSummaries;
 
     private boolean mHasDisplayModes = false;
-
     private LiveDisplayManager mLiveDisplayManager;
-
     private LineageHardwareManager mHardware;
-
-    static final String PAGE_VIEWER_SELECTION_INDEX = "page_viewer_selection_index";
-
-    private static final int DOT_INDICATOR_SIZE = 12;
-    private static final int DOT_INDICATOR_LEFT_PADDING = 6;
-    private static final int DOT_INDICATOR_RIGHT_PADDING = 6;
-
-    private View mViewArrowPrevious;
-    private View mViewArrowNext;
-    private ViewPager mViewPager;
-
-    private ArrayList<View> mPageList;
-
-    private ImageView[] mDotIndicators;
-    private View[] mViewPagerImages;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         final Resources res = getResources();
         final boolean isNightDisplayAvailable =
                 ColorDisplayManager.isNightDisplayAvailable(requireContext());
@@ -150,8 +119,11 @@ public class LiveDisplaySettings extends SettingsPreferenceFragment implements
 
         addPreferencesFromResource(R.xml.livedisplay);
 
-        PreferenceScreen liveDisplayPrefs = findPreference(KEY_SCREEN_LIVE_DISPLAY);
+        // ALPHADROID: Configure the preview pager via the base fragment
+        LayoutPreference preview = findPreference(KEY_COLOR_MODE_PREVIEW);
+        configurePreviewPager(preview, savedInstanceState);
 
+        PreferenceScreen liveDisplayPrefs = findPreference(KEY_SCREEN_LIVE_DISPLAY);
         PreferenceCategory advancedPrefs = findPreference(KEY_CATEGORY_ADVANCED);
 
         int adaptiveMode = mLiveDisplayManager.getMode();
@@ -226,7 +198,6 @@ public class LiveDisplaySettings extends SettingsPreferenceFragment implements
 
         mOutdoorMode = findPreference(KEY_LIVE_DISPLAY_AUTO_OUTDOOR_MODE);
         if (liveDisplayPrefs != null && mOutdoorMode != null
-                // MODE_AUTO implies automatic outdoor mode on HWC2
                 && (isNightDisplayAvailable || !config.hasFeature(MODE_OUTDOOR))) {
             liveDisplayPrefs.removePreference(mOutdoorMode);
             mOutdoorMode = null;
@@ -270,160 +241,6 @@ public class LiveDisplaySettings extends SettingsPreferenceFragment implements
                 !mHardware.isSupported(LineageHardwareManager.FEATURE_ANTI_FLICKER)) {
             liveDisplayPrefs.removePreference(antiFlicker);
         }
-
-        LayoutPreference preview = findPreference(KEY_COLOR_MODE_PREVIEW);
-        preview.setSelectable(false);
-        addViewPager(preview);
-        if (savedInstanceState != null) {
-            final int selectedPosition = savedInstanceState.getInt(PAGE_VIEWER_SELECTION_INDEX);
-            mViewPager.setCurrentItem(selectedPosition);
-            updateIndicator(selectedPosition);
-        }
-    }
-
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        outState.putInt(PAGE_VIEWER_SELECTION_INDEX, mViewPager.getCurrentItem());
-    }
-
-    public ArrayList<Integer> getViewPagerResource() {
-        return new ArrayList<Integer>(
-                Arrays.asList(
-                        R.layout.color_mode_view1,
-                        R.layout.color_mode_view2,
-                        R.layout.color_mode_view3));
-    }
-
-    void addViewPager(LayoutPreference preview) {
-        final ArrayList<Integer> tmpviewPagerList = getViewPagerResource();
-        mViewPager = preview.findViewById(R.id.viewpager);
-
-        mViewPagerImages = new View[3];
-        for (int idx = 0; idx < tmpviewPagerList.size(); idx++) {
-            mViewPagerImages[idx] =
-                    getLayoutInflater().inflate(tmpviewPagerList.get(idx), null /* root */);
-        }
-
-        mPageList = new ArrayList<View>();
-        mPageList.add(mViewPagerImages[0]);
-        mPageList.add(mViewPagerImages[1]);
-        mPageList.add(mViewPagerImages[2]);
-
-        mViewPager.setAdapter(new ColorPagerAdapter(mPageList));
-
-        mViewArrowPrevious = preview.findViewById(R.id.arrow_previous);
-        mViewArrowPrevious.setOnClickListener(v -> {
-            final int previousPos = mViewPager.getCurrentItem() - 1;
-            mViewPager.setCurrentItem(previousPos, true);
-        });
-
-        mViewArrowNext = preview.findViewById(R.id.arrow_next);
-        mViewArrowNext.setOnClickListener(v -> {
-            final int nextPos = mViewPager.getCurrentItem() + 1;
-            mViewPager.setCurrentItem(nextPos, true);
-        });
-
-        mViewPager.addOnPageChangeListener(createPageListener());
-
-        final ViewGroup viewGroup = (ViewGroup) preview.findViewById(R.id.viewGroup);
-        mDotIndicators = new ImageView[mPageList.size()];
-        for (int i = 0; i < mPageList.size(); i++) {
-            final ImageView imageView = new ImageView(getContext());
-            final ViewGroup.MarginLayoutParams lp =
-                    new ViewGroup.MarginLayoutParams(DOT_INDICATOR_SIZE, DOT_INDICATOR_SIZE);
-            lp.setMargins(DOT_INDICATOR_LEFT_PADDING, 0, DOT_INDICATOR_RIGHT_PADDING, 0);
-            imageView.setLayoutParams(lp);
-            mDotIndicators[i] = imageView;
-
-            viewGroup.addView(mDotIndicators[i]);
-        }
-
-        updateIndicator(mViewPager.getCurrentItem());
-    }
-
-    private ViewPager.OnPageChangeListener createPageListener() {
-        return new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(
-                    int position, float positionOffset, int positionOffsetPixels) {
-                if (positionOffset != 0) {
-                    for (int idx = 0; idx < mPageList.size(); idx++) {
-                        mViewPagerImages[idx].setVisibility(View.VISIBLE);
-                    }
-                } else {
-                    mViewPagerImages[position].setContentDescription(
-                            getContext().getString(R.string.colors_viewpager_content_description));
-                    updateIndicator(position);
-                }
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-            }
-        };
-    }
-
-    private void updateIndicator(int position) {
-        for (int i = 0; i < mPageList.size(); i++) {
-            if (position == i) {
-                mDotIndicators[i].setBackgroundResource(
-                        R.drawable.ic_color_page_indicator_focused);
-
-                mViewPagerImages[i].setVisibility(View.VISIBLE);
-            } else {
-                mDotIndicators[i].setBackgroundResource(
-                        R.drawable.ic_color_page_indicator_unfocused);
-
-                mViewPagerImages[i].setVisibility(View.INVISIBLE);
-            }
-        }
-
-        if (position == 0) {
-            mViewArrowPrevious.setVisibility(View.INVISIBLE);
-            mViewArrowNext.setVisibility(View.VISIBLE);
-        } else if (position == (mPageList.size() - 1)) {
-            mViewArrowPrevious.setVisibility(View.VISIBLE);
-            mViewArrowNext.setVisibility(View.INVISIBLE);
-        } else {
-            mViewArrowPrevious.setVisibility(View.VISIBLE);
-            mViewArrowNext.setVisibility(View.VISIBLE);
-        }
-    }
-
-    static class ColorPagerAdapter extends PagerAdapter {
-        private final ArrayList<View> mPageViewList;
-
-        ColorPagerAdapter(ArrayList<View> pageViewList) {
-            mPageViewList = pageViewList;
-        }
-
-        @Override
-        public void destroyItem(ViewGroup container, int position, Object object) {
-            if (mPageViewList.get(position) != null) {
-                container.removeView(mPageViewList.get(position));
-            }
-        }
-
-        @Override
-        public Object instantiateItem(ViewGroup container, int position) {
-            container.addView(mPageViewList.get(position));
-            return mPageViewList.get(position);
-        }
-
-        @Override
-        public int getCount() {
-            return mPageViewList.size();
-        }
-
-        @Override
-        public boolean isViewFromObject(View view, Object object) {
-            return object == view;
-        }
     }
 
     @Override
@@ -465,7 +282,6 @@ public class LiveDisplaySettings extends SettingsPreferenceFragment implements
             entries[i] = ResourceUtils.getLocalizedString(
                     getResources(), modes[i].name, COLOR_PROFILE_TITLE);
 
-            // Populate summary
             String summary = ResourceUtils.getLocalizedString(
                     getResources(), modes[i].name, COLOR_PROFILE_SUMMARY);
             if (summary != null) {
@@ -533,10 +349,12 @@ public class LiveDisplaySettings extends SettingsPreferenceFragment implements
         int day = mLiveDisplayManager.getDayColorTemperature();
         int night = mLiveDisplayManager.getNightColorTemperature();
 
-        mDisplayTemperature.setSummary(getResources().getString(
-                R.string.live_display_color_temperature_summary,
-                mDisplayTemperature.roundUp(day),
-                mDisplayTemperature.roundUp(night)));
+        if (mDisplayTemperature != null) {
+            mDisplayTemperature.setSummary(getResources().getString(
+                    R.string.live_display_color_temperature_summary,
+                    mDisplayTemperature.roundUp(day),
+                    mDisplayTemperature.roundUp(night)));
+        }
     }
 
     private void updateReadingModeStatus() {
@@ -576,7 +394,6 @@ public class LiveDisplaySettings extends SettingsPreferenceFragment implements
     @Override
     public void onDisplayPreferenceDialog(Preference preference) {
         if (preference.getKey() == null) {
-            // Auto-key preferences that don't have a key, so the dialog can find them.
             preference.setKey(UUID.randomUUID().toString());
         }
         DialogFragment f = null;
@@ -635,7 +452,6 @@ public class LiveDisplaySettings extends SettingsPreferenceFragment implements
             if (!config.hasFeature(FEATURE_ANTI_FLICKER)) {
                 result.add(KEY_LIVE_DISPLAY_ANTI_FLICKER);
             }
-
             return result;
         }
 
@@ -644,7 +460,6 @@ public class LiveDisplaySettings extends SettingsPreferenceFragment implements
             final LiveDisplayConfig config = LiveDisplayManager.getInstance(context).getConfig();
             final List<String> result = new ArrayList<>();
 
-            // Add keywords for supported color profiles
             if (config.hasFeature(FEATURE_DISPLAY_MODES)) {
                 DisplayMode[] modes = LineageHardwareManager.getInstance(context).getDisplayModes();
                 if (modes != null && modes.length > 0) {

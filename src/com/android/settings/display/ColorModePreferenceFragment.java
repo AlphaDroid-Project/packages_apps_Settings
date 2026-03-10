@@ -1,15 +1,7 @@
 /*
- * Copyright (C) 2017 The Android Open Source Project
- *
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file
- * except in compliance with the License. You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software distributed under the
- * License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
- * KIND, either express or implied. See the License for the specific language governing
- * permissions and limitations under the License.
+ * SPDX-FileCopyrightText: 2017 The Android Open Source Project
+ * SPDX-FileCopyrightText: 2026 AlphaDroid
+ * SPDX-License-Identifier: Apache-2.0
  */
 package com.android.settings.display;
 
@@ -23,286 +15,151 @@ import static android.hardware.display.ColorDisplayManager.VENDOR_COLOR_MODE_RAN
 import android.app.settings.SettingsEnums;
 import android.content.ContentResolver;
 import android.content.Context;
-import android.content.res.Resources;
 import android.database.ContentObserver;
-import android.graphics.drawable.Drawable;
 import android.hardware.display.ColorDisplayManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.os.UserHandle;
 import android.provider.Settings;
-import android.provider.Settings.Secure;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
+import android.text.TextUtils;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.annotation.VisibleForTesting;
-import androidx.preference.PreferenceScreen;
-import androidx.viewpager.widget.PagerAdapter;
-import androidx.viewpager.widget.ViewPager;
+import androidx.preference.Preference;
+import androidx.preference.PreferenceCategory;
 
 import com.android.settings.R;
+import com.android.settings.alpha.AlphaPreferenceFragment;
 import com.android.settings.search.BaseSearchIndexProvider;
-import com.android.settings.widget.RadioButtonPickerFragment;
 import com.android.settingslib.search.SearchIndexable;
-import com.android.settingslib.widget.CandidateInfo;
 import com.android.settingslib.widget.LayoutPreference;
+import com.android.settingslib.widget.SelectorWithWidgetPreference;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Map;
 
-// LINT.IfChange
 @SuppressWarnings("WeakerAccess")
 @SearchIndexable
-public class ColorModePreferenceFragment extends RadioButtonPickerFragment {
+public class ColorModePreferenceFragment extends AlphaPreferenceFragment {
 
     private static final String KEY_COLOR_MODE_PREFIX = "color_mode_";
-
     private static final int COLOR_MODE_FALLBACK = COLOR_MODE_NATURAL;
 
-    static final String PAGE_VIEWER_SELECTION_INDEX = "page_viewer_selection_index";
+    private static final String PREF_COLOR_MODE_PREVIEW = "color_mode_preview";
+    private static final String PREF_AOSP_CATEGORY = "aosp_color_mode_category";
+    private static final String PREF_DISPLAY_ENGINE = "display_engine_mode";
 
-    private static final int DOT_INDICATOR_SIZE = 12;
-    private static final int DOT_INDICATOR_LEFT_PADDING = 6;
-    private static final int DOT_INDICATOR_RIGHT_PADDING = 6;
-
-    private ContentObserver mContentObserver;
+    private ContentObserver mAccessibilityObserver;
     private ColorDisplayManager mColorDisplayManager;
-    private Resources mResources;
 
-    private View mViewArrowPrevious;
-    private View mViewArrowNext;
-    private ViewPager mViewPager;
-
-    private ArrayList<View> mPageList;
-
-    private ImageView[] mDotIndicators;
-    private View[] mViewPagerImages;
-    
-    private ContentObserver mDisplayEngineModeObserver;
-    private TextView mDisplayEngineModeText;
+    private PreferenceCategory mAospCategory;
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-
         mColorDisplayManager = context.getSystemService(ColorDisplayManager.class);
-        mResources = context.getResources();
-
-        final ContentResolver cr = context.getContentResolver();
-        mContentObserver = new ContentObserver(new Handler(Looper.getMainLooper())) {
-            @Override
-            public void onChange(boolean selfChange, Uri uri) {
-                super.onChange(selfChange, uri);
-                if (ColorDisplayManager.areAccessibilityTransformsEnabled(getContext())) {
-                    // Color modes are not configurable when Accessibility transforms are enabled.
-                    // Close this fragment in that case.
-                    getActivity().finish();
-                }
-            }
-        };
-        cr.registerContentObserver(
-                Secure.getUriFor(Secure.ACCESSIBILITY_DISPLAY_INVERSION_ENABLED),
-                false /* notifyForDescendants */, mContentObserver, mUserId);
-        cr.registerContentObserver(
-                Secure.getUriFor(Secure.ACCESSIBILITY_DISPLAY_DALTONIZER_ENABLED),
-                false /* notifyForDescendants */, mContentObserver, mUserId);
-                
-        mDisplayEngineModeObserver = new ContentObserver(new Handler(Looper.getMainLooper())) {
-            @Override
-            public void onChange(boolean selfChange, Uri uri) {
-                super.onChange(selfChange, uri);
-                updateDisplayEngineModeText();
-            }
-        };
-        cr.registerContentObserver(
-                Secure.getUriFor("display_engine_mode"),
-                false /* notifyForDescendants */, mDisplayEngineModeObserver);
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (savedInstanceState != null) {
-            final int selectedPosition = savedInstanceState.getInt(PAGE_VIEWER_SELECTION_INDEX);
-            mViewPager.setCurrentItem(selectedPosition);
-            updateIndicator(selectedPosition);
+        addPreferencesFromResource(R.xml.color_mode_settings);
+
+        LayoutPreference preview = findPreference(PREF_COLOR_MODE_PREVIEW);
+        configurePreviewPager(preview, savedInstanceState);
+
+        mAospCategory = findPreference(PREF_AOSP_CATEGORY);
+        PreferenceCategory displayEngineCategory = findPreference("display_engine_category");
+        Preference footerPref = findPreference("display_engine_mode_footer");
+
+        // Hide Display Engine category (margin + list) and footer if hardware doesn't support it
+        if (!ColorDisplayManager.isColorTransformAccelerated(getContext())) {
+            if (displayEngineCategory != null) getPreferenceScreen().removePreference(displayEngineCategory);
+            if (footerPref != null) getPreferenceScreen().removePreference(footerPref);
         }
-        updateDisplayEngineModeText();
+
+        setupAospColorModes();
+        registerAccessibilityObserver();
     }
 
     @Override
-    public void onDetach() {
-        if (mContentObserver != null) {
-            getContext().getContentResolver().unregisterContentObserver(mContentObserver);
-            mContentObserver = null;
-        }
-        if (mDisplayEngineModeObserver != null) {
-            getContext().getContentResolver().unregisterContentObserver(mDisplayEngineModeObserver);
-            mDisplayEngineModeObserver = null;
-        }
-        super.onDetach();
+    public void onResume() {
+        super.onResume();
+        updateUiState();
     }
 
     @Override
-    public void onSaveInstanceState(Bundle outState){
-        super.onSaveInstanceState(outState);
-        outState.putInt(PAGE_VIEWER_SELECTION_INDEX, mViewPager.getCurrentItem());
-    }
-
-    @Override
-    protected int getPreferenceScreenResId() {
-        return R.xml.color_mode_settings;
-    }
-
-    @VisibleForTesting
-    void configureAndInstallPreview(LayoutPreference preview, PreferenceScreen screen) {
-        preview.setSelectable(false);
-        screen.addPreference(preview);
-    }
-
-    @VisibleForTesting
-    public ArrayList<Integer> getViewPagerResource() {
-        return new ArrayList<Integer>(
-                Arrays.asList(
-                        R.layout.color_mode_view1,
-                        R.layout.color_mode_view2,
-                        R.layout.color_mode_view3));
-    }
-
-    void addViewPager(LayoutPreference preview) {
-        final ArrayList<Integer> tmpviewPagerList = getViewPagerResource();
-        mDisplayEngineModeText = preview.findViewById(R.id.display_engine_mode_text);
-        mViewPager = preview.findViewById(R.id.viewpager);
-
-        mViewPagerImages = new View[3];
-        for (int idx = 0; idx < tmpviewPagerList.size(); idx++) {
-            mViewPagerImages[idx] =
-                    getLayoutInflater().inflate(tmpviewPagerList.get(idx), null /* root */);
-        }
-
-        mPageList = new ArrayList<View>();
-        mPageList.add(mViewPagerImages[0]);
-        mPageList.add(mViewPagerImages[1]);
-        mPageList.add(mViewPagerImages[2]);
-
-        mViewPager.setAdapter(new ColorPagerAdapter(mPageList));
-
-        mViewArrowPrevious = preview.findViewById(R.id.arrow_previous);
-        mViewArrowPrevious.setOnClickListener(v -> {
-            final int previousPos = mViewPager.getCurrentItem() - 1;
-            mViewPager.setCurrentItem(previousPos, true);
-        });
-
-        mViewArrowNext = preview.findViewById(R.id.arrow_next);
-        mViewArrowNext.setOnClickListener(v -> {
-            final int nextPos = mViewPager.getCurrentItem() + 1;
-            mViewPager.setCurrentItem(nextPos, true);
-        });
-
-        mViewPager.addOnPageChangeListener(createPageListener());
-
-        final ViewGroup viewGroup = (ViewGroup) preview.findViewById(R.id.viewGroup);
-        mDotIndicators = new ImageView[mPageList.size()];
-        for (int i = 0; i < mPageList.size(); i++) {
-            final ImageView imageView = new ImageView(getContext());
-            final ViewGroup.MarginLayoutParams lp =
-                    new ViewGroup.MarginLayoutParams(DOT_INDICATOR_SIZE, DOT_INDICATOR_SIZE);
-            lp.setMargins(DOT_INDICATOR_LEFT_PADDING, 0, DOT_INDICATOR_RIGHT_PADDING, 0);
-            imageView.setLayoutParams(lp);
-            mDotIndicators[i] = imageView;
-
-            viewGroup.addView(mDotIndicators[i]);
-        }
-
-        updateIndicator(mViewPager.getCurrentItem());
-    }
-
-    @Override
-    public void updateCandidates() {
-        super.updateCandidates();
-        PreferenceScreen screen = getPreferenceScreen();
-        if (ColorDisplayManager.isColorTransformAccelerated(screen.getContext())) {
-            getPreferenceManager().inflateFromResource(screen.getContext(), R.xml.color_mode_settings,
-                    screen);
+    public void onDestroy() {
+        super.onDestroy();
+        if (mAccessibilityObserver != null) {
+            getContext().getContentResolver().unregisterContentObserver(mAccessibilityObserver);
+            mAccessibilityObserver = null;
         }
     }
 
-    @Override
-    protected void addStaticPreferences(PreferenceScreen screen) {
-        final LayoutPreference preview = new LayoutPreference(screen.getContext(),
-                R.layout.color_mode_preview);
-        configureAndInstallPreview(preview, screen);
-
-        addViewPager(preview);
+    private void registerAccessibilityObserver() {
+        final ContentResolver cr = getContext().getContentResolver();
+        mAccessibilityObserver = new ContentObserver(new Handler(Looper.getMainLooper())) {
+            @Override
+            public void onChange(boolean selfChange, Uri uri) {
+                super.onChange(selfChange, uri);
+                if (ColorDisplayManager.areAccessibilityTransformsEnabled(getContext())) {
+                    getActivity().finish();
+                }
+            }
+        };
+        cr.registerContentObserver(
+                Settings.Secure.getUriFor(Settings.Secure.ACCESSIBILITY_DISPLAY_INVERSION_ENABLED),
+                false, mAccessibilityObserver, UserHandle.USER_CURRENT);
+        cr.registerContentObserver(
+                Settings.Secure.getUriFor(Settings.Secure.ACCESSIBILITY_DISPLAY_DALTONIZER_ENABLED),
+                false, mAccessibilityObserver, UserHandle.USER_CURRENT);
     }
 
-    @Override
-    protected List<? extends CandidateInfo> getCandidates() {
+    private void setupAospColorModes() {
+        if (mAospCategory == null) return;
+        mAospCategory.removeAll();
+
+        int[] availableModes = ColorModeUtils.getAvailableColorModes(getContext());
+        if (availableModes == null || availableModes.length == 0) {
+            getPreferenceScreen().removePreference(mAospCategory);
+            return;
+        }
+
         final Map<Integer, String> colorModesToSummaries =
-                ColorModeUtils.getColorModeMapping(mResources);
-        final List<ColorModeCandidateInfo> candidates = new ArrayList<>();
-        for (int colorMode : ColorModeUtils.getAvailableColorModes(getContext())) {
-            candidates.add(new ColorModeCandidateInfo(
-                    colorModesToSummaries.get(colorMode),
-                    getKeyForColorMode(colorMode),
-                    true /* enabled */));
+                ColorModeUtils.getColorModeMapping(getResources());
+
+        for (int colorMode : availableModes) {
+            SelectorWithWidgetPreference pref = new SelectorWithWidgetPreference(getPrefContext());
+            pref.setKey(getKeyForColorMode(colorMode));
+            pref.setTitle(colorModesToSummaries.get(colorMode));
+
+            pref.setOnPreferenceClickListener(p -> {
+                mColorDisplayManager.setColorMode(colorMode);
+                updateUiState();
+                return true;
+            });
+
+            mAospCategory.addPreference(pref);
         }
-        return candidates;
     }
 
-    @Override
-    protected String getDefaultKey() {
-        final int colorMode = getColorMode();
-        if (isValidColorMode(colorMode)) {
-            return getKeyForColorMode(colorMode);
+    private void updateUiState() {
+        if (mAospCategory == null) return;
+
+        int currentAospMode = mColorDisplayManager.getColorMode();
+        if (!isValidColorMode(currentAospMode)) currentAospMode = COLOR_MODE_FALLBACK;
+
+        String selectedAospKey = getKeyForColorMode(currentAospMode);
+        for (int i = 0; i < mAospCategory.getPreferenceCount(); i++) {
+            Preference pref = mAospCategory.getPreference(i);
+            if (pref instanceof SelectorWithWidgetPreference) {
+                ((SelectorWithWidgetPreference) pref).setChecked(
+                        TextUtils.equals(pref.getKey(), selectedAospKey));
+            }
         }
-        return getKeyForColorMode(COLOR_MODE_FALLBACK);
     }
 
-    @Override
-    protected boolean setDefaultKey(String key) {
-        int colorMode = Integer.parseInt(key.substring(key.lastIndexOf("_") + 1));
-        if (isValidColorMode(colorMode)) {
-            setColorMode(colorMode);
-        }
-        return true;
-    }
-
-    @Override
-    public @Nullable String getPreferenceScreenBindingKey(@NonNull Context context) {
-        return ColorModeScreen.KEY;
-    }
-
-    /**
-     * Wraps ColorDisplayManager#getColorMode for substitution in testing.
-     */
-    @VisibleForTesting
-    public int getColorMode() {
-        return mColorDisplayManager.getColorMode();
-    }
-
-    /**
-     * Wraps ColorDisplayManager#setColorMode for substitution in testing.
-     */
-    @VisibleForTesting
-    public void setColorMode(int colorMode) {
-        mColorDisplayManager.setColorMode(colorMode);
-    }
-
-    @Override
-    public int getMetricsCategory() {
-        return SettingsEnums.COLOR_MODE_SETTINGS;
-    }
-
-    @VisibleForTesting
-    String getKeyForColorMode(int colorMode) {
+    private String getKeyForColorMode(int colorMode) {
         return KEY_COLOR_MODE_PREFIX + colorMode;
     }
 
@@ -315,151 +172,19 @@ public class ColorModePreferenceFragment extends RadioButtonPickerFragment {
                 && colorMode <= VENDOR_COLOR_MODE_RANGE_MAX);
     }
 
-    @VisibleForTesting
-    static class ColorModeCandidateInfo extends CandidateInfo {
-        private final CharSequence mLabel;
-        private final String mKey;
-
-        ColorModeCandidateInfo(CharSequence label, String key, boolean enabled) {
-            super(enabled);
-            mLabel = label;
-            mKey = key;
-        }
-
-        @Override
-        public CharSequence loadLabel() {
-            return mLabel;
-        }
-
-        @Override
-        public Drawable loadIcon() {
-            return null;
-        }
-
-        @Override
-        public String getKey() {
-            return mKey;
-        }
-    }
-
-    private ViewPager.OnPageChangeListener createPageListener() {
-        return new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(
-                    int position, float positionOffset, int positionOffsetPixels) {
-                if (positionOffset != 0) {
-                    for (int idx = 0; idx < mPageList.size(); idx++) {
-                        mViewPagerImages[idx].setVisibility(View.VISIBLE);
-                    }
-                } else {
-                    mViewPagerImages[position].setContentDescription(
-                            getContext().getString(R.string.colors_viewpager_content_description));
-                    updateIndicator(position);
-                }
-            }
-
-            @Override
-            public void onPageSelected(int position) {}
-
-            @Override
-            public void onPageScrollStateChanged(int state) {}
-        };
-    }
-
-    private void updateIndicator(int position) {
-        for (int i = 0; i < mPageList.size(); i++) {
-            if (position == i) {
-                mDotIndicators[i].setBackgroundResource(
-                        R.drawable.ic_color_page_indicator_focused);
-
-                mViewPagerImages[i].setVisibility(View.VISIBLE);
-            } else {
-                mDotIndicators[i].setBackgroundResource(
-                        R.drawable.ic_color_page_indicator_unfocused);
-
-                mViewPagerImages[i].setVisibility(View.INVISIBLE);
-            }
-        }
-
-        if (position == 0) {
-            mViewArrowPrevious.setVisibility(View.INVISIBLE);
-            mViewArrowNext.setVisibility(View.VISIBLE);
-        } else if (position == (mPageList.size() - 1)) {
-            mViewArrowPrevious.setVisibility(View.VISIBLE);
-            mViewArrowNext.setVisibility(View.INVISIBLE);
-        } else {
-            mViewArrowPrevious.setVisibility(View.VISIBLE);
-            mViewArrowNext.setVisibility(View.VISIBLE);
-        }
-    }
-
-    static class ColorPagerAdapter extends PagerAdapter {
-        private final ArrayList<View> mPageViewList;
-
-        ColorPagerAdapter(ArrayList<View> pageViewList) {
-            mPageViewList = pageViewList;
-        }
-
-        @Override
-        public void destroyItem(ViewGroup container, int position, Object object) {
-            if (mPageViewList.get(position) != null) {
-                container.removeView(mPageViewList.get(position));
-            }
-        }
-
-        @Override
-        public Object instantiateItem(ViewGroup container, int position) {
-            container.addView(mPageViewList.get(position));
-            return mPageViewList.get(position);
-        }
-
-        @Override
-        public int getCount() {
-            return mPageViewList.size();
-        }
-
-        @Override
-        public boolean isViewFromObject(View view, Object object) {
-            return object == view;
-        }
-    }
-
-    private void updateDisplayEngineModeText() {
-        int mode = Secure.getInt(getContext().getContentResolver(), "display_engine_mode", 0);
-        String prefix = getString(R.string.display_engine_category);
-        String modeText = "";
-        switch (mode) {
-            case 0:
-                modeText = getString(R.string.display_engine_default);
-                break;
-            case 1:
-                modeText = getString(R.string.x_reality_engine_mode_title);
-                break;
-            case 2:
-                modeText = getString(R.string.vivid_engine_mode_title);
-                break;
-            case 3:
-                modeText = getString(R.string.triluminous_display_mode_title);
-                break;
-            default:
-                modeText = getString(R.string.display_engine_default);
-                break;
-        }
-        if (mDisplayEngineModeText != null) {
-            mDisplayEngineModeText.setText(prefix + ": " + modeText);
-        }
+    @Override
+    public int getMetricsCategory() {
+        return SettingsEnums.COLOR_MODE_SETTINGS;
     }
 
     public static final BaseSearchIndexProvider SEARCH_INDEX_DATA_PROVIDER =
             new BaseSearchIndexProvider(R.xml.color_mode_settings) {
-
                 @Override
                 protected boolean isPageSearchEnabled(Context context) {
                     final int[] availableColorModes =
                             ColorModeUtils.getAvailableColorModes(context);
-                    return availableColorModes != null && availableColorModes.length > 0
-                            && !ColorDisplayManager.areAccessibilityTransformsEnabled(context);
+                    boolean hasAosp = availableColorModes != null && availableColorModes.length > 0;
+                    return hasAosp && !ColorDisplayManager.areAccessibilityTransformsEnabled(context);
                 }
             };
 }
-// LINT.ThenChange(ColorModeScreen.kt)

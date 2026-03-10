@@ -35,6 +35,8 @@ import com.android.settings.core.BasePreferenceController;
 public class ColorModePreferenceController extends BasePreferenceController
         implements LifecycleObserver {
 
+    private static final String DISPLAY_ENGINE_MODE = "display_engine_mode";
+
     private Preference mPreference;
 
     private final ContentObserver mContentObserver = new ContentObserver(
@@ -53,19 +55,31 @@ public class ColorModePreferenceController extends BasePreferenceController
 
     @Override
     public int getAvailabilityStatus() {
+        if (ColorDisplayManager.areAccessibilityTransformsEnabled(mContext)) {
+            return DISABLED_FOR_USER;
+        }
+
         final int[] availableColorModes = mContext.getResources().getIntArray(
                 com.android.internal.R.array.config_availableColorModes);
-        return mContext.getSystemService(ColorDisplayManager.class)
-                .isDeviceColorManaged()
-                && availableColorModes.length > 0
-                && !ColorDisplayManager.areAccessibilityTransformsEnabled(mContext) ?
-                AVAILABLE : DISABLED_FOR_USER;
+
+        final ColorDisplayManager cdm = mContext.getSystemService(ColorDisplayManager.class);
+
+        boolean hasAospModes = cdm != null && cdm.isDeviceColorManaged()
+                && availableColorModes != null && availableColorModes.length > 0;
+
+        return hasAospModes ? AVAILABLE : CONDITIONALLY_UNAVAILABLE;
     }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
     public void onResume() {
         mContext.getContentResolver().registerContentObserver(
                 Settings.System.getUriFor(Settings.System.DISPLAY_COLOR_MODE),
+                /* notifyForDescendants= */ false,
+                mContentObserver);
+
+        // Observe Display Engine changes so the summary updates dynamically
+        mContext.getContentResolver().registerContentObserver(
+                Settings.System.getUriFor(DISPLAY_ENGINE_MODE),
                 /* notifyForDescendants= */ false,
                 mContentObserver);
     }
@@ -99,6 +113,24 @@ public class ColorModePreferenceController extends BasePreferenceController
 
     @NonNull
     private String getColorModeName() {
+        int engineMode = Settings.System.getInt(
+                mContext.getContentResolver(), DISPLAY_ENGINE_MODE, 0);
+
+        // If Display Engine is active, show its specific mode name in the Settings menu
+        if (engineMode != 0) {
+            switch (engineMode) {
+                case 1:
+                    return mContext.getString(com.android.settings.R.string.display_engine_mode_xreality);
+                case 2:
+                    return mContext.getString(com.android.settings.R.string.display_engine_mode_vivid);
+                case 3:
+                    return mContext.getString(com.android.settings.R.string.display_engine_mode_triluminous);
+                default:
+                    return mContext.getString(com.android.settings.R.string.display_engine_mode_title);
+            }
+        }
+
+        // If Display Engine is off, fall back to the AOSP Color Mode name
         return ColorModeUtils.getActiveColorModeName(mContext);
     }
 }

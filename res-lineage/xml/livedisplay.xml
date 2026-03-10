@@ -8,10 +8,9 @@
         android:key="livedisplay"
         android:title="@*android:string/live_display_title">
 
-    <!-- Color mode preview -->
     <com.android.settingslib.widget.LayoutPreference
-        android:layout="@layout/color_mode_preview"
-        android:selectable="false" />
+        android:key="color_mode_preview"
+        android:layout="@layout/color_mode_preview" />
 
     <!-- Color profile -->
     <ListPreference
