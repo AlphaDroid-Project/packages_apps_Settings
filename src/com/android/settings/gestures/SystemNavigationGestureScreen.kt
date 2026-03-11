@@ -19,6 +19,7 @@ import android.app.settings.SettingsEnums
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
+import android.content.res.Resources
 import android.content.pm.PackageManager
 import android.view.WindowManagerPolicyConstants.NAV_BAR_MODE_2BUTTON
 import android.view.WindowManagerPolicyConstants.NAV_BAR_MODE_GESTURAL
@@ -83,17 +84,24 @@ class SystemNavigationGestureScreen :
             return false
         }
 
-        // Skip if the recents component is not defined
-        val recentsComponentName =
-            ComponentName.unflattenFromString(
-                getString(InternalR.string.config_recentsComponentName)
-            ) ?: return false
+        // Adapt to integrate QuickSwitch multi-launcher support
+        val launcherPackages = try {
+            resources.getStringArray(InternalR.array.config_launcherPackages)
+        } catch (e: Resources.NotFoundException) {
+            emptyArray<String>()
+        }
 
-        // Skip if the overview proxy service exists
-        val quickStepIntent = Intent(ACTION_QUICKSTEP).setPackage(recentsComponentName.packageName)
-        return packageManager.resolveService(quickStepIntent, PackageManager.MATCH_SYSTEM_ONLY) !=
-            null
+        for (packageName in launcherPackages) {
+            val quickStepIntent = Intent(ACTION_QUICKSTEP).setPackage(packageName)
+
+            if (packageManager.resolveService(quickStepIntent, PackageManager.MATCH_SYSTEM_ONLY) != null) {
+                return true
+            }
+        }
+
+        return false
     }
+
 
     fun Context.isGestureNavigationEnabled(): Boolean =
         NAV_BAR_MODE_GESTURAL ==

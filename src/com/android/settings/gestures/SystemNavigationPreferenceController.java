@@ -25,6 +25,7 @@ import static android.view.WindowManagerPolicyConstants.NAV_BAR_MODE_GESTURAL;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.content.pm.PackageManager;
 
 import com.android.settings.R;
@@ -63,7 +64,24 @@ public class SystemNavigationPreferenceController extends BasePreferenceControll
                 com.android.internal.R.bool.config_swipe_up_gesture_setting_available)) {
             return false;
         }
-        return true;
+
+        // Adapt to integrate QuickSwitch multi-launcher support
+        try {
+            String[] launcherPackages = context.getResources().getStringArray(
+                    com.android.internal.R.array.config_launcherPackages);
+
+            for (String pkg : launcherPackages) {
+                Intent quickStepIntent = new Intent(ACTION_QUICKSTEP).setPackage(pkg);
+                if (context.getPackageManager().resolveService(quickStepIntent,
+                        PackageManager.MATCH_SYSTEM_ONLY) != null) {
+                    return true;
+                }
+            }
+        } catch (Resources.NotFoundException e) {
+            // Fallback if array doesn't exist
+        }
+
+        return false;
     }
 
     static boolean isOverlayPackageAvailable(Context context, String overlayPackage) {
