@@ -6299,6 +6299,17 @@
                 android:permission="com.alpha.settings.DOZE">
         </service>
 
+        <activity
+            android:name="com.alpha.settings.trampoline.DynamicBarSettingsActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="alpha.settings.DINAMIC_BAR_SETTINGS" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+            <meta-data android:name="com.android.settings.FRAGMENT_CLASS"
+                       android:value="com.alpha.settings.fragments.statusbar.DynamicBar" />
+        </activity>
+
         <!-- Trampoline activities -->
         <activity
             android:name="com.alpha.settings.trampoline.AboutActivity"
