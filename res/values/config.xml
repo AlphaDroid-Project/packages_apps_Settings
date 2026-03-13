@@ -348,6 +348,9 @@
     <!-- Whether to support enrollment during setup wizard flow -->
     <bool name="config_suw_support_face_enroll">true</bool>
 
+    <!-- Whether to use legacy UDFPS enrollment UI -->
+    <bool name="config_useLegacyUdfpsUi">false</bool>
+
     <!-- App intent -->
     <string name="config_account_intent_uri" translatable="false"></string>
 
