@@ -31,7 +31,6 @@ class DeviceCardView : LinearLayout {
 
         setBackgroundResource(R.drawable.bg_about_card_top_right)
 
-        // Add padding to the card itself so text isn't stuck to edges
         val vPadding = (resources.displayMetrics.density * 12).toInt()
         setPadding(0, vPadding, 0, vPadding)
 
@@ -67,7 +66,7 @@ class DeviceCardView : LinearLayout {
     }
 
     private fun showRenameDialog() {
-        val alert = AlertDialog.Builder(context, R.style.Theme_AlertDialog)
+        val alert = AlertDialog.Builder(context)
         val dialogView = View.inflate(context, R.layout.device_name_dialog, null)
         val mEditText = dialogView.findViewById<EditText>(R.id.device_edit_text)
 
@@ -75,9 +74,13 @@ class DeviceCardView : LinearLayout {
         alert.setView(dialogView)
 
         mEditText?.setText(deviceSummary.text)
+        mEditText?.setSelection(mEditText.text.length)
 
         alert.setPositiveButton(android.R.string.ok) { dialog, _ ->
             val newName = mEditText?.text.toString()
+            context.updateDeviceName(newName)
+            setDeviceName(newName)
+            // still invoke listener in case parent fragment needs it
             listener?.invoke(newName)
             dialog.dismiss()
         }
@@ -93,5 +96,8 @@ class DeviceCardView : LinearLayout {
             listener?.invoke(name)
         }
     }
-    fun setDeviceName(name: String) { deviceSummary.text = name }
+
+    fun setDeviceName(name: String) {
+        deviceSummary.text = name
+    }
 }
