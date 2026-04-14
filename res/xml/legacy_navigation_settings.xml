@@ -30,12 +30,6 @@
         android:key="navbar_layout_category"
         android:title="@string/navbar_layout_category_title">
 
-        <Preference
-            android:key="android.theme.customization.navbar"
-            android:title="@string/theme_customization_navbar_title"
-            android:summary="@string/theme_customization_navbar_summary"
-            android:fragment="com.alpha.settings.fragments.ui.NavbarStyles"/>
-
         <com.alpha.settings.preferences.SecureSettingSwitchPreference
             android:key="navigationbar_key_order"
             android:title="@string/navbar_invert_layout_title"
