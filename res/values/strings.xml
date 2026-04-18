@@ -3463,6 +3463,8 @@
 
     <!-- Title of the toggle to turn off blur [CHAR LIMIT=NONE] -->
     <string name="blur_switch">Reduce blur effects</string>
+    <!-- Title for selecting RenderEngine blur algorithm [CHAR LIMIT=NONE] -->
+    <string name="blur_algorithm_title">Blur algorithm</string>
     <!-- Summary string of the toggle to turn off blur [CHAR LIMIT=60] -->
     <string name="blur_switch_summary">Make backgrounds and panels easier to see</string>
     <!-- Summary string on blur switch explaining why the toggle is disabled [CHAR LIMIT=60]  -->

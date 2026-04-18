@@ -257,6 +257,12 @@
             android:key="enable_blurs_on_windows"
             android:title="@string/window_blurs"/>
 
+        <ListPreference
+            android:key="blur_algorithm"
+            android:title="@string/blur_algorithm_title"
+            android:summary="@string/summary_placeholder"
+            android:dependency="enable_blurs_on_windows" />
+
         <SwitchPreferenceCompat
             android:key="tap_to_wake"
             android:title="@string/tap_to_wake"
