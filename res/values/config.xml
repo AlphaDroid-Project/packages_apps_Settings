@@ -49,8 +49,8 @@
 
     <!-- WallpaperPicker -->
     <string name="config_google_wallpaper_picker_package" translatable="false">com.google.android.apps.wallpaper</string>
-    <string name="config_wallpaper_picker_package" translatable="false">com.android.wallpaper</string>
-    <string name="config_wallpaper_picker_class" translatable="false">com.android.customization.picker.CustomizationPickerActivity</string>
+    <string name="config_wallpaper_picker_package" translatable="false">com.android.alpha.themepicker</string>
+    <string name="config_wallpaper_picker_class" translatable="false">com.android.alpha.themepicker.ui.MainActivity</string>
     <string name="config_wallpaper_picker_action" translatable="false">android.intent.action.SET_WALLPAPER</string>
 
     <!-- Fully-qualified class name for the styles & wallpaper picker activity. -->
