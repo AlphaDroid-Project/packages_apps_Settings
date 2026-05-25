@@ -12,6 +12,7 @@ import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.Path
 import android.graphics.PathMeasure
+import android.graphics.Rect
 import android.graphics.RectF
 import android.util.AttributeSet
 import android.view.View
@@ -23,6 +24,10 @@ class AlphaLogoView @JvmOverloads constructor(
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0
 ) : View(context, attrs, defStyleAttr) {
+
+    private companion object {
+        private const val LABEL = "AlphaDroid"
+    }
 
     // Callback for when animation completes
     private var animationEndListener: (() -> Unit)? = null
@@ -82,6 +87,16 @@ class AlphaLogoView @JvmOverloads constructor(
     // Animation
     private var progress = 0f
     private var animator: ValueAnimator? = null
+
+    // Cached values that only change when the view is resized. Recomputing measureText and
+    // the path offsets every frame for 2 s of animation was the dominant CPU cost on this view.
+    private var cachedLabelWidth = 0f
+    private var cachedStartOffset = 0f
+    private var cachedCenterOffset = 0f
+    private var cachedVOffset = 0f
+    // Damage rect for the text band only. Invalidating the whole view forced the static
+    // bitmap to be recorded again every frame.
+    private val textDamageRect = Rect()
 
     init {
         // Set shadow based on theme
@@ -145,6 +160,23 @@ class AlphaLogoView @JvmOverloads constructor(
         textPaint.textSize = textSize
         textStrokePaint.textSize = textSize
         textStrokePaint.strokeWidth = resources.displayMetrics.density * 2.5f
+
+        // Cache text metrics now that text size, paint, and path are stable.
+        cachedLabelWidth = textPaint.measureText(LABEL)
+        cachedStartOffset = 0f
+        cachedCenterOffset = (textPathLength - cachedLabelWidth) / 2f
+        cachedVOffset = textPaint.textSize + (resources.displayMetrics.density * 2f)
+
+        // Damage rect covers the upper half of the view where the text band travels.
+        // The arc spans 180° starting at the ring center, so the band is bounded by the
+        // ring rect we already computed plus a margin for shadow + stroke.
+        val damageMargin = (resources.displayMetrics.density * 12f).toInt()
+        textDamageRect.set(
+            (ringRect.left.toInt() - damageMargin).coerceAtLeast(0),
+            (ringRect.top.toInt() - damageMargin).coerceAtLeast(0),
+            (ringRect.right.toInt() + damageMargin).coerceAtMost(w),
+            (ringRect.bottom.toInt() + damageMargin).coerceAtMost(h)
+        )
     }
 
     override fun onDraw(canvas: Canvas) {
@@ -161,22 +193,16 @@ class AlphaLogoView @JvmOverloads constructor(
     }
 
     private fun drawText(canvas: Canvas) {
-        val pm = textPathMeasure ?: return
-        val label = "AlphaDroid"
-        val textWidth = textPaint.measureText(label)
+        if (textPathMeasure == null || textPathLength <= 0f) return
 
-        val startOffset = 0f
-        val centerOffset = (textPathLength - textWidth) / 2f
-
-        val currentOffset = startOffset + (centerOffset - startOffset) * progress
-
-        val vOffset = textPaint.textSize + (resources.displayMetrics.density * 2f)
+        val currentOffset = cachedStartOffset +
+                (cachedCenterOffset - cachedStartOffset) * progress
 
         if (!isDarkTheme) {
-            canvas.drawTextOnPath(label, textPath, currentOffset, vOffset, textStrokePaint)
+            canvas.drawTextOnPath(LABEL, textPath, currentOffset, cachedVOffset, textStrokePaint)
         }
 
-        canvas.drawTextOnPath(label, textPath, currentOffset, vOffset, textPaint)
+        canvas.drawTextOnPath(LABEL, textPath, currentOffset, cachedVOffset, textPaint)
     }
 
     fun startAnimation() {
@@ -190,7 +216,14 @@ class AlphaLogoView @JvmOverloads constructor(
             interpolator = DecelerateInterpolator(1.5f)
             addUpdateListener { va ->
                 progress = va.animatedValue as Float
-                invalidate()
+                // Invalidate only the band where the text travels. The logo bitmap
+                // sits underneath but doesn't change during the animation, so damaging
+                // the whole view forced HWUI to re-record the bitmap draw every frame.
+                if (!textDamageRect.isEmpty) {
+                    invalidate(textDamageRect)
+                } else {
+                    invalidate()
+                }
             }
             addListener(object : AnimatorListenerAdapter() {
                 override fun onAnimationEnd(animation: Animator) {
