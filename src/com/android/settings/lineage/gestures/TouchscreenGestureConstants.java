@@ -22,6 +22,6 @@ class TouchscreenGestureConstants {
     static final int ACTION_VOLUME_DOWN = 10;
     static final int ACTION_VOLUME_UP = 11;
     static final int ACTION_AMBIENT_DISPLAY = 12;
-    // Alpha addition: opens the app stored alongside the action, see TouchscreenGestureAppPicker.
+    // Opens the app/shortcut stored alongside the action (see TouchscreenGestureAppPickerFragment).
     static final int ACTION_LAUNCH_APP = 13;
 }

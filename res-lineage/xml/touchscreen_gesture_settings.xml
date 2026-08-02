@@ -1,18 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
      SPDX-FileCopyrightText: 2016 The CyanogenMod Project
-     SPDX-FileCopyrightText: 2017 The LineageOS Project
+     SPDX-FileCopyrightText: 2017-2026 The LineageOS Project
      SPDX-License-Identifier: Apache-2.0
 -->
 <PreferenceScreen
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:key="touchscreen_gesture_settings"
     android:title="@string/touchscreen_gesture_settings_title">
 
-    <lineageos.preference.LineageSystemSettingSwitchPreference
-        android:key="touchscreen_gesture_haptic_feedback"
-        android:title="@string/touchscreen_gestures_haptic_feedback_title"
-        android:summary="@string/touchscreen_gestures_haptic_feedback_summary"
+    <!-- Room under a two-line collapsing toolbar title so the first row is not clipped. -->
+    <com.android.settings.applications.SpacePreference
+        android:key="touchscreen_gesture_title_space"
+        android:layout_height="24dp"
+        android:selectable="false" />
+
+    <!-- Master enable. LineageSystemSetting* writes Settings.System under the key. -->
+    <lineageos.preference.LineageSystemSettingMainSwitchPreference
+        android:key="touchscreen_gesture_enable"
+        android:title="@string/touchscreen_gesture_master_title"
         android:defaultValue="true" />
+
+    <PreferenceCategory
+        android:key="touchscreen_gesture_options_category"
+        android:title="@string/touchscreen_gesture_options_category_title"
+        android:dependency="touchscreen_gesture_enable">
+
+        <lineageos.preference.LineageSystemSettingSwitchPreference
+            android:key="touchscreen_gesture_haptic_feedback"
+            android:title="@string/touchscreen_gestures_haptic_feedback_title"
+            android:summary="@string/touchscreen_gestures_haptic_feedback_summary"
+            android:defaultValue="true" />
+
+    </PreferenceCategory>
+
+    <!-- Dynamic gesture ListPreferences are added here in code. A category keeps them from
+         sitting under the collapsing toolbar title (the old "overlapping title" bug). -->
+    <PreferenceCategory
+        android:key="touchscreen_gesture_list_category"
+        android:title="@string/touchscreen_gesture_list_category_title"
+        android:dependency="touchscreen_gesture_enable" />
 
 </PreferenceScreen>

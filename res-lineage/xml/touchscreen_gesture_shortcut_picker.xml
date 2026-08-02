@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     SPDX-FileCopyrightText: 2026 AlphaDroid
+     SPDX-License-Identifier: Apache-2.0
+-->
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:key="touchscreen_gesture_shortcut_picker"
+    android:title="@string/touchscreen_gesture_shortcut_picker_title">
+
+    <com.android.settings.applications.SpacePreference
+        android:key="touchscreen_gesture_shortcut_picker_space"
+        android:layout_height="24dp"
+        android:selectable="false" />
+
+    <com.android.settingslib.widget.TopIntroPreference
+        android:key="touchscreen_gesture_shortcut_picker_intro"
+        android:title="@string/touchscreen_gesture_shortcut_picker_summary" />
+
+    <PreferenceCategory
+        android:key="touchscreen_gesture_shortcut_list"
+        android:title="@string/touchscreen_gesture_shortcut_list_title" />
+
+</PreferenceScreen>

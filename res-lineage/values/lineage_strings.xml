@@ -30,8 +30,22 @@
     <string name="touchscreen_gesture_settings_title">Touchscreen gestures</string>
     <string name="touchscreen_gesture_settings_summary">Perform various touchscreen gestures for quick actions</string>
 
+    <string name="touchscreen_gesture_master_title">Use touchscreen gestures</string>
+    <string name="touchscreen_gesture_options_category_title">Options</string>
+    <string name="touchscreen_gesture_list_category_title">Gestures</string>
+
     <string name="touchscreen_gestures_haptic_feedback_title">Haptic feedback</string>
     <string name="touchscreen_gestures_haptic_feedback_summary">Vibrate when a touchscreen gesture is detected</string>
+
+    <string name="touchscreen_gesture_action_launch_app">Open app</string>
+    <string name="touchscreen_gesture_app_picker_title">Choose an app</string>
+    <string name="touchscreen_gesture_app_picker_summary">Select an app to open for this gesture. If the app has shortcuts, use the settings button to pick one.</string>
+    <string name="touchscreen_gesture_app_list_title">Apps</string>
+    <string name="touchscreen_gesture_shortcut_picker_title">Choose a shortcut</string>
+    <string name="touchscreen_gesture_shortcut_picker_summary">Select what this gesture opens. You can open the app itself or one of its shortcuts.</string>
+    <string name="touchscreen_gesture_shortcut_list_title">Shortcuts</string>
+    <string name="touchscreen_gesture_launch_app_itself">Open app</string>
+    <string name="touchscreen_gesture_shortcuts_a11y">%1$s shortcuts</string>
 
     <string name="touchscreen_gesture_two_fingers_down_swipe_title">Swipe down with two fingers</string>
     <string name="touchscreen_gesture_one_finger_up_swipe_title">Swipe up with one finger</string>

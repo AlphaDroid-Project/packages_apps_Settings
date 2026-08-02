@@ -7,12 +7,17 @@
 package com.android.settings.lineage.gestures;
 
 import android.Manifest;
+import android.app.ActivityManager;
 import android.content.ActivityNotFoundException;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.IShortcutService;
 import android.content.pm.PackageManager;
+import android.content.pm.ParceledListSlice;
 import android.content.pm.ResolveInfo;
+import android.content.pm.ShortcutInfo;
+import android.content.pm.ShortcutManager;
 import android.content.res.Resources;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
@@ -29,6 +34,7 @@ import android.os.Looper;
 import android.os.Message;
 import android.os.PowerManager;
 import android.os.PowerManager.WakeLock;
+import android.os.ServiceManager;
 import android.os.SystemClock;
 import android.os.UserHandle;
 import android.os.VibrationEffect;
@@ -144,6 +150,12 @@ public class KeyHandler implements DeviceKeyHandler {
             return event;
         }
 
+        // Master switch: HAL should already be disarmed, but gate here too so a stale arm cannot
+        // fire after the user turned gestures off.
+        if (!TouchscreenGestureStore.isMasterEnabled(mContext)) {
+            return event;
+        }
+
         // Read the action at dispatch time. Settings.System is provider-backed, so a change made
         // in the UI is visible here immediately — no cached map, no update broadcast to keep in
         // sync. (The old SharedPreferences map only refreshed when system_server restarted, which
@@ -152,10 +164,6 @@ public class KeyHandler implements DeviceKeyHandler {
         if (event.getAction() != KeyEvent.ACTION_UP || !hasSetupCompleted()) {
             return event;
         }
-
-        Log.e(TAG, "gesture scancode=" + scanCode
-                + " keyCode=" + event.getKeyCode()
-                + " action=" + action);
 
         if (scanCode == TouchscreenGestureStore.KEYCODE_SINGLE_TAP && isDoubleTapToWakeEnabled()) {
             handleSingleTap(action, scanCode);
@@ -377,9 +385,8 @@ public class KeyHandler implements DeviceKeyHandler {
     }
 
     /**
-     * Opens the launcher entry the user picked for this gesture. The picker only offers
-     * MAIN/LAUNCHER activities, so a plain launch intent is enough — no LauncherApps, and no
-     * shortcut plumbing, in system_server.
+     * Opens the launcher entry (or optional deep shortcut) the user picked for this gesture.
+     * Shortcut ids are stored alongside the component by the Columbus-style app/shortcut pickers.
      */
     private void launchApp(final int keycode) {
         final String flattened = TouchscreenGestureStore.getApp(mContext, keycode);
@@ -391,18 +398,97 @@ public class KeyHandler implements DeviceKeyHandler {
         }
 
         performWakeUp();
+        final String shortcutId = TouchscreenGestureStore.getShortcut(mContext, keycode);
+        // Must be a concrete user id, not USER_CURRENT: startActivityAsUser goes through
+        // ActivityManager, which resolves USER_CURRENT, but LauncherApps/ShortcutService take the
+        // id verbatim and throwIfUserLockedL(-2) blows up before the shortcut is ever looked up.
+        final UserHandle user = UserHandle.of(ActivityManager.getCurrentUser());
+
+        // Deep shortcut: id differs from the flattened main activity key.
+        final boolean isDeepShortcut =
+                shortcutId != null && !shortcutId.isEmpty() && !shortcutId.equals(flattened);
+        if (isDeepShortcut) {
+            // Deliberately NOT LauncherApps.startShortcut: that routes through
+            // ActivityTaskManagerService.startActivitiesAsPackage(), which starts the activity as
+            // the *publisher* app with allowBalExemptionForSystemProcess hardcoded false. Firing
+            // from a screen-off gesture the publisher is CACHED_EMPTY with no visible window, so
+            // the start is refused with BAL_BLOCK — and startShortcut does not throw, it just
+            // silently does nothing. Resolve the intent ourselves and start it as the system
+            // instead, which is the same call the main-activity path below already uses.
+            final Intent shortcutIntent =
+                    resolveShortcutIntent(component.getPackageName(), shortcutId,
+                            user.getIdentifier());
+            if (shortcutIntent != null) {
+                shortcutIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK
+                        | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
+                try {
+                    mContext.startActivityAsUser(shortcutIntent, null, user);
+                    doHapticFeedback();
+                    return;
+                } catch (Exception e) {
+                    Log.w(TAG, "Shortcut launch failed for " + component.getPackageName()
+                            + "/" + shortcutId + ", falling back to main activity", e);
+                }
+            } else {
+                Log.w(TAG, "No intent for shortcut " + component.getPackageName() + "/"
+                        + shortcutId + ", falling back to main activity");
+            }
+        }
+
         final Intent intent = Intent.makeMainActivity(component);
-        // Deliberately not CLEAR_TOP like the other launches here: reopening an app should return
-        // to where the user left it, the way a launcher icon does.
+        // Deliberately not CLEAR_TOP: reopening should return where the user left off.
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK
                 | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
         try {
-            mContext.startActivityAsUser(intent, null, new UserHandle(UserHandle.USER_CURRENT));
+            mContext.startActivityAsUser(intent, null, user);
         } catch (ActivityNotFoundException e) {
             Log.w(TAG, "Could not open " + flattened, e);
             return;
         }
         doHapticFeedback();
+    }
+
+    /**
+     * Look the shortcut up through {@link IShortcutService} — the publisher-facing interface —
+     * rather than {@link android.content.pm.LauncherApps}. Shortcuts handed to a launcher are
+     * cloned with {@code CLONE_REMOVE_INTENT}, so {@link ShortcutInfo#getIntent()} is always null
+     * there; the publisher-side clone keeps it. {@code ShortcutService.verifyCaller()} short
+     * circuits for the system uid, so system_server may query any package.
+     */
+    @SuppressWarnings("unchecked") // IShortcutService.getShortcuts is declared raw in the AIDL.
+    private Intent resolveShortcutIntent(final String packageName, final String shortcutId,
+            final int userId) {
+        try {
+            final IShortcutService service = IShortcutService.Stub.asInterface(
+                    ServiceManager.getService(Context.SHORTCUT_SERVICE));
+            if (service == null) {
+                Log.w(TAG, "No shortcut service");
+                return null;
+            }
+            // Match pinned/cached too, not just what the picker could offer: a shortcut that was
+            // dynamic when the user chose it can later be dropped from the dynamic set while a
+            // launcher still pins it. Without these it would resolve to null and silently fall
+            // back to the main activity.
+            final ParceledListSlice<ShortcutInfo> slice = service.getShortcuts(packageName,
+                    ShortcutManager.FLAG_MATCH_MANIFEST | ShortcutManager.FLAG_MATCH_DYNAMIC
+                            | ShortcutManager.FLAG_MATCH_PINNED | ShortcutManager.FLAG_MATCH_CACHED,
+                    userId);
+            final List<ShortcutInfo> shortcuts = slice == null ? null : slice.getList();
+            if (shortcuts == null) {
+                Log.w(TAG, "No shortcut list for " + packageName);
+                return null;
+            }
+            for (final ShortcutInfo info : shortcuts) {
+                if (shortcutId.equals(info.getId())) {
+                    return info.getIntent();
+                }
+            }
+            Log.w(TAG, "Shortcut " + shortcutId + " not published by " + packageName
+                    + " (" + shortcuts.size() + " shortcuts seen)");
+        } catch (Exception e) {
+            Log.w(TAG, "Could not resolve shortcut " + packageName + "/" + shortcutId, e);
+        }
+        return null;
     }
 
     private void performWakeUp() {
