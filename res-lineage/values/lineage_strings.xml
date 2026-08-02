@@ -68,9 +68,9 @@
     <string name="touchscreen_gesture_action_dialer">Open the dialer</string>
     <string name="touchscreen_gesture_action_email">View your emails</string>
     <string name="touchscreen_gesture_action_messages">View your messages</string>
-    <string name="touchscreen_gesture_action_play_pause_music">Play/pause music playback</string>
-    <string name="touchscreen_gesture_action_previous_track">Navigate to the previous music track</string>
-    <string name="touchscreen_gesture_action_next_track">Skip to the next music track</string>
+    <string name="touchscreen_gesture_action_play_pause_music">Play/pause media</string>
+    <string name="touchscreen_gesture_action_previous_track">Skip to previous</string>
+    <string name="touchscreen_gesture_action_next_track">Skip to next</string>
     <string name="touchscreen_gesture_action_volume_down">Lower media volume</string>
     <string name="touchscreen_gesture_action_volume_up">Raise media volume</string>
     <string name="touchscreen_gesture_action_ambient_display">Show ambient display</string>

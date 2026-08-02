@@ -63,6 +63,14 @@
     public <init>(android.content.Context);
 }
 
+# DeviceKeyHandler loaded by PhoneWindowManager via PathClassLoader + reflection
+# (getConstructor(Context.class)). Without this, R8 drops the public Context ctor and
+# boot logs: NoSuchMethodException: KeyHandler.<init> [class android.content.Context]
+-keep class * implements com.android.internal.os.DeviceKeyHandler {
+    public <init>(android.content.Context);
+}
+-keep class com.android.settings.lineage.gestures.TouchscreenGestureStore { *; }
+
 # Keep classes that extends SliceBackgroundWorker, which are used by reflection.
 -keepclasseswithmembers class * extends com.android.settings.slices.SliceBackgroundWorker {
     public <init>(android.content.Context, android.net.Uri);

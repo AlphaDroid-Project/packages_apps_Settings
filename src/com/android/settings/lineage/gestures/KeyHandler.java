@@ -8,10 +8,9 @@ package com.android.settings.lineage.gestures;
 
 import android.Manifest;
 import android.content.ActivityNotFoundException;
-import android.content.BroadcastReceiver;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.content.res.Resources;
@@ -36,13 +35,22 @@ import android.os.VibrationEffect;
 import android.os.Vibrator;
 import android.provider.Settings;
 import android.util.Log;
-import android.util.SparseIntArray;
 import android.view.KeyEvent;
+import android.view.ViewConfiguration;
+
+import androidx.annotation.Keep;
 
 import com.android.internal.os.DeviceKeyHandler;
 
 import java.util.List;
 
+/**
+ * Loaded into system_server by PhoneWindowManager via PathClassLoader reflection:
+ * {@code getConstructor(Context.class)}. Must keep a public Context constructor
+ * (see Settings proguard.flags) — R8 otherwise strips it and boot fails with
+ * {@code NoSuchMethodException: KeyHandler.<init> [class android.content.Context]}.
+ */
+@Keep
 public class KeyHandler implements DeviceKeyHandler {
 
     private static final String TAG = KeyHandler.class.getSimpleName();
@@ -52,6 +60,7 @@ public class KeyHandler implements DeviceKeyHandler {
     private static final int GESTURE_REQUEST = 0;
     private static final int GESTURE_WAKELOCK_DURATION = 3000;
     private static final int EVENT_PROCESS_WAKELOCK_DURATION = 500;
+    private static final int DOUBLE_TAP_TIMEOUT = ViewConfiguration.getDoubleTapTimeout();
 
     private final Context mContext;
     private final AudioManager mAudioManager;
@@ -61,7 +70,6 @@ public class KeyHandler implements DeviceKeyHandler {
     private final CameraManager mCameraManager;
     private final Vibrator mVibrator;
 
-    private final SparseIntArray mActionMapping = new SparseIntArray();
     private final boolean mProximityWakeSupported;
     private SensorManager mSensorManager;
     private Sensor mProximitySensor;
@@ -72,22 +80,12 @@ public class KeyHandler implements DeviceKeyHandler {
     private String mRearCameraId;
     private boolean mTorchEnabled;
 
-    private final BroadcastReceiver mUpdateReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            int[] keycodes = intent.getIntArrayExtra(
-                    TouchscreenGestureConstants.UPDATE_EXTRA_KEYCODE_MAPPING);
-            int[] actions = intent.getIntArrayExtra(
-                    TouchscreenGestureConstants.UPDATE_EXTRA_ACTION_MAPPING);
-            mActionMapping.clear();
-            if (keycodes != null && actions != null && keycodes.length == actions.length) {
-                for (int i = 0; i < keycodes.length; i++) {
-                    mActionMapping.put(keycodes[i], actions[i]);
-                }
-            }
-        }
-    };
+    private final Object mSingleTapLock = new Object();
+    private boolean mSingleTapPending;
+    private int mPendingSingleTapAction;
+    private int mPendingSingleTapKeycode;
 
+    @Keep
     public KeyHandler(final Context context) {
         mContext = context;
 
@@ -120,9 +118,8 @@ public class KeyHandler implements DeviceKeyHandler {
             mProximityWakeLock = mPowerManager.newWakeLock(
                     PowerManager.PARTIAL_WAKE_LOCK, "Lineage:ProximityWakeLock");
         }
-        mContext.registerReceiver(mUpdateReceiver,
-                new IntentFilter(TouchscreenGestureConstants.UPDATE_PREFS_ACTION),
-                Context.RECEIVER_NOT_EXPORTED);
+        // Nothing to cache or register: actions are read from Settings.System at dispatch time.
+        Log.i(TAG, "KeyHandler ready");
     }
 
     private class TorchModeCallback extends CameraManager.TorchCallback {
@@ -140,27 +137,112 @@ public class KeyHandler implements DeviceKeyHandler {
     }
 
     public KeyEvent handleKeyEvent(final KeyEvent event) {
-        final int action = mActionMapping.get(event.getScanCode(), -1);
-        if (action < 0 || event.getAction() != KeyEvent.ACTION_UP || !hasSetupCompleted()) {
+        final int scanCode = event.getScanCode();
+
+        // Only gesture scancodes are ours; everything else must pass straight through.
+        if (!TouchscreenGestureStore.isGestureKeycode(scanCode)) {
             return event;
         }
 
-        if (action != 0 && !mEventHandler.hasMessages(GESTURE_REQUEST)) {
-            final Message msg = getMessageForAction(action);
-            final boolean proxWakeEnabled = Settings.System.getInt(
-                    mContext.getContentResolver(),
-                    Settings.System.PROXIMITY_ON_WAKE, mDefaultProximity ? 1 : 0) == 1;
-            if (mProximityWakeSupported && proxWakeEnabled && mProximitySensor != null) {
-                mGestureWakeLock.acquire(2L * mProximityTimeOut);
-                mEventHandler.sendMessageDelayed(msg, mProximityTimeOut);
-                processEvent(action);
-            } else {
-                mGestureWakeLock.acquire(EVENT_PROCESS_WAKELOCK_DURATION);
-                mEventHandler.sendMessage(msg);
-            }
+        // Read the action at dispatch time. Settings.System is provider-backed, so a change made
+        // in the UI is visible here immediately — no cached map, no update broadcast to keep in
+        // sync. (The old SharedPreferences map only refreshed when system_server restarted, which
+        // is why gesture actions used to apply only after a reboot.)
+        final int action = TouchscreenGestureStore.getAction(mContext, scanCode, 0);
+        if (event.getAction() != KeyEvent.ACTION_UP || !hasSetupCompleted()) {
+            return event;
+        }
+
+        Log.e(TAG, "gesture scancode=" + scanCode
+                + " keyCode=" + event.getKeyCode()
+                + " action=" + action);
+
+        if (scanCode == TouchscreenGestureStore.KEYCODE_SINGLE_TAP && isDoubleTapToWakeEnabled()) {
+            handleSingleTap(action, scanCode);
+        } else {
+            dispatchAction(action, scanCode);
         }
 
         return null;
+    }
+
+    private void dispatchAction(final int action, final int keycode) {
+        if (action == 0 || mEventHandler.hasMessages(GESTURE_REQUEST)) {
+            return;
+        }
+
+        final Message msg = getMessageForAction(action, keycode);
+        final boolean proxWakeEnabled = Settings.System.getIntForUser(
+                mContext.getContentResolver(), Settings.System.PROXIMITY_ON_WAKE,
+                mDefaultProximity ? 1 : 0, UserHandle.USER_CURRENT) == 1;
+        if (mProximityWakeSupported && proxWakeEnabled && mProximitySensor != null) {
+            mGestureWakeLock.acquire(2L * mProximityTimeOut);
+            mEventHandler.sendMessageDelayed(msg, mProximityTimeOut);
+            processEvent(action, keycode);
+        } else {
+            mGestureWakeLock.acquire(EVENT_PROCESS_WAKELOCK_DURATION);
+            mEventHandler.sendMessage(msg);
+        }
+    }
+
+    /**
+     * Single tap and double tap to wake share one firmware mask: the touch HAL arms gestures on
+     * DOUBLE_TAP_INDEP_NODE and the power HAL sets the double-tap bit of that same node (see
+     * hardware/oplus/power/power-mode.cpp). While single tap is armed the panel reports one
+     * SINGLE_TAP per tap and never reports DTAP_DETECT, so the kernel's KEY_WAKEUP for double tap
+     * is never emitted and the first tap of a double tap already runs the single-tap action.
+     *
+     * <p>Stock hits the same wall and disambiguates in software — OplusBlackScreenGestureControll
+     * synthesizes gesture=1 when a second gesture=16 arrives inside the double-tap window. We do
+     * the same, except stock dispatches the single tap immediately <em>and</em> the double tap
+     * afterwards, which only works because its pair composes (AOD pulse, then full wake). Our
+     * actions are arbitrary, so the single tap is held back for the window instead and cancelled
+     * if a second tap lands. Cost: single tap is delayed by the double-tap timeout, and only while
+     * double tap to wake is enabled.
+     */
+    private void handleSingleTap(final int action, final int keycode) {
+        synchronized (mSingleTapLock) {
+            if (mSingleTapPending) {
+                // Second tap inside the window: this is the double tap the firmware can no longer
+                // report, so drop the pending single-tap action and wake instead.
+                mSingleTapPending = false;
+                mEventHandler.removeCallbacks(mSingleTapTimeout);
+                performWakeUp();
+                return;
+            }
+            if (action == 0) {
+                return;
+            }
+            mPendingSingleTapAction = action;
+            mPendingSingleTapKeycode = keycode;
+            mSingleTapPending = true;
+        }
+        // uptimeMillis() — and with it the pending callback — does not advance while suspended,
+        // so hold the AP up for at least the window.
+        mGestureWakeLock.acquire(DOUBLE_TAP_TIMEOUT + EVENT_PROCESS_WAKELOCK_DURATION);
+        mEventHandler.postDelayed(mSingleTapTimeout, DOUBLE_TAP_TIMEOUT);
+    }
+
+    private final Runnable mSingleTapTimeout = new Runnable() {
+        @Override
+        public void run() {
+            final int action;
+            final int keycode;
+            synchronized (mSingleTapLock) {
+                if (!mSingleTapPending) {
+                    return;
+                }
+                mSingleTapPending = false;
+                action = mPendingSingleTapAction;
+                keycode = mPendingSingleTapKeycode;
+            }
+            dispatchAction(action, keycode);
+        }
+    };
+
+    private boolean isDoubleTapToWakeEnabled() {
+        return Settings.Secure.getIntForUser(mContext.getContentResolver(),
+                Settings.Secure.DOUBLE_TAP_TO_WAKE, 0, UserHandle.USER_CURRENT) != 0;
     }
 
     private boolean hasSetupCompleted() {
@@ -168,7 +250,7 @@ public class KeyHandler implements DeviceKeyHandler {
                 Settings.Secure.USER_SETUP_COMPLETE, 0) != 0;
     }
 
-    private void processEvent(final int action) {
+    private void processEvent(final int action, final int keycode) {
         mSensorManager.registerListener(new SensorEventListener() {
             @Override
             public void onSensorChanged(SensorEvent event) {
@@ -182,7 +264,7 @@ public class KeyHandler implements DeviceKeyHandler {
                 }
                 mEventHandler.removeMessages(GESTURE_REQUEST);
                 if (event.values[0] >= mProximitySensor.getMaximumRange()) {
-                    Message msg = getMessageForAction(action);
+                    Message msg = getMessageForAction(action, keycode);
                     mEventHandler.sendMessage(msg);
                 }
             }
@@ -195,9 +277,11 @@ public class KeyHandler implements DeviceKeyHandler {
         }, mProximitySensor, SensorManager.SENSOR_DELAY_FASTEST);
     }
 
-    private Message getMessageForAction(final int action) {
+    private Message getMessageForAction(final int action, final int keycode) {
         Message msg = mEventHandler.obtainMessage(GESTURE_REQUEST);
         msg.arg1 = action;
+        // ACTION_LAUNCH_APP stores its app per gesture, so the handler needs to know which one.
+        msg.arg2 = keycode;
         return msg;
     }
 
@@ -246,6 +330,9 @@ public class KeyHandler implements DeviceKeyHandler {
                 case TouchscreenGestureConstants.ACTION_AMBIENT_DISPLAY:
                     launchDozePulse();
                     break;
+                case TouchscreenGestureConstants.ACTION_LAUNCH_APP:
+                    launchApp(msg.arg2);
+                    break;
             }
         }
     }
@@ -286,6 +373,35 @@ public class KeyHandler implements DeviceKeyHandler {
         final Intent intent = getLaunchableIntent(
                 new Intent(Intent.ACTION_VIEW, Uri.parse("sms:")));
         startActivitySafely(intent);
+        doHapticFeedback();
+    }
+
+    /**
+     * Opens the launcher entry the user picked for this gesture. The picker only offers
+     * MAIN/LAUNCHER activities, so a plain launch intent is enough — no LauncherApps, and no
+     * shortcut plumbing, in system_server.
+     */
+    private void launchApp(final int keycode) {
+        final String flattened = TouchscreenGestureStore.getApp(mContext, keycode);
+        final ComponentName component = flattened == null
+                ? null : ComponentName.unflattenFromString(flattened);
+        if (component == null) {
+            Log.w(TAG, "No app stored for gesture keycode " + keycode);
+            return;
+        }
+
+        performWakeUp();
+        final Intent intent = Intent.makeMainActivity(component);
+        // Deliberately not CLEAR_TOP like the other launches here: reopening an app should return
+        // to where the user left it, the way a launcher icon does.
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK
+                | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
+        try {
+            mContext.startActivityAsUser(intent, null, new UserHandle(UserHandle.USER_CURRENT));
+        } catch (ActivityNotFoundException e) {
+            Log.w(TAG, "Could not open " + flattened, e);
+            return;
+        }
         doHapticFeedback();
     }
 
@@ -382,8 +498,9 @@ public class KeyHandler implements DeviceKeyHandler {
         }
 
         if (mAudioManager.getRingerMode() != AudioManager.RINGER_MODE_SILENT) {
-            final boolean enabled = Settings.System.getInt(mContext.getContentResolver(),
-                    Settings.System.TOUCHSCREEN_GESTURE_HAPTIC_FEEDBACK, 1) != 0;
+            final boolean enabled = Settings.System.getIntForUser(mContext.getContentResolver(),
+                    Settings.System.TOUCHSCREEN_GESTURE_HAPTIC_FEEDBACK, 1,
+                    UserHandle.USER_CURRENT) != 0;
             if (enabled) {
                 mVibrator.vibrate(VibrationEffect.createOneShot(50,
                         VibrationEffect.DEFAULT_AMPLITUDE));

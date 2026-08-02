@@ -6,24 +6,26 @@
 
 package com.android.settings.lineage.gestures;
 
+import android.content.ComponentName;
 import android.content.Context;
-import android.content.Intent;
-import android.content.SharedPreferences;
+import android.content.pm.ActivityInfo;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.os.UserHandle;
+import android.util.Log;
 
-import androidx.preference.ListPreference;
-import androidx.preference.PreferenceManager;
+import androidx.preference.Preference;
+import androidx.preference.PreferenceScreen;
 
 import com.android.internal.logging.nano.MetricsProto.MetricsEvent;
 import com.android.settings.R;
 import com.android.settings.SettingsPreferenceFragment;
+import com.android.settings.core.SubSettingLauncher;
 import com.android.settings.lineage.utils.ResourceUtils;
-import com.android.settings.lineage.widget.CustomDialogPreference;
 import com.android.settings.search.BaseSearchIndexProvider;
 import com.android.settingslib.search.SearchIndexable;
 
 import lineageos.hardware.LineageHardwareManager;
+import lineageos.preference.LineageSystemSettingListPreference;
 import lineageos.hardware.TouchscreenGesture;
 
 import java.util.ArrayList;
@@ -31,6 +33,8 @@ import java.util.List;
 
 @SearchIndexable
 public class TouchscreenGestureSettings extends SettingsPreferenceFragment {
+
+    private static final String TAG = "TouchscreenGestureSettings";
 
     private static final String KEY_TOUCHSCREEN_GESTURE = "touchscreen_gesture";
     private static final String KEY_TOUCHSCREEN_GESTURE_SETTINGS =
@@ -45,6 +49,10 @@ public class TouchscreenGestureSettings extends SettingsPreferenceFragment {
     public void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        // Actions live in Settings.System (see TouchscreenGestureStore), so no SharedPreferences
+        // plumbing is needed — and none of it would work anyway: SettingsActivity replaces the
+        // default prefs name with SharedPreferencesLogger, and system_server could not see writes
+        // to a SharedPreferences file from this process.
         addPreferencesFromResource(R.xml.touchscreen_gesture_settings);
 
         if (isTouchscreenGesturesSupported(getContext())) {
@@ -53,32 +61,78 @@ public class TouchscreenGestureSettings extends SettingsPreferenceFragment {
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        // The app picker writes the action and the chosen app straight to Settings.System, so
+        // re-read every row on the way back instead of trusting what the dialog left behind.
+        final PreferenceScreen screen = getPreferenceScreen();
+        for (int i = 0; i < screen.getPreferenceCount(); i++) {
+            final Preference preference = screen.getPreference(i);
+            if (preference instanceof TouchscreenGesturePreference) {
+                ((TouchscreenGesturePreference) preference).refresh();
+            }
+        }
+    }
+
+    @Override
     public int getMetricsCategory() {
         return MetricsEvent.LINEAGE;
+    }
+
+    private void launchAppPicker(final int keycode) {
+        final Bundle args = new Bundle();
+        args.putInt(TouchscreenGestureAppPicker.EXTRA_KEYCODE, keycode);
+        new SubSettingLauncher(getContext())
+                .setDestination(TouchscreenGestureAppPicker.class.getName())
+                .setSourceMetricsCategory(getMetricsCategory())
+                .setTitleRes(R.string.touchscreen_gesture_app_picker_title)
+                .setArguments(args)
+                .launch();
     }
 
     private void initTouchscreenGestures() {
         final LineageHardwareManager manager = LineageHardwareManager.getInstance(getContext());
         mTouchscreenGestures = manager.getTouchscreenGestures();
-        final int[] actions = getDefaultGestureActions(requireContext(), mTouchscreenGestures);
+        final int[] defaults = getDefaultGestureActions(requireContext(), mTouchscreenGestures);
         for (final TouchscreenGesture gesture : mTouchscreenGestures) {
             getPreferenceScreen().addPreference(new TouchscreenGesturePreference(
-                    getContext(), gesture, actions[gesture.id]));
+                    getContext(), gesture, defaults[gesture.id]));
         }
     }
 
-    private class TouchscreenGesturePreference extends ListPreference {
+    /**
+     * Per-device default actions from {@code config_defaultTouchscreenGestureActions}, indexed by
+     * the HAL's sequential gesture id. Applied only until the user picks something, after which
+     * the stored Settings.System value wins.
+     */
+    private static int[] getDefaultGestureActions(final Context context,
+            final TouchscreenGesture[] gestures) {
+        final int[] configured = context.getResources().getIntArray(
+                R.array.config_defaultTouchscreenGestureActions);
+        if (configured.length >= gestures.length) {
+            return configured;
+        }
+        final int[] filled = new int[gestures.length];
+        System.arraycopy(configured, 0, filled, 0, configured.length);
+        return filled;
+    }
+
+    private class TouchscreenGesturePreference extends LineageSystemSettingListPreference {
         private final Context mContext;
         private final TouchscreenGesture mGesture;
+        private final int mDefaultAction;
 
         public TouchscreenGesturePreference(final Context context,
                                             final TouchscreenGesture gesture,
                                             final int defaultAction) {
-            super(context);
+            // Persists to Settings.System under getKey(); null attrs is fine (see
+            // SelfRemovingListPreference's Context-only constructor).
+            super(context, null);
             mContext = context;
             mGesture = gesture;
+            mDefaultAction = defaultAction;
 
-            setKey(buildPreferenceKey(gesture));
+            setKey(TouchscreenGestureStore.buildPreferenceKey(gesture));
             setEntries(R.array.touchscreen_gesture_action_entries);
             setEntryValues(R.array.touchscreen_gesture_action_values);
             setDefaultValue(String.valueOf(defaultAction));
@@ -93,22 +147,61 @@ public class TouchscreenGestureSettings extends SettingsPreferenceFragment {
         @Override
         public boolean callChangeListener(final Object newValue) {
             final int action = Integer.parseInt(String.valueOf(newValue));
+            if (action == TouchscreenGestureConstants.ACTION_LAUNCH_APP) {
+                // Nothing to persist yet — "Open app" without an app would be a dead gesture. The
+                // picker writes the action and the component together and arms the gesture, and
+                // onResume() picks the result up. Returning false leaves the old value in place if
+                // the user backs out.
+                launchAppPicker(mGesture.keycode);
+                return false;
+            }
             final LineageHardwareManager manager = LineageHardwareManager.getInstance(mContext);
             if (!manager.setTouchscreenGestureEnabled(mGesture, action > 0)) {
+                Log.e(TAG, "HAL rejected enable for " + mGesture.name
+                        + " keycode=" + mGesture.keycode + " action=" + action);
                 return false;
             }
             return super.callChangeListener(newValue);
         }
 
         @Override
-        protected boolean persistString(String value) {
-            if (!super.persistString(value)) {
-                return false;
+        public void setValue(String value) {
+            super.setValue(value);
+            // Keep the icon in step with the stored value (set on load and on change).
+            final int action = value == null ? 0 : Integer.parseInt(value);
+            if (action == TouchscreenGestureConstants.ACTION_LAUNCH_APP) {
+                showChosenApp();
+            } else {
+                setIcon(getIconDrawableResourceForAction(action));
+                setSummary("%s");
             }
-            final int action = Integer.parseInt(String.valueOf(value));
-            setIcon(getIconDrawableResourceForAction(action));
-            sendUpdateBroadcast(mContext, mTouchscreenGestures);
-            return true;
+        }
+
+        void refresh() {
+            setValue(String.valueOf(TouchscreenGestureStore.getAction(
+                    mContext, mGesture.keycode, mDefaultAction)));
+        }
+
+        /** Show the picked app's own icon and name rather than a generic "Open app". */
+        private void showChosenApp() {
+            final String flattened = TouchscreenGestureStore.getApp(mContext, mGesture.keycode);
+            final ComponentName component = flattened == null
+                    ? null : ComponentName.unflattenFromString(flattened);
+            if (component != null) {
+                final PackageManager pm = mContext.getPackageManager();
+                try {
+                    final ActivityInfo info = pm.getActivityInfo(component, 0 /* flags */);
+                    setIcon(info.loadIcon(pm));
+                    // ListPreference runs the summary through String.format(), so a label such as
+                    // "100% Battery" would blow up unescaped.
+                    setSummary(info.loadLabel(pm).toString().replace("%", "%%"));
+                    return;
+                } catch (PackageManager.NameNotFoundException e) {
+                    Log.w(TAG, "Gesture " + mGesture.name + " points at a missing app: " + flattened);
+                }
+            }
+            setIcon(R.drawable.ic_gesture_action_none);
+            setSummary("%s");
         }
 
         private int getIconDrawableResourceForAction(final int action) {
@@ -151,61 +244,15 @@ public class TouchscreenGestureSettings extends SettingsPreferenceFragment {
 
         final LineageHardwareManager manager = LineageHardwareManager.getInstance(context);
         final TouchscreenGesture[] gestures = manager.getTouchscreenGestures();
-        final int[] actionList = buildActionList(context, gestures);
+        final int[] actionList = TouchscreenGestureStore.buildActionList(context, gestures);
         for (final TouchscreenGesture gesture : gestures) {
             manager.setTouchscreenGestureEnabled(gesture, actionList[gesture.id] > 0);
         }
-
-        sendUpdateBroadcast(context, gestures);
     }
 
     private static boolean isTouchscreenGesturesSupported(final Context context) {
         final LineageHardwareManager manager = LineageHardwareManager.getInstance(context);
         return manager.isSupported(LineageHardwareManager.FEATURE_TOUCHSCREEN_GESTURES);
-    }
-
-    private static int[] getDefaultGestureActions(final Context context,
-            final TouchscreenGesture[] gestures) {
-        final int[] defaultActions = context.getResources().getIntArray(
-                R.array.config_defaultTouchscreenGestureActions);
-        if (defaultActions.length >= gestures.length) {
-            return defaultActions;
-        }
-
-        final int[] filledDefaultActions = new int[gestures.length];
-        System.arraycopy(defaultActions, 0, filledDefaultActions, 0, defaultActions.length);
-        return filledDefaultActions;
-    }
-
-    private static int[] buildActionList(final Context context,
-            final TouchscreenGesture[] gestures) {
-        final int[] result = new int[gestures.length];
-        final int[] defaultActions = getDefaultGestureActions(context, gestures);
-        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-        for (final TouchscreenGesture gesture : gestures) {
-            final String key = buildPreferenceKey(gesture);
-            final String defaultValue = String.valueOf(defaultActions[gesture.id]);
-            result[gesture.id] = Integer.parseInt(prefs.getString(key, defaultValue));
-        }
-        return result;
-    }
-
-    private static String buildPreferenceKey(final TouchscreenGesture gesture) {
-        return "touchscreen_gesture_" + gesture.id;
-    }
-
-    private static void sendUpdateBroadcast(final Context context,
-            final TouchscreenGesture[] gestures) {
-        final Intent intent = new Intent(TouchscreenGestureConstants.UPDATE_PREFS_ACTION);
-        final int[] keycodes = new int[gestures.length];
-        final int[] actions = buildActionList(context, gestures);
-        for (final TouchscreenGesture gesture : gestures) {
-            keycodes[gesture.id] = gesture.keycode;
-        }
-        intent.putExtra(TouchscreenGestureConstants.UPDATE_EXTRA_KEYCODE_MAPPING, keycodes);
-        intent.putExtra(TouchscreenGestureConstants.UPDATE_EXTRA_ACTION_MAPPING, actions);
-        intent.setFlags(Intent.FLAG_RECEIVER_REGISTERED_ONLY);
-        context.sendBroadcastAsUser(intent, UserHandle.CURRENT);
     }
 
     public static final BaseSearchIndexProvider SEARCH_INDEX_DATA_PROVIDER =

@@ -7,12 +7,7 @@
 package com.android.settings.lineage.gestures;
 
 class TouchscreenGestureConstants {
-    // Broadcast action for settings update
-    static final String UPDATE_PREFS_ACTION = "lineage.gestures.UPDATE_SETTINGS";
-    // Broadcast extra: keycode mapping (int[]: key = gesture ID, value = keycode)
-    static final String UPDATE_EXTRA_KEYCODE_MAPPING = "keycode_mappings";
-    // Broadcast extra: assigned actions (int[]: key = gesture ID, value = action)
-    static final String UPDATE_EXTRA_ACTION_MAPPING = "action_mappings";
+    // No update broadcast: actions live in Settings.System and are read at dispatch time.
 
     // Touchscreen gesture actions
     static final int ACTION_FLASHLIGHT = 1;
@@ -27,4 +22,6 @@ class TouchscreenGestureConstants {
     static final int ACTION_VOLUME_DOWN = 10;
     static final int ACTION_VOLUME_UP = 11;
     static final int ACTION_AMBIENT_DISPLAY = 12;
+    // Alpha addition: opens the app stored alongside the action, see TouchscreenGestureAppPicker.
+    static final int ACTION_LAUNCH_APP = 13;
 }

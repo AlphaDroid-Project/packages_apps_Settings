@@ -159,9 +159,6 @@
 
     <protected-broadcast android:name="com.android.systemui.doze.pulse" />
 
-    <!-- Lineage gestures -->
-    <protected-broadcast android:name="lineage.gestures.UPDATE_SETTINGS" />
-
     <application
             android:name=".SettingsApplication"
             android:label="@string/settings_label"
@@ -6250,6 +6247,15 @@
 
         <!-- Lineage gestures -->
         <activity android:name="com.android.settings.lineage.gestures.KeyHandler" />
+
+        <receiver
+            android:name="com.android.settings.lineage.BootReceiver"
+            android:enabled="true"
+            android:exported="false">
+            <intent-filter android:priority="2147483647">
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
 
         <!-- Begin Alpha Settings -->
         <activity android:name="Settings$AlphaSettingsActivity"
