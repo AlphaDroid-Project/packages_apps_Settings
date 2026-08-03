@@ -27,7 +27,11 @@ import android.hardware.camera2.CameraAccessException;
 import android.hardware.camera2.CameraCharacteristics;
 import android.hardware.camera2.CameraManager;
 import android.media.AudioManager;
+import android.media.session.MediaController;
+import android.media.session.MediaSession;
 import android.media.session.MediaSessionLegacyHelper;
+import android.media.session.MediaSessionManager;
+import android.media.session.PlaybackState;
 import android.net.Uri;
 import android.os.Handler;
 import android.os.Looper;
@@ -511,17 +515,61 @@ public class KeyHandler implements DeviceKeyHandler {
         }
     }
 
+    /**
+     * Play/pause media for the system's media-button target.
+     *
+     * <ul>
+     *   <li>Live session playing → PLAY_PAUSE (toggle off)</li>
+     *   <li>Live session paused/stopped/unknown → MEDIA_PLAY (resume)</li>
+     *   <li>No live session → MEDIA_PLAY so the framework hits the last
+     *       media-button receiver ({@code Settings.Secure.media_button_receiver})
+     *       and resumes that app after reboot / process death</li>
+     * </ul>
+     * There is no user-picked "default media player"; last MBR is the only fallback.
+     */
     private void playPauseMusic() {
-        dispatchMediaKeyWithWakeLockToMediaSession(KeyEvent.KEYCODE_MEDIA_PLAY_PAUSE);
+        mGestureWakeLock.acquire(GESTURE_WAKELOCK_DURATION);
+        dispatchMediaKeyWithWakeLockToMediaSession(resolvePlayPauseKeycode());
         doHapticFeedback();
     }
 
+    /**
+     * Choose PLAY vs PLAY_PAUSE based on whether a live media-button session exists
+     * and is actively playing. Prefer PLAY when resuming so a dead session still
+     * reaches the last media-button receiver as an explicit start/resume.
+     */
+    private int resolvePlayPauseKeycode() {
+        final MediaSessionManager manager =
+                mContext.getSystemService(MediaSessionManager.class);
+        if (manager == null) {
+            return KeyEvent.KEYCODE_MEDIA_PLAY_PAUSE;
+        }
+        try {
+            final MediaSession.Token token = manager.getMediaKeyEventSession();
+            if (token == null) {
+                // Session dead: framework will deliver to last media-button receiver.
+                return KeyEvent.KEYCODE_MEDIA_PLAY;
+            }
+            final MediaController controller = new MediaController(mContext, token);
+            final PlaybackState state = controller.getPlaybackState();
+            if (state != null && state.getState() == PlaybackState.STATE_PLAYING) {
+                return KeyEvent.KEYCODE_MEDIA_PLAY_PAUSE;
+            }
+            return KeyEvent.KEYCODE_MEDIA_PLAY;
+        } catch (Exception e) {
+            Log.w(TAG, "Could not resolve media session state", e);
+            return KeyEvent.KEYCODE_MEDIA_PLAY_PAUSE;
+        }
+    }
+
     private void previousTrack() {
+        mGestureWakeLock.acquire(GESTURE_WAKELOCK_DURATION);
         dispatchMediaKeyWithWakeLockToMediaSession(KeyEvent.KEYCODE_MEDIA_PREVIOUS);
         doHapticFeedback();
     }
 
     private void nextTrack() {
+        mGestureWakeLock.acquire(GESTURE_WAKELOCK_DURATION);
         dispatchMediaKeyWithWakeLockToMediaSession(KeyEvent.KEYCODE_MEDIA_NEXT);
         doHapticFeedback();
     }
@@ -550,16 +598,25 @@ public class KeyHandler implements DeviceKeyHandler {
     }
 
     private void dispatchMediaKeyWithWakeLockToMediaSession(final int keycode) {
+        final long now = SystemClock.uptimeMillis();
+        KeyEvent event = new KeyEvent(now, now, KeyEvent.ACTION_DOWN, keycode, 0);
+        final MediaSessionManager manager =
+                mContext.getSystemService(MediaSessionManager.class);
+        // Prefer the system-service path: same routing as headset keys (live session,
+        // else last media-button receiver) with framework media-key wakelock.
+        if (manager != null) {
+            manager.dispatchMediaKeyEventAsSystemService(event);
+            manager.dispatchMediaKeyEventAsSystemService(
+                    KeyEvent.changeAction(event, KeyEvent.ACTION_UP));
+            return;
+        }
         final MediaSessionLegacyHelper helper = MediaSessionLegacyHelper.getHelper(mContext);
         if (helper == null) {
             Log.w(TAG, "Unable to send media key event");
             return;
         }
-        KeyEvent event = new KeyEvent(SystemClock.uptimeMillis(),
-                SystemClock.uptimeMillis(), KeyEvent.ACTION_DOWN, keycode, 0);
         helper.sendMediaButtonEvent(event, true);
-        event = KeyEvent.changeAction(event, KeyEvent.ACTION_UP);
-        helper.sendMediaButtonEvent(event, true);
+        helper.sendMediaButtonEvent(KeyEvent.changeAction(event, KeyEvent.ACTION_UP), true);
     }
 
     private void startActivitySafely(final Intent intent) {
