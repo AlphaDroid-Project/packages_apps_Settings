@@ -23,6 +23,7 @@ import android.content.Intent;
 import android.media.MediaRouter2Manager;
 import android.media.RoutingSessionInfo;
 import android.text.TextUtils;
+import android.util.Log;
 
 import androidx.annotation.VisibleForTesting;
 import androidx.preference.Preference;
@@ -125,12 +126,23 @@ public class RemoteVolumeGroupController extends BasePreferenceController implem
         for (RoutingSessionInfo info : mRoutingSessionInfos) {
             final CharSequence appName = Utils.getApplicationLabel(mContext,
                     info.getClientPackageName());
+            // Material Slider requires valueFrom < valueTo. Sessions that report max<=0 would
+            // crash Sound settings on layout; skip or clamp instead of creating a 0/0 range.
+            final int volumeMax = Math.max(1, info.getVolumeMax());
+            if (info.getVolumeMax() <= 0) {
+                Log.w(TAG, "Remote session volumeMax<=0 id=" + info.getId()
+                        + " pkg=" + info.getClientPackageName() + "; using max=" + volumeMax);
+            }
+            final int volume = Math.max(0, Math.min(info.getVolume(), volumeMax));
             RemoteVolumeSliderPreference sliderPreference = mPreferenceCategory.findPreference(
                     info.getId());
             if (sliderPreference != null) {
                 // Update slider
-                if (sliderPreference.getValue() != info.getVolume()) {
-                    sliderPreference.setValue(info.getVolume());
+                if (sliderPreference.getMax() != volumeMax) {
+                    sliderPreference.setMax(volumeMax);
+                }
+                if (sliderPreference.getValue() != volume) {
+                    sliderPreference.setValue(volume);
                 }
                 sliderPreference.setEnabled(mLocalMediaManager.shouldEnableVolumeSeekBar(info));
             } else {
@@ -138,9 +150,9 @@ public class RemoteVolumeGroupController extends BasePreferenceController implem
                 sliderPreference = new RemoteVolumeSliderPreference(mContext);
                 sliderPreference.setKey(info.getId());
                 sliderPreference.setTitle(castVolume);
-                sliderPreference.setMax(info.getVolumeMax());
-                sliderPreference.setValue(info.getVolume());
                 sliderPreference.setMin(0);
+                sliderPreference.setMax(volumeMax);
+                sliderPreference.setValue(volume);
                 sliderPreference.setOnPreferenceChangeListener(this);
                 sliderPreference.setIcon(com.android.settingslib.R.drawable.ic_volume_remote);
                 sliderPreference.setEnabled(mLocalMediaManager.shouldEnableVolumeSeekBar(info));

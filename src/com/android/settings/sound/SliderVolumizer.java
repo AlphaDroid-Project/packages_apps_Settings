@@ -185,7 +185,8 @@ public class SliderVolumizer implements OnSliderTouchListener, OnChangeListener,
             mVolumeGroupId = getVolumeGroupIdForLegacyStreamType(mStreamType);
         }
 
-        mMaxStreamVolume = mAudioManager.getStreamMaxVolume(mStreamType);
+        // Material Slider requires valueFrom < valueTo; never store a non-positive max.
+        mMaxStreamVolume = Math.max(1, mAudioManager.getStreamMaxVolume(mStreamType));
         mCallback = callback;
         mOriginalStreamVolume = mAudioManager.getStreamVolume(mStreamType);
         mLastAudibleStreamVolume = mAudioManager.getLastAudibleStreamVolume(mStreamType);
@@ -265,7 +266,13 @@ public class SliderVolumizer implements OnSliderTouchListener, OnChangeListener,
         }
         mSlider = slider;
         mSlider.clearOnChangeListeners();
-        mSlider.setValueTo(mMaxStreamVolume);
+        // Always keep a non-empty range; Material Slider crashes on layout if
+        // valueFrom >= valueTo (e.g. both still at the default 0).
+        final float valueFrom = mSlider.getValueFrom();
+        final float valueTo = mMaxStreamVolume > valueFrom
+                ? mMaxStreamVolume
+                : valueFrom + 1.0f;
+        mSlider.setValueTo(valueTo);
         mSlider.setStepSize(1.0f);
         mSlider.setTickVisibilityMode(TICK_VISIBILITY_HIDDEN);
         updateSliderState();

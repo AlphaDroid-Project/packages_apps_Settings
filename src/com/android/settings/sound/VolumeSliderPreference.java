@@ -24,6 +24,7 @@ import android.media.AudioManager;
 import android.net.Uri;
 import android.text.TextUtils;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -99,11 +100,26 @@ public class VolumeSliderPreference extends RestrictedSliderPreference {
 
     public void setStream(int stream) {
         mStream = stream;
-        setMax(mAudioManager.getStreamMaxVolume(mStream));
         // Use getStreamMinVolumeInt for non-public stream type
         // eg: AudioManager.STREAM_BLUETOOTH_SCO
-        setMin(mAudioManager.getStreamMinVolumeInt(mStream));
-        setValue(mAudioManager.getStreamVolume(mStream));
+        int min = mAudioManager.getStreamMinVolumeInt(mStream);
+        int max = mAudioManager.getStreamMaxVolume(mStream);
+        // Material Slider requires valueFrom < valueTo; a 0/0 range crashes on layout.
+        if (max <= min) {
+            Log.w(TAG, "Invalid stream volume range stream=" + mStream
+                    + " min=" + min + " max=" + max + "; clamping max to min+1");
+            max = min + 1;
+        }
+        // Set min before max so setMax does not clamp against a stale upper bound.
+        setMin(min);
+        setMax(max);
+        int value = mAudioManager.getStreamVolume(mStream);
+        if (value < min) {
+            value = min;
+        } else if (value > max) {
+            value = max;
+        }
+        setValue(value);
     }
 
     public void setCallback(Callback callback) {
