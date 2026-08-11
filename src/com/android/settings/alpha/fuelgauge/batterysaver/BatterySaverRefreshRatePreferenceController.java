@@ -14,16 +14,23 @@
  * limitations under the License.
  */
 
-package com.android.settings.fuelgauge.batterysaver;
+package com.android.settings.alpha.fuelgauge.batterysaver;
 
 import static android.provider.Settings.System.LOW_POWER_REFRESH_RATE;
 
 import android.content.Context;
+import android.hardware.display.DisplayManager;
 import android.provider.Settings;
+import android.view.Display;
 
 import com.android.settings.R;
 import com.android.settings.core.TogglePreferenceController;
 
+/**
+ * Gates DisplayModeDirector's low-power 60 Hz vote via
+ * {@link Settings.System#LOW_POWER_REFRESH_RATE} ("low_power_rr_switch").
+ * Default is off (opt-in); the cap only applies while Battery Saver is also on.
+ */
 public class BatterySaverRefreshRatePreferenceController extends TogglePreferenceController {
 
     public BatterySaverRefreshRatePreferenceController(Context context, String key) {
@@ -32,23 +39,38 @@ public class BatterySaverRefreshRatePreferenceController extends TogglePreferenc
 
     @Override
     public boolean isChecked() {
-        int val = Settings.System.getInt(mContext.getContentResolver(), LOW_POWER_REFRESH_RATE, 1);
-        return val == 1;
+        return Settings.System.getInt(mContext.getContentResolver(),
+                LOW_POWER_REFRESH_RATE, 0 /*default off: opt-in*/) == 1;
     }
 
     @Override
     public boolean setChecked(boolean isChecked) {
-        int val = isChecked ? 1 : 0;
-        return Settings.System.putInt(mContext.getContentResolver(), LOW_POWER_REFRESH_RATE, val);
+        return Settings.System.putInt(mContext.getContentResolver(),
+                LOW_POWER_REFRESH_RATE, isChecked ? 1 : 0);
     }
 
     @Override
     public int getAvailabilityStatus() {
-        return mContext.getResources().getBoolean(R.bool.config_show_smooth_display) ? AVAILABLE : UNSUPPORTED_ON_DEVICE;
+        // Prefer multi-rate panels over config_show_smooth_display (false on some
+        // OnePlus targets that still support 90/120 Hz).
+        return hasMultipleRefreshRates() ? AVAILABLE : UNSUPPORTED_ON_DEVICE;
     }
 
     @Override
     public int getSliceHighlightMenuRes() {
         return R.string.menu_key_battery;
+    }
+
+    private boolean hasMultipleRefreshRates() {
+        final Display display = mContext.getSystemService(DisplayManager.class)
+                .getDisplay(Display.DEFAULT_DISPLAY);
+        if (display == null) {
+            return false;
+        }
+        float max = 0f;
+        for (Display.Mode mode : display.getSupportedModes()) {
+            max = Math.max(max, mode.getRefreshRate());
+        }
+        return max > 60.1f;
     }
 }
