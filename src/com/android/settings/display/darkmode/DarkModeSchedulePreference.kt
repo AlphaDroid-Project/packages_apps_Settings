@@ -71,7 +71,7 @@ class DarkModeSchedulePreference(
                 R.array.dark_ui_scheduler_preference_titles
             }
 
-    override fun getSummary(context: Context): CharSequence? = "%s"
+    override fun getSummary(context: Context): CharSequence? = getCurrentMode(context)
 
     override fun createWidget(context: Context) = DropDownPreference(context)
 

@@ -117,12 +117,15 @@ public class DarkModeSettingsFragment extends BaseSupportFragment {
 
     @Override
     public boolean onPreferenceTreeClick(Preference preference) {
-        if (DARK_THEME_END_TIME.equals(preference.getKey())) {
-            showDialog(DIALOG_END_TIME);
-            return true;
-        } else if (DARK_THEME_START_TIME.equals(preference.getKey())) {
-            showDialog(DIALOG_START_TIME);
-            return true;
+        // Catalyst start/end prefs show DarkModeTimePicker themselves.
+        if (!Flags.catalystDarkUiMode()) {
+            if (DARK_THEME_END_TIME.equals(preference.getKey())) {
+                showDialog(DIALOG_END_TIME);
+                return true;
+            } else if (DARK_THEME_START_TIME.equals(preference.getKey())) {
+                showDialog(DIALOG_START_TIME);
+                return true;
+            }
         }
         return super.onPreferenceTreeClick(preference);
     }
