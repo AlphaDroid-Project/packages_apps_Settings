@@ -36,6 +36,7 @@ import androidx.preference.Preference;
 import androidx.preference.PreferenceScreen;
 
 import com.android.settings.R;
+import com.android.settings.Utils;
 import com.android.settings.dashboard.DashboardFragment;
 import com.android.settings.display.AmbientDisplayAlwaysOnPreferenceController;
 import com.android.settings.display.AmbientDisplayNotificationsPreferenceController;
@@ -72,6 +73,7 @@ public class LockscreenDashboardFragment extends DashboardFragment
     static final String KEY_ADD_USER_FROM_LOCK_SCREEN =
             "security_lockscreen_add_users_when_locked";
     private static final String KEY_NOW_PLAYING = "dashboard_tile_pref_com.google.intelligence.sense.ambientmusic.AmbientMusicNotificationsSettingsActivity";
+    private static final String ASI_PACKAGE = "com.google.android.as";
 
     private AmbientDisplayConfiguration mConfig;
     private OwnerInfoPreferenceController mOwnerInfoPreferenceController;
@@ -101,13 +103,18 @@ public class LockscreenDashboardFragment extends DashboardFragment
 
     private void updateAmbientMusicPref() {
         final PreferenceScreen screen = getPreferenceScreen();
-        if (getContext().getResources().getBoolean(R.bool.config_show_now_playing) || screen == null) {
+        if (screen == null || isAmbientMusicAvailable(getContext())) {
             return;
         }
         final Preference preference = screen.findPreference(KEY_NOW_PLAYING);
         if (preference != null) {
             screen.removePreference(preference);
         }
+    }
+
+    private static boolean isAmbientMusicAvailable(Context context) {
+        return context.getResources().getBoolean(R.bool.config_show_now_playing)
+                && Utils.isPackageEnabled(context, ASI_PACKAGE);
     }
 
     @Override
@@ -205,7 +212,7 @@ public class LockscreenDashboardFragment extends DashboardFragment
                 public List<String> getNonIndexableKeys(Context context) {
                     final List<String> niks = super.getNonIndexableKeys(context);
                     niks.add(KEY_ADD_USER_FROM_LOCK_SCREEN);
-                    if (!context.getResources().getBoolean(R.bool.config_show_now_playing)) {
+                    if (!isAmbientMusicAvailable(context)) {
                         niks.add(KEY_NOW_PLAYING);
                     }
                     return niks;
