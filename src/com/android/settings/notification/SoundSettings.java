@@ -34,11 +34,9 @@ import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
 import androidx.preference.ListPreference;
 import androidx.preference.Preference;
-import androidx.preference.PreferenceScreen;
 
 import com.android.settings.R;
 import com.android.settings.RingtonePreference;
-import com.android.settings.Utils;
 import com.android.settings.core.OnActivityResultListener;
 import com.android.settings.dashboard.DashboardFragment;
 import com.android.settings.search.BaseSearchIndexProvider;
@@ -50,6 +48,7 @@ import com.android.settings.widget.UpdatableListPreferenceDialogFragment;
 import com.android.settingslib.core.AbstractPreferenceController;
 import com.android.settingslib.core.instrumentation.Instrumentable;
 import com.android.settingslib.core.lifecycle.Lifecycle;
+import com.android.settingslib.drawer.Tile;
 import com.android.settingslib.preference.UtilsKt;
 import com.android.settingslib.search.SearchIndexable;
 
@@ -71,8 +70,9 @@ public class SoundSettings extends DashboardFragment implements OnActivityResult
 
     private static final String EXTRA_OPEN_PHONE_RINGTONE_PICKER =
             "EXTRA_OPEN_PHONE_RINGTONE_PICKER";
-    private static final String KEY_NOW_PLAYING = "dashboard_tile_pref_com.google.intelligence.sense.ambientmusic.AmbientMusicSettingsActivity";
-    private static final String ASI_PACKAGE = "com.google.android.as";
+    private static final String NOW_PLAYING_ACTIVITY =
+            "com.google.intelligence.sense.ambientmusic.AmbientMusicSettingsActivity";
+    private static final String KEY_NOW_PLAYING = "dashboard_tile_pref_" + NOW_PLAYING_ACTIVITY;
 
     @VisibleForTesting
     static final int STOP_SAMPLE = 1;
@@ -134,7 +134,6 @@ public class SoundSettings extends DashboardFragment implements OnActivityResult
             }
             return null;
         });
-        updateAmbientMusicPref();
 
         boolean mediaFocus = Settings.System.getIntForUser(getContext().getContentResolver(),
             Settings.System.MULTI_AUDIO_FOCUS_ENABLED, 0, UserHandle.USER_CURRENT) != 0;
@@ -143,21 +142,24 @@ public class SoundSettings extends DashboardFragment implements OnActivityResult
         mediaFocusPref.setChecked(mediaFocus);
     }
 
-    private void updateAmbientMusicPref() {
-        final PreferenceScreen screen = getPreferenceScreen();
-        if (screen == null || isAmbientMusicAvailable(getContext())) {
-            return;
+    @Override
+    protected boolean displayTile(Tile tile) {
+        if (!super.displayTile(tile)) {
+            return false;
         }
-
-        final Preference preference = screen.findPreference(KEY_NOW_PLAYING);
-        if (preference != null) {
-            screen.removePreference(preference);
+        if (isNowPlayingTile(tile)
+                && !getContext().getResources().getBoolean(R.bool.config_show_now_playing)) {
+            return false;
         }
+        return true;
     }
 
-    private static boolean isAmbientMusicAvailable(Context context) {
-        return context.getResources().getBoolean(R.bool.config_show_now_playing)
-                && Utils.isPackageEnabled(context, ASI_PACKAGE);
+    private static boolean isNowPlayingTile(Tile tile) {
+        final Intent intent = tile.getIntent();
+        if (intent == null || intent.getComponent() == null) {
+            return false;
+        }
+        return NOW_PLAYING_ACTIVITY.equals(intent.getComponent().getClassName());
     }
 
     @Override
@@ -367,7 +369,7 @@ public class SoundSettings extends DashboardFragment implements OnActivityResult
                 public List<String> getNonIndexableKeys(Context context) {
                     List<String> keys = super.getNonIndexableKeys(context);
 
-                    if (!isAmbientMusicAvailable(context)) {
+                    if (!context.getResources().getBoolean(R.bool.config_show_now_playing)) {
                         keys.add(KEY_NOW_PLAYING);
                     }
 

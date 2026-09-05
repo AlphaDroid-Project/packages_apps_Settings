@@ -21,6 +21,7 @@ import static android.app.admin.DevicePolicyResources.Strings.Settings.WORK_PROF
 
 import android.app.settings.SettingsEnums;
 import android.content.Context;
+import android.content.Intent;
 import android.database.ContentObserver;
 import android.hardware.display.AmbientDisplayConfiguration;
 import android.net.Uri;
@@ -32,11 +33,8 @@ import android.provider.Settings;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
-import androidx.preference.Preference;
-import androidx.preference.PreferenceScreen;
 
 import com.android.settings.R;
-import com.android.settings.Utils;
 import com.android.settings.dashboard.DashboardFragment;
 import com.android.settings.display.AmbientDisplayAlwaysOnPreferenceController;
 import com.android.settings.display.AmbientDisplayNotificationsPreferenceController;
@@ -47,6 +45,7 @@ import com.android.settings.search.BaseSearchIndexProvider;
 import com.android.settings.security.screenlock.LockScreenPreferenceController;
 import com.android.settingslib.core.AbstractPreferenceController;
 import com.android.settingslib.core.lifecycle.Lifecycle;
+import com.android.settingslib.drawer.Tile;
 import com.android.settingslib.search.SearchIndexable;
 
 import java.util.ArrayList;
@@ -72,8 +71,9 @@ public class LockscreenDashboardFragment extends DashboardFragment
     @VisibleForTesting
     static final String KEY_ADD_USER_FROM_LOCK_SCREEN =
             "security_lockscreen_add_users_when_locked";
-    private static final String KEY_NOW_PLAYING = "dashboard_tile_pref_com.google.intelligence.sense.ambientmusic.AmbientMusicNotificationsSettingsActivity";
-    private static final String ASI_PACKAGE = "com.google.android.as";
+    private static final String NOW_PLAYING_ACTIVITY =
+            "com.google.intelligence.sense.ambientmusic.AmbientMusicNotificationsSettingsActivity";
+    private static final String KEY_NOW_PLAYING = "dashboard_tile_pref_" + NOW_PLAYING_ACTIVITY;
 
     private AmbientDisplayConfiguration mConfig;
     private OwnerInfoPreferenceController mOwnerInfoPreferenceController;
@@ -98,23 +98,26 @@ public class LockscreenDashboardFragment extends DashboardFragment
                 R.string.locked_work_profile_notification_title);
         replaceEnterpriseStringTitle("security_setting_lock_screen_notif_work_header",
                 WORK_PROFILE_NOTIFICATIONS_SECTION_HEADER, R.string.profile_section_header);
-        updateAmbientMusicPref();
     }
 
-    private void updateAmbientMusicPref() {
-        final PreferenceScreen screen = getPreferenceScreen();
-        if (screen == null || isAmbientMusicAvailable(getContext())) {
-            return;
+    @Override
+    protected boolean displayTile(Tile tile) {
+        if (!super.displayTile(tile)) {
+            return false;
         }
-        final Preference preference = screen.findPreference(KEY_NOW_PLAYING);
-        if (preference != null) {
-            screen.removePreference(preference);
+        if (isNowPlayingTile(tile)
+                && !getContext().getResources().getBoolean(R.bool.config_show_now_playing)) {
+            return false;
         }
+        return true;
     }
 
-    private static boolean isAmbientMusicAvailable(Context context) {
-        return context.getResources().getBoolean(R.bool.config_show_now_playing)
-                && Utils.isPackageEnabled(context, ASI_PACKAGE);
+    private static boolean isNowPlayingTile(Tile tile) {
+        final Intent intent = tile.getIntent();
+        if (intent == null || intent.getComponent() == null) {
+            return false;
+        }
+        return NOW_PLAYING_ACTIVITY.equals(intent.getComponent().getClassName());
     }
 
     @Override
@@ -212,7 +215,7 @@ public class LockscreenDashboardFragment extends DashboardFragment
                 public List<String> getNonIndexableKeys(Context context) {
                     final List<String> niks = super.getNonIndexableKeys(context);
                     niks.add(KEY_ADD_USER_FROM_LOCK_SCREEN);
-                    if (!isAmbientMusicAvailable(context)) {
+                    if (!context.getResources().getBoolean(R.bool.config_show_now_playing)) {
                         niks.add(KEY_NOW_PLAYING);
                     }
                     return niks;
